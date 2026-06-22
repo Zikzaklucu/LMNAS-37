@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+
+# Hermes local workspace artifacts
+.hermes/
+
+# Local editor metadata
+.idea/
+.vscode/
+
+# Local environment/secrets
+.env
+.env.*
+
+# Logs
+*.log

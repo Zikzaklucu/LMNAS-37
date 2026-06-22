@@ -1,0 +1,150 @@
+@font-face {
+  font-family: "Naluka";
+  src: url("Assets/fonts/Naluka.ttf") format("truetype");
+  font-display: swap;
+}
+
+:root {
+  --forest: #17300f;
+  --forest-shadow: #0b1d09;
+  --moss: #426928;
+  --gold: #f2cc6d;
+  --gold-shadow: #8d6727;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body { min-height: 100%; }
+
+body {
+  min-width: 20rem;
+  margin: 0;
+  overflow: hidden;
+  background: var(--forest-shadow);
+}
+
+.coming-soon {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  place-items: center;
+  padding: clamp(2rem, 8vw, 6rem);
+  background-color: var(--forest);
+  background-image: url("Assets/rock-texture.png");
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: multiply;
+}
+
+.coming-soon::before {
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+  content: "";
+  background: var(--forest-shadow);
+  opacity: 0.34;
+}
+
+.coming-soon::after {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  right: clamp(1.6rem, 6vw, 5rem);
+  bottom: 0;
+  left: clamp(1.6rem, 6vw, 5rem);
+  content: "";
+  border: 1px solid rgba(242, 204, 109, 0.24);
+  border-top: 0;
+  border-bottom: 0;
+}
+
+.wood-frame {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  width: clamp(1.8rem, 5.6vw, 5.1rem);
+  height: 100%;
+  object-fit: fill;
+  opacity: 0.98;
+}
+
+.wood-frame--left { left: 0; }
+.wood-frame--right { right: 0; transform: scaleX(-1); }
+
+.foliage,
+.vine {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.foliage {
+  width: min(48rem, 90vw);
+  opacity: 0.9;
+  filter: saturate(0.75) brightness(0.58);
+}
+
+.foliage--upper {
+  top: -7rem;
+  left: -12rem;
+  width: min(54rem, 100vw);
+  transform: rotate(-11deg);
+}
+
+.foliage--lower-left {
+  bottom: -4rem;
+  left: -11rem;
+  transform: rotate(14deg);
+}
+
+.foliage--lower-right {
+  right: -12rem;
+  bottom: 3rem;
+  transform: scaleX(-1) rotate(10deg);
+}
+
+.vine {
+  bottom: -2rem;
+  width: clamp(12rem, 28vw, 23rem);
+  opacity: 0.82;
+  filter: saturate(0.72) brightness(0.72);
+}
+
+.vine--left { left: -5rem; transform: rotate(-10deg); }
+.vine--right { right: -5rem; transform: scaleX(-1) rotate(-10deg); }
+
+h1 {
+  z-index: 1;
+  max-width: 8ch;
+  margin: 0;
+  color: var(--gold);
+  font-family: "Naluka", Georgia, serif;
+  font-size: clamp(3.9rem, 13vw, 12rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 0.78;
+  text-align: center;
+  text-shadow:
+    0.025em 0.035em 0 var(--gold-shadow),
+    0.065em 0.08em 0 rgba(7, 23, 6, 0.78);
+  text-transform: uppercase;
+}
+
+@media (max-width: 40rem) {
+  .coming-soon { padding-inline: 3.8rem; }
+
+  .foliage--upper { top: -2.5rem; left: -15rem; width: 38rem; }
+  .foliage--lower-left { bottom: -2rem; left: -17rem; width: 37rem; }
+  .foliage--lower-right { right: -16rem; bottom: 6rem; width: 36rem; }
+  .vine { width: 14rem; bottom: -1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after { scroll-behavior: auto !important; }
+}
