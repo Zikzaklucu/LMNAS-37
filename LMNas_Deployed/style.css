@@ -1,6 +1,7 @@
+/* LMNAS 37 WordPress/GitHub-linked deploy build: assets load from GitHub Pages. */
 @font-face {
   font-family: "Naluka";
-  src: url("Assets/fonts/Naluka.ttf") format("truetype");
+  src: url("https://zikzaklucu.github.io/LMNAS-37/Assets/fonts/Naluka.ttf") format("truetype");
   font-display: swap;
 }
 
@@ -61,7 +62,7 @@ img {
 
 .poster::before {
   z-index: 2;
-  background-image: url("Assets/figma/rock-texture-green.webp");
+  background-image: url("https://zikzaklucu.github.io/LMNAS-37/Assets/figma/rock-texture-green.webp");
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -90,7 +91,7 @@ img {
   z-index: 8;
   inset-block: 0;
   inline-size: var(--rail-width);
-  background: url("Assets/wood border.png") center / 100% 100% no-repeat;
+  background: url("https://zikzaklucu.github.io/LMNAS-37/Assets/wood border.png") center / 100% 100% no-repeat;
   box-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.42);
 }
 
