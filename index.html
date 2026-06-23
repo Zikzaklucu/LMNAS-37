@@ -5,58 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="LMNAS 37 is coming soon."
+      content="LMNAS 37 and Semnastika 18 jungle-themed coming soon page."
     />
-    <title>LMNAS 37 — Coming Soon</title>
+    <title>LMNAS 37 / Semnastika 18</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="coming-soon" aria-labelledby="coming-soon-title">
+    <main class="poster" aria-labelledby="page-title">
+      <h1 class="sr-only" id="page-title">LMNAS 37 and Semnastika 18</h1>
+
+      <div class="wood-rail wood-rail--left" aria-hidden="true"></div>
+      <div class="wood-rail wood-rail--right" aria-hidden="true"></div>
+
       <img
-        class="wood-frame wood-frame--left"
-        src="Assets/wood border.png"
+        class="decor decor--ruins decor--ruins-top"
+        src="Assets/figma/jungle-ruins-top.svg"
         alt=""
         aria-hidden="true"
       />
       <img
-        class="wood-frame wood-frame--right"
-        src="Assets/wood border.png"
+        class="decor decor--ruins decor--ruins-bottom"
+        src="Assets/figma/jungle-ruins-bottom.svg"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        class="decor decor--leaf decor--leaf-a"
+        src="Assets/figma/leaf-cluster-a.svg"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        class="decor decor--leaf decor--leaf-b"
+        src="Assets/figma/leaf-cluster-b.svg"
+        alt=""
+        aria-hidden="true"
+      />
+      <img
+        class="decor decor--leaf decor--leaf-c"
+        src="Assets/figma/leaf-cluster-c.svg"
         alt=""
         aria-hidden="true"
       />
 
-      <img
-        class="foliage foliage--upper"
-        src="Assets/leaf clusters.svg"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        class="foliage foliage--lower-left"
-        src="Assets/leaf clusters.svg"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        class="foliage foliage--lower-right"
-        src="Assets/leaf clusters.svg"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        class="vine vine--left"
-        src="Assets/side vine.svg"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        class="vine vine--right"
-        src="Assets/side vine.svg"
-        alt=""
-        aria-hidden="true"
-      />
+      <div class="fireflies" id="fireflies" aria-hidden="true"></div>
 
-      <h1 id="coming-soon-title">Coming Soon</h1>
+      <h2 class="coming-soon-word">Coming Soon</h2>
+
+      <header class="brand-header" aria-label="Event organizers and identities">
+        <img
+          class="brand-header__image"
+          src="Assets/figma/header-logo-bar.png"
+          alt="Universitas Gadjah Mada, Himatika, LMNAS 37, and Semnastika 18 logos"
+        />
+      </header>
+
+      <footer class="social-footer" aria-label="LMNAS and Semnastika social channels">
+        <img
+          class="social-footer__image"
+          src="Assets/figma/socials-bar.png"
+          alt="Facebook: LMNas dan Semnastika UGM. YouTube: LMNas and Semnastika UGM. X, TikTok, and Instagram: @lmnas_semnas."
+        />
+      </footer>
     </main>
+    <script src="script.js"></script>
   </body>
 </html>
