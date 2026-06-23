@@ -59,7 +59,7 @@ Do not replace Naluka with a web font unless the user explicitly asks.
 The page uses:
 
 - visually hidden `h1` for accessibility: `LMNAS 37 and Semnastika 18`
-- visible `h2.coming-soon-word`: one-line `Coming Soon`
+- visible `h2.coming-soon-word`: one-line `Coming Soon` on desktop/tablet, split as `Coming` / `Soon` on phones
 - fixed wood rails on left/right
 - decorative ruins and leaves as `img.decor`
 - fixed brand header image from `Assets/figma/header-logo-bar.png`
@@ -132,7 +132,7 @@ Before reporting done:
 4. Verify no missing asset/script paths.
 5. Visually confirm:
    - side rails use saturated PNG wood coloring
-   - `Coming Soon` is one line in Naluka
+   - `Coming Soon` is one line in Naluka on desktop/tablet and split into two larger lines on phones
    - brand header and social footer are scaled down and readable
    - fireflies are visible and do not cover readability
    - background/decor layering matches the latest user request
