@@ -1,76 +1,245 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="LMNAS 37 and Semnastika 18 jungle-themed coming soon page."
-    />
-    <title>LMNAS 37 / Semnastika 18</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <main class="poster" aria-labelledby="page-title">
-      <h1 class="sr-only" id="page-title">LMNAS 37 and Semnastika 18</h1>
+<!doctype html>
+<html lang="id">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Peraturan Babak Penyisihan</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Rye&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--moss: #3e5626;
+			--paper: #f3d275;
+			--panel: #fadc9a;
+			--gold: #b47c00;
+			--page-width: min(100vw, 1463px);
+		}
 
-      <div class="wood-rail wood-rail--left" aria-hidden="true"></div>
-      <div class="wood-rail wood-rail--right" aria-hidden="true"></div>
+		* { box-sizing: border-box; }
 
-      <img
-        class="decor decor--ruins decor--ruins-top"
-        src="Assets/figma/jungle-ruins-top.svg"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        class="decor decor--ruins decor--ruins-bottom"
-        src="Assets/figma/jungle-ruins-bottom.svg"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        class="decor decor--leaf decor--leaf-a"
-        src="Assets/figma/leaf-cluster-a.svg"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        class="decor decor--leaf decor--leaf-b"
-        src="Assets/figma/leaf-cluster-b.svg"
-        alt=""
-        aria-hidden="true"
-      />
-      <img
-        class="decor decor--leaf decor--leaf-c"
-        src="Assets/figma/leaf-cluster-c.svg"
-        alt=""
-        aria-hidden="true"
-      />
+		html {
+			background: var(--paper);
+			overflow-x: hidden;
+		}
 
-      <div class="fireflies" id="fireflies" aria-hidden="true"></div>
+		body {
+			margin: 0;
+			color: #0d0d0b;
+			font-family: Montserrat, sans-serif;
+			font-weight: 500;
+		}
 
-      <h2 class="coming-soon-word" aria-label="Coming Soon">
-        <span aria-hidden="true">Coming</span>
-        <span aria-hidden="true">Soon</span>
-      </h2>
+		.page {
+			position: relative;
+			width: var(--page-width);
+			min-height: calc(var(--page-width) * 2.21599);
+			overflow: hidden;
+			background: var(--paper);
+			isolation: isolate;
+		}
 
-      <header class="brand-header" aria-label="Event organizers and identities">
-        <img
-          class="brand-header__image"
-          src="Assets/figma/header-logo-bar.png"
-          alt="Universitas Gadjah Mada, Himatika, LMNAS 37, and Semnastika 18 logos"
-        />
-      </header>
+		.texture {
+			position: absolute;
+			z-index: -1;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			background-image: url("https://www.figma.com/api/mcp/asset/b8fdf16b-ae64-45dd-80c9-6e1ce1f540da.png");
+			background-size: cover;
+			background-position: center;
+			mix-blend-mode: color-burn;
+			opacity: .13;
+			transform: rotate(90deg) scale(1.35);
+		}
 
-      <footer class="social-footer" aria-label="LMNAS and Semnastika social channels">
-        <img
-          class="social-footer__image"
-          src="Assets/figma/socials-bar.png"
-          alt="Facebook: LMNas dan Semnastika UGM. YouTube: LMNas and Semnastika UGM. X, TikTok, and Instagram: @lmnas_semnas."
-        />
-      </footer>
-    </main>
-    <script src="script.js"></script>
-  </body>
+		.header {
+			position: absolute;
+			inset: 0 0 auto;
+			height: 3.46%;
+			min-height: 0;
+			background: var(--moss);
+			display: flex;
+			align-items: center;
+			padding: 0 5.2%;
+			gap: 5%;
+			color: #fff;
+			box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+		}
+
+		.brand {
+			width: 5%;
+			min-width: 38px;
+			aspect-ratio: 72 / 74;
+			object-fit: contain;
+			filter: drop-shadow(0 3px 2px rgb(0 0 0 / 25%));
+		}
+
+		.nav {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex: 1;
+			gap: clamp(10px, 2.05vw, 30px);
+			white-space: nowrap;
+			font-size: clamp(8px, 1.64vw, 24px);
+			text-shadow: 0 0 4px rgb(0 0 0 / 25%);
+		}
+
+		.nav a { color: inherit; text-decoration: none; }
+		.nav a:hover, .nav a[aria-current="page"] { color: #fadc9a; }
+
+		.title {
+			position: absolute;
+			top: 5.43%;
+			left: 5.6%;
+			margin: 0;
+			color: var(--moss);
+			font-family: Rye, Georgia, serif;
+			font-size: clamp(42px, 8.75vw, 128px);
+			font-weight: 400;
+			line-height: 1.12;
+			letter-spacing: .05em;
+		}
+
+		.rules {
+			position: absolute;
+			top: 17.25%;
+			left: 3.05%;
+			width: 79.63%;
+			min-height: 57.04%;
+			margin: 0;
+			padding: 3.3% 2.6% 3.2% 4.85%;
+			border: clamp(4px, .96vw, 14px) solid var(--moss);
+			border-radius: clamp(16px, 2.95vw, 43px);
+			background: var(--panel);
+			font-size: clamp(10px, 2.19vw, 32px);
+			line-height: 1.17;
+			letter-spacing: .05em;
+			text-align: justify;
+		}
+
+		.rules li { padding-left: .25em; }
+		.rules li + li { margin-top: 1.45em; }
+
+		.sponsors {
+			position: absolute;
+			top: 77.69%;
+			left: 0;
+			width: 100%;
+			min-height: 22.31%;
+			border-top: clamp(6px, 1.05vw, 15px) solid var(--gold);
+			padding: 3.25% 3.7% 0;
+		}
+
+		.sponsors::before {
+			content: "";
+			position: absolute;
+			top: -1px;
+			left: 0;
+			width: 100%;
+			height: 3px;
+			background: #e7b42e;
+		}
+
+		.footer-line {
+			position: absolute;
+			top: -1px;
+			left: 0;
+			width: 100%;
+			height: clamp(6px, 1.05vw, 15px);
+			object-fit: cover;
+		}
+
+		.sponsor-headings {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			width: 74%;
+			color: var(--moss);
+			font-family: Rye, Georgia, serif;
+			font-size: clamp(16px, 4.38vw, 64px);
+			line-height: 1;
+			letter-spacing: .05em;
+		}
+
+		.sponsor-headings p { margin: 0; }
+
+		.social-art {
+			position: absolute;
+			top: 34%;
+			left: 3.1%;
+			width: 59.4%;
+			height: auto;
+		}
+
+		.mountains {
+			position: absolute;
+			right: -2%;
+			bottom: -1%;
+			width: 37%;
+			height: auto;
+		}
+
+		.mountain-texture {
+			position: absolute;
+			right: 7%;
+			bottom: -1%;
+			width: 25%;
+			height: auto;
+			opacity: .82;
+		}
+
+		@media (max-width: 620px) {
+			.header { padding: 0 4%; gap: 3%; }
+			.brand { min-width: 28px; }
+			.nav { gap: 8px; font-size: 7px; overflow: hidden; }
+			.title { top: 5.43%; left: 5%; font-size: 8.2vw; }
+			.rules { top: 17.25%; left: 5%; width: 90%; padding: 4.5% 4% 4.5% 7%; font-size: 2.55vw; }
+			.rules li + li { margin-top: 1.2em; }
+			.sponsors { padding-left: 4%; }
+			.sponsor-headings { width: 96%; font-size: 4vw; }
+			.social-art { top: 36%; left: 4%; width: 75%; }
+			.mountains { width: 43%; }
+		}
+	</style>
+</head>
+<body>
+	<main class="page">
+		<div class="texture" aria-hidden="true"></div>
+
+		<header class="header">
+			<img class="brand" src="https://www.figma.com/api/mcp/asset/e84f179f-a849-421e-a360-553178cd8aed.png" alt="Lambang Limas">
+			<nav class="nav" aria-label="Navigasi utama">
+				<a href="#home">Home</a>
+				<a href="#daftar">Daftar</a>
+				<a href="#pengumuman">Pengumuman</a>
+				<a href="#contact">Contact</a>
+				<a href="#silabus">Silabus</a>
+				<a href="#buku-panduan">Buku Panduan</a>
+				<a href="#peraturan" aria-current="page">Peraturan</a>
+				<a href="#faq">FAQ</a>
+			</nav>
+		</header>
+
+		<h1 class="title">Peraturan<br>Babak Penyisihan</h1>
+
+		<ol class="rules" id="peraturan">
+			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+		</ol>
+
+		<footer class="sponsors">
+			<img class="footer-line" src="https://www.figma.com/api/mcp/asset/e5f477f9-db86-4d23-b87c-d7521b6f94c7.png" alt="">
+			<div class="sponsor-headings">
+				<p>Sponsored by:</p>
+				<p>Media Partner:</p>
+			</div>
+			<img class="social-art" src="https://www.figma.com/api/mcp/asset/073cc7f9-a0b9-4958-aaf9-256138ec2db8.svg" alt="Lambang dan media sosial Limas">
+			<img class="mountain-texture" src="https://www.figma.com/api/mcp/asset/baf4b450-c3a4-4945-8e6d-43fb5678dad8.png" alt="">
+			<img class="mountains" src="https://www.figma.com/api/mcp/asset/97793768-f127-458c-ac12-8477b8625486.svg" alt="Ilustrasi pegunungan">
+		</footer>
+	</main>
+</body>
 </html>
