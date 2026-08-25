@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buku Panduan</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Montserrat:wght@400;500;600;700&display=swap');
+
+      :root {
+        --paper: #f1d680;
+        --paper-dark: #e3c75d;
+        --olive: #3e5626;
+        --olive-dark: #284118;
+        --olive-deep: #1e3214;
+        --gold-1: #fadf82;
+        --gold-2: #d4af3a;
+        --green-soft: #1b4d2b;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--paper);
+        color: #fff;
+        font-family: Georgia, 'Times New Roman', serif;
+      }
+
+      body {
+        position: relative;
+        overflow-x: hidden;
+        background:
+          linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.05)),
+          linear-gradient(180deg, #f3d275 0%, #e4c96d 100%);
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        background-repeat: repeat;
+        background-size: 100% 100%;
+        opacity: 0.22;
+      }
+
+      body::before {
+        background-image: url('https://www.figma.com/api/mcp/asset/4b9dd065-6986-4131-9cb4-b0b14151138c.png');
+        transform: scaleY(1)
+          rotate(0deg);
+      }
+
+      body::after {
+        background-image: url('https://www.figma.com/api/mcp/asset/4b9dd065-6986-4131-9cb4-b0b14151138c.png');
+        transform: scaleY(-1) rotate(90deg);
+        opacity: 0.18;
+      }
+
+      .page {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+      }
+
+      .topbar {
+        position: relative;
+        height: 112px;
+        background: linear-gradient(180deg, var(--olive) 0%, #2d4d1f 100%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      }
+
+      .topbar-inner {
+        position: relative;
+        max-width: 1463px;
+        height: 100%;
+        margin: 0 auto;
+      }
+
+      .nav {
+        position: absolute;
+        left: 327px;
+        top: 38px;
+        display: flex;
+        gap: 30px;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 24px;
+        font-weight: 500;
+        color: rgba(255,255,255,0.96);
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+      }
+
+      .nav a {
+        color: inherit;
+        text-decoration: none;
+        font-size: 24px;
+      }
+
+      .brand-logo {
+        position: absolute;
+        left: 0;
+        top: 19px;
+        width: 72px;
+        height: 74px;
+        display: block;
+      }
+
+      .brand-logo img {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .hero {
+        position: relative;
+        padding-top: 65px;
+      }
+
+      .title {
+        margin: 0;
+        text-align: center;
+        font-size: clamp(74px, 9vw, 150px);
+        line-height: 1;
+        letter-spacing: 7.5px;
+        color: rgba(62, 85, 38, 0.98);
+        font-weight: 400;
+        font-family: 'Cinzel', Georgia, serif;
+        text-shadow: 0 0 1px rgba(0,0,0,0.1);
+      }
+
+      .cover-wrap {
+        position: relative;
+        width: min(940px, calc(100vw - 80px));
+        height: 1329px;
+        margin: 26px auto 0;
+        filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+      }
+
+      .cover-glow {
+        position: absolute;
+        inset: 8px 0 0 0;
+        background: rgba(62, 86, 38, 0.72);
+        filter: blur(35px);
+        z-index: 0;
+      }
+
+      .cover-image {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        filter: contrast(1.02);
+      }
+
+      .footer-card {
+        position: relative;
+        width: min(1449px, calc(100vw - 40px));
+        height: 554px;
+        margin: 0 auto;
+        margin-top: 35px;
+        border-radius: 30px;
+        background: rgba(62, 86, 38, 0.85);
+        overflow: hidden;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      }
+
+      .footer-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('https://www.figma.com/api/mcp/asset/d833c72b-b898-4695-bb16-99ae3bfbea57.png') center center / cover no-repeat;
+        opacity: 0.7;
+      }
+
+      .footer-card::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        transform: translateX(-50%);
+        background: rgba(255,255,255,0.5);
+      }
+
+      .footer-inner {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        height: 100%;
+      }
+
+      .footer-section {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px 20px;
+      }
+
+      .footer-label {
+        margin: 0 0 28px;
+        font-family: 'Cinzel', Georgia, serif;
+        font-size: clamp(30px, 3vw, 45px);
+        line-height: 1;
+        background: linear-gradient(180deg, #fce58a 0%, #d8b643 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        letter-spacing: 0.04em;
+      }
+
+      .socials {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 28px;
+        width: min(100%, 500px);
+      }
+
+      .social-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255,255,255,0.92);
+        font-size: 13px;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .social-item img {
+        width: 26px;
+        height: 26px;
+        object-fit: contain;
+        display: block;
+      }
+
+      .social-item .text {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-family: 'Montserrat', sans-serif;
+      }
+
+      @media (max-width: 1000px) {
+        .nav {
+          left: 180px;
+          gap: 18px;
+          font-size: 18px;
+        }
+
+        .nav a {
+          font-size: 18px;
+        }
+
+        .cover-wrap {
+          height: 900px;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .topbar {
+          height: 160px;
+        }
+
+        .topbar-inner {
+          padding: 18px 16px 0;
+        }
+
+        .brand-logo {
+          left: 16px;
+          top: 18px;
+          width: 52px;
+          height: 52px;
+        }
+
+        .nav {
+          position: static;
+          padding-top: 80px;
+          justify-content: center;
+          gap: 12px 18px;
+          flex-wrap: wrap;
+          font-size: 14px;
+          text-align: center;
+        }
+
+        .nav a {
+          font-size: 14px;
+        }
+
+        .title {
+          letter-spacing: 4px;
+        }
+
+        .cover-wrap {
+          width: min(100% - 28px, 620px);
+          height: 580px;
+        }
+
+        .footer-card {
+          width: min(100% - 18px, 500px);
+          height: auto;
+          border-radius: 18px;
+        }
+
+        .footer-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-card::after {
+          left: 50%;
+          top: auto;
+          bottom: 0;
+          width: 100%;
+          height: 2px;
+          transform: translateX(-50%);
+        }
+
+        .socials {
+          grid-template-columns: 1fr;
+          width: min(100%, 260px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="brand-logo">
+            <img src="https://www.figma.com/api/mcp/asset/3c646fc6-3311-4492-adff-51cc3924881f.png" alt="LMNAS Logo" />
+          </div>
+
+          <nav class="nav" aria-label="Main navigation">
+            <a href="#">Home</a>
+            <a href="#">Daftar</a>
+            <a href="#">Pengumuman</a>
+            <a href="#">Contact</a>
+            <a href="#">Silabus</a>
+            <a href="#">Buku Panduan</a>
+            <a href="#">Peraturan</a>
+            <a href="#">FAQ</a>
+          </nav>
+        </div>
+      </header>
+
+      <main class="hero">
+        <h1 class="title">Buku Panduan</h1>
+
+        <div class="cover-wrap" aria-label="Buku Panduan cover">
+          <div class="cover-glow"></div>
+          <img class="cover-image" src="https://www.figma.com/api/mcp/asset/cfb1ae40-57bf-4102-bdb5-fb6a185e7265.png" alt="Buku Panduan cover" />
+        </div>
+      </main>
+
+      <footer class="footer-card" aria-label="Media partner and mitra">
+        <div class="footer-inner">
+          <section class="footer-section">
+            <h2 class="footer-label">Media Partner</h2>
+            <div class="socials">
+              <div class="social-item">
+                <img src="https://www.figma.com/api/mcp/asset/cde1a42b-00a9-4669-bd30-984e42b98725.svg" alt="social icon" />
+                <span class="text">@LMNAS DAN SOMNISTIA</span>
+              </div>
+              <div class="social-item">
+                <img src="https://www.figma.com/api/mcp/asset/cd8d354a-f989-4a1d-8d26-e71a1953f3be.svg" alt="social icon" />
+                <span class="text">@LMNAS.SEMNAS</span>
+              </div>
+              <div class="social-item">
+                <img src="https://www.figma.com/api/mcp/asset/8d55eb48-e9d9-4565-ae9c-6f0d89e54f14.svg" alt="social icon" />
+                <span class="text">@LMNAS. SEMNAS</span>
+              </div>
+              <div class="social-item">
+                <img src="https://www.figma.com/api/mcp/asset/6b3cf6e7-ead4-48cb-b590-1ceffdd2b665.svg" alt="social icon" />
+                <span class="text">@LMNAS.SEMNAS</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="footer-section">
+            <h2 class="footer-label">Mitra</h2>
+            <div class="socials">
+              <div class="social-item">
+                <img src="https://www.figma.com/api/mcp/asset/cde1a42b-00a9-4669-bd30-984e42b98725.svg" alt="social icon" />
+                <span class="text">@LMNAS.SEMNAS</span>
+              </div>
+              <div class="social-item">
+                <img src="https://www.figma.com/api/mcp/asset/cd8d354a-f989-4a1d-8d26-e71a1953f3be.svg" alt="social icon" />
+                <span class="text">@LMNAS.SEMNAS</span>
+              </div>
+              <div class="social-item">
+                <img src="https://www.figma.com/api/mcp/asset/8d55eb48-e9d9-4565-ae9c-6f0d89e54f14.svg" alt="social icon" />
+                <span class="text">@LMNAS. SEMNAS</span>
+              </div>
+              <div class="social-item">
+                <img src="https://www.figma.com/api/mcp/asset/6b3cf6e7-ead4-48cb-b590-1ceffdd2b665.svg" alt="social icon" />
+                <span class="text">@LMNAS.SEMNAS</span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
