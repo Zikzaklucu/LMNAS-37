@@ -1,0 +1,115 @@
+.peraturan-main {
+  position: relative;
+  min-height: 2604px;
+  overflow: hidden;
+}
+
+.peraturan-inner {
+  width: min(100%, 1449px);
+  margin-inline: auto;
+  padding-top: 112px;
+}
+
+.peraturan-main h1 {
+  width: min(956px, calc(100% - 10.08%));
+  margin: 0 0 21px 5.04%;
+  color: #3e5526;
+  font-family: var(--display);
+  font-size: 128px;
+  font-weight: 400;
+  letter-spacing: .05em;
+  line-height: 1.414;
+  white-space: nowrap;
+}
+
+.rules-card {
+  width: min(1165px, calc(100% - 18.91%));
+  min-height: 1848px;
+  margin: 0 auto;
+  padding: 36px 54px 48px 92px;
+  border: 14px solid var(--green);
+  border-radius: 43px;
+  color: #000;
+  background: var(--cream);
+  font-size: 32px;
+  letter-spacing: .05em;
+  line-height: 1.2;
+  text-align: justify;
+}
+
+.rules-card li {
+  padding-left: 4px;
+}
+
+.rules-card li + li {
+  margin-top: 14px;
+}
+
+@media (max-width: 1200px) {
+  .peraturan-main {
+    min-height: 0;
+    padding-bottom: 150px;
+  }
+
+  .peraturan-inner {
+    padding-top: clamp(64px, 9vw, 96px);
+  }
+
+  .peraturan-main h1 {
+    width: calc(100% - 72px);
+    margin: 0 0 46px 36px;
+    font-size: clamp(72px, 10vw, 112px);
+    line-height: 1.15;
+    white-space: normal;
+  }
+
+  .rules-card {
+    width: calc(100% - 72px);
+    min-height: 0;
+    padding: 44px 46px 60px 82px;
+    border-width: 10px;
+    border-radius: 34px;
+    font-size: clamp(20px, 2.5vw, 30px);
+    line-height: 1.35;
+  }
+
+  .rules-card li + li {
+    margin-top: 1.35em;
+  }
+}
+
+@media (max-width: 640px) {
+  .peraturan-main {
+    padding-bottom: 86px;
+  }
+
+  .peraturan-inner {
+    padding-top: 54px;
+  }
+
+  .peraturan-main h1 {
+    width: calc(100% - 36px);
+    margin: 0 0 34px 18px;
+    font-size: clamp(47px, 14vw, 70px);
+    line-height: 1.18;
+  }
+
+  .rules-card {
+    width: calc(100% - 36px);
+    padding: 28px 20px 36px 48px;
+    border-width: 6px;
+    border-radius: 24px;
+    font-size: clamp(15px, 4.35vw, 18px);
+    letter-spacing: .025em;
+    line-height: 1.48;
+    text-align: left;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peraturan-main *,
+  .peraturan-main *::before,
+  .peraturan-main *::after {
+    scroll-behavior: auto !important;
+  }
+}

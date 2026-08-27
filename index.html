@@ -1,245 +1,235 @@
 <!doctype html>
 <html lang="id">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Peraturan Babak Penyisihan</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&family=Rye&display=swap" rel="stylesheet">
-	<style>
-		:root {
-			--moss: #3e5626;
-			--paper: #f3d275;
-			--panel: #fadc9a;
-			--gold: #b47c00;
-			--page-width: min(100vw, 1463px);
-		}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="LMNAS 37 dan Semnastika 18 — kompetisi matematika nasional." />
+    <meta name="theme-color" content="#3e5626" />
+    <link rel="canonical" href="https://lmnas.fmipa.ugm.ac.id/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:title" content="LMNAS 37 / Semnastika 18" />
+    <meta property="og:description" content="Kompetisi matematika nasional untuk pelajar SMP dan SMA/sederajat dari seluruh Indonesia." />
+    <meta property="og:url" content="https://lmnas.fmipa.ugm.ac.id/" />
+    <meta property="og:image" content="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/header-logo-bar.png" />
+    <meta property="og:image:width" content="933" />
+    <meta property="og:image:height" content="218" />
+    <meta property="og:image:alt" content="Logo Universitas Gadjah Mada, HIMATIKA, LMNAS 37, dan Semnastika 18" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LMNAS 37 / Semnastika 18" />
+    <meta name="twitter:description" content="Kompetisi matematika nasional untuk pelajar SMP dan SMA/sederajat dari seluruh Indonesia." />
+    <meta name="twitter:image" content="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/header-logo-bar.png" />
+    <meta name="twitter:image:alt" content="Logo Universitas Gadjah Mada, HIMATIKA, LMNAS 37, dan Semnastika 18" />
+    <title>LMNAS 37 / Semnastika 18</title>
+    <link rel="icon" href="Assets/figma/nav-mark-216.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css?v=90" />
+    <script src="site-config.js?v=1" defer></script>
+    <script src="countdown.js?v=4" defer></script>
+    <script src="script.js?v=9" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
 
-		* { box-sizing: border-box; }
+    <header class="site-header">
+      <a class="brand-mark" href="#home" aria-label="LMNAS 37">
+        <img src="Assets/figma/nav-mark-216.png" alt="" />
+      </a>
+      <nav aria-label="Navigasi utama">
+        <a href="#home">Home</a>
+        <a href="buku-panduan/">Buku Panduan</a>
+        <a href="peraturan/">Peraturan</a>
+        <a href="faq/">FAQ</a>
+      </nav>
+    </header>
 
-		html {
-			background: var(--paper);
-			overflow-x: hidden;
-		}
+    <main id="main-content">
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <img class="hero-art" src="Assets/figma/hero-expedition.svg" alt="" aria-hidden="true" />
+        <img class="hero-mascot" src="Assets/figma/expedition-mascot.png" alt="" aria-hidden="true" />
+        <img class="hero-flowers" src="Assets/figma/hero-flowers.svg" alt="" aria-hidden="true" />
+        <img class="hero-wood-divider" src="Assets/figma/hero-wood-divider.png" alt="" aria-hidden="true" />
+        <div class="hero-copy">
+          <p>Selamat Datang</p>
+          <h1 id="hero-title">LMNAS 37</h1>
+          <p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br />to Broader Thinking and Limitless Potential”</p>
+          <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>Daftar</a>
+        </div>
+      </section>
 
-		body {
-			margin: 0;
-			color: #0d0d0b;
-			font-family: Montserrat, sans-serif;
-			font-weight: 500;
-		}
+      <section class="countdown-section" aria-labelledby="countdown-title">
+        <img class="countdown-scene" src="Assets/figma/hero-expedition.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <img class="countdown-art" src="Assets/figma/countdown-vines.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="countdown-copy">
+          <p class="section-kicker">Menuju</p>
+          <h2 id="countdown-title">Registrasi Gelombang I</h2>
+          <p class="countdown-value" role="timer" aria-atomic="true" aria-label="Menghitung waktu menuju Registrasi Gelombang I" data-countdown-label="Registrasi Gelombang I" data-countdown-target="2026-09-01T00:00:00+07:00">0:00:00:00</p>
+        </div>
+      </section>
 
-		.page {
-			position: relative;
-			width: var(--page-width);
-			min-height: calc(var(--page-width) * 2.21599);
-			overflow: hidden;
-			background: var(--paper);
-			isolation: isolate;
-		}
+      <section class="why-section" aria-labelledby="why-title">
+        <img class="why-art" src="Assets/figma/section-foliage.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="section-inner">
+          <h2 class="section-title" id="why-title">Kenapa LMNas?</h2>
+          <div class="cream-card why-card">
+            <p>LMNas UGM merupakan kompetisi matematika tingkat nasional yang diselenggarakan oleh Himpunan Mahasiswa Matematika UGM. Ajang ini memberi ruang bagi pelajar SMP dan SMA/sederajat dari seluruh Indonesia untuk mengasah penalaran matematis, sportivitas, dan semangat berkompetisi. Melalui rangkaian babak yang terstruktur, peserta dapat belajar, menguji kemampuan, dan bertemu dengan talenta matematika dari berbagai daerah.</p>
+          </div>
+        </div>
+      </section>
 
-		.texture {
-			position: absolute;
-			z-index: -1;
-			inset: 0;
-			width: 100%;
-			height: 100%;
-			background-image: url("https://www.figma.com/api/mcp/asset/b8fdf16b-ae64-45dd-80c9-6e1ce1f540da.png");
-			background-size: cover;
-			background-position: center;
-			mix-blend-mode: color-burn;
-			opacity: .13;
-			transform: rotate(90deg) scale(1.35);
-		}
+      <section class="timeline-section" id="peta-waktu" aria-labelledby="timeline-title">
+        <img class="timeline-monkey" src="Assets/figma/timeline-monkey.svg?v=2" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="timeline-inner">
+          <div class="timeline-board">
+            <h2 id="timeline-title">LINIMASA</h2>
+            <p>LMNas 37</p>
+          </div>
+          <ol class="timeline-list">
+            <li class="timeline-entry timeline-entry--right" data-phase-key="registration-one" data-phase-start="2026-09-01T00:00:00+07:00" data-phase-end="2026-09-12T23:59:59+07:00">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div><h3>Registrasi Gelombang I</h3><time datetime="2026-09-01">1–12 September 2026</time><span class="timeline-status">Akan datang</span></div>
+            </li>
+            <li class="timeline-entry timeline-entry--left" data-phase-key="registration-two" data-phase-start="2026-09-13T00:00:00+07:00" data-phase-end="2026-09-26T23:59:59+07:00">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div><h3>Registrasi Gelombang II</h3><time datetime="2026-09-13">13–26 September 2026</time><span class="timeline-status">Akan datang</span></div>
+            </li>
+            <li class="timeline-entry timeline-entry--right" data-phase-key="preliminary" data-phase-start="2026-10-24T00:00:00+07:00" data-phase-end="2026-10-24T23:59:59+07:00">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div><h3>Babak Penyisihan</h3><time datetime="2026-10-24">24 Oktober 2026</time><span class="timeline-status">Akan datang</span></div>
+            </li>
+            <li class="timeline-entry timeline-entry--left" data-phase-key="finals" data-phase-start="2026-11-14T00:00:00+07:00" data-phase-end="2026-11-15T23:59:59+07:00">
+              <span class="timeline-dot" aria-hidden="true"></span>
+              <div><h3>Babak Semifinal, Final,<br />dan Grandfinal</h3><time datetime="2026-11-14">14–15 November 2026</time><span class="timeline-status">Akan datang</span></div>
+            </li>
+          </ol>
+        </div>
+      </section>
 
-		.header {
-			position: absolute;
-			inset: 0 0 auto;
-			height: 3.46%;
-			min-height: 0;
-			background: var(--moss);
-			display: flex;
-			align-items: center;
-			padding: 0 5.2%;
-			gap: 5%;
-			color: #fff;
-			box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
-		}
+      <section class="prize-section" aria-labelledby="hadiah">
+        <img class="timeline-tree" src="Assets/figma/timeline-tree.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="section-inner">
+          <h2 class="section-title" id="hadiah">Kenapa Layak Diikuti?</h2>
+          <div class="cream-card prize-card">
+            <p class="prize-heading prize-heading--total">Total Hadiah</p>
+            <p class="prize-amount">Rp38.000.000,00</p>
+            <p class="prize-extras">+ Medali, Sertifikat, dan Piala Bergilir</p>
+            <p class="prize-heading prize-heading--second">Beserta</p>
+            <p class="prize-promo-title">Promo Pendaftaran</p>
+            <div class="prize-benefits">
+              <div class="prize-benefit">
+                <img src="Assets/figma/prize-book.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <p><strong>Gratis Buku Soal dan Pembahasan LMNas 36</strong> untuk <strong>5 pendaftar pertama</strong> pada setiap jenjang.*</p>
+              </div>
+              <div class="prize-benefit">
+                <img src="Assets/figma/prize-group.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <p><strong>Daftar 6, Bayar 5</strong> untuk pendaftaran kolektif dari sekolah yang sama.**</p>
+              </div>
+              <small>*Berlaku bagi peserta yang telah menyelesaikan seluruh proses pendaftaran hingga berhasil mengunduh kartu peserta.<br />** Berlaku kelipatan.</small>
+            </div>
+          </div>
+        </div>
+      </section>
 
-		.brand {
-			width: 5%;
-			min-width: 38px;
-			aspect-ratio: 72 / 74;
-			object-fit: contain;
-			filter: drop-shadow(0 3px 2px rgb(0 0 0 / 25%));
-		}
+      <section class="testimonial-section" id="testimonial" aria-labelledby="testimonial-title">
+        <img class="testimonial-art" src="Assets/figma/testimonial-foliage.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="section-inner">
+          <h2 class="section-title" id="testimonial-title">Kata Mereka</h2>
+          <div class="testimonial-carousel" data-testimonial-carousel role="region" aria-roledescription="carousel" aria-labelledby="testimonial-title">
+            <p class="visually-hidden" data-carousel-status aria-live="polite">Slide 1 dari 3</p>
+            <div class="testimonial-viewport" data-carousel-viewport>
+              <div class="testimonial-track" data-carousel-track>
+                <article class="testimonial-slide" data-carousel-slide></article>
+                <article class="testimonial-slide" data-carousel-slide></article>
+                <article class="testimonial-slide" data-carousel-slide></article>
+              </div>
+            </div>
+            <div class="testimonial-controls">
+              <button class="testimonial-arrow" type="button" data-carousel-prev aria-label="Testimoni sebelumnya"></button>
+              <div class="testimonial-dots" role="group" aria-label="Pilih testimoni">
+                <button type="button" data-carousel-dot="0" aria-label="Testimoni 1" aria-current="true"></button>
+                <button type="button" data-carousel-dot="1" aria-label="Testimoni 2"></button>
+                <button type="button" data-carousel-dot="2" aria-label="Testimoni 3"></button>
+              </div>
+              <button class="testimonial-arrow" type="button" data-carousel-next aria-label="Testimoni berikutnya"></button>
+            </div>
+          </div>
+        </div>
+      </section>
 
-		.nav {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex: 1;
-			gap: clamp(10px, 2.05vw, 30px);
-			white-space: nowrap;
-			font-size: clamp(8px, 1.64vw, 24px);
-			text-shadow: 0 0 4px rgb(0 0 0 / 25%);
-		}
+      <section class="flow-section" id="alur" aria-labelledby="flow-title">
+        <img class="flow-heading-art" src="Assets/figma/flow-heading-foliage.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="section-inner">
+          <h2 class="section-title" id="flow-title">Alur Pendaftaran</h2>
+          <figure class="video-card">
+            <img src="Assets/figma/registration-video.png" alt="Video alur pendaftaran LMNAS 37" loading="lazy" decoding="async" />
+          </figure>
+        </div>
+      </section>
 
-		.nav a { color: inherit; text-decoration: none; }
-		.nav a:hover, .nav a[aria-current="page"] { color: #fadc9a; }
+      <section class="registration-section" id="pendaftaran" aria-labelledby="registration-title">
+        <img class="registration-tree" src="Assets/figma/registration-tree.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="section-inner">
+          <p class="registration-kicker">Tunggu Apa lagi?</p>
+          <h2 class="registration-title" id="registration-title">Daftar Sekarang!</h2>
+          <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>Daftar</a>
+          <div class="book-promo" aria-labelledby="book-promo-title">
+            <div class="book-promo-copy">
+              <h3 id="book-promo-title">
+                <span class="visually-hidden">Buku Pembahasan Soal LMNas 36</span>
+                <img class="book-title-line book-title-line--one" src="Assets/figma/book-title-line-1.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                <img class="book-title-line book-title-line--two" src="Assets/figma/book-title-line-2.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              </h3>
+              <p><span class="visually-hidden">Beli Disini :</span><img class="book-store-label" src="Assets/figma/book-store-label.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" /></p>
+              <div class="book-stores" aria-label="Toko buku pembahasan LMNas 36">
+                <a href="https://shopee.co.id/lmnasstore" target="_blank" rel="noopener noreferrer" aria-label="Beli buku pembahasan LMNas 36 di Shopee">
+                  <img src="Assets/figma/book-store-shopee.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                </a>
+                <a href="https://www.tokopedia.com/lmnas-semnas" target="_blank" rel="noopener noreferrer" aria-label="Beli buku pembahasan LMNas 36 di Tokopedia">
+                  <img src="Assets/figma/book-store-tokopedia.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+                </a>
+              </div>
+            </div>
+            <div class="book-covers" aria-hidden="true">
+              <img src="Assets/figma/book-lmnas-blue.png" alt="" loading="lazy" decoding="async" />
+              <img src="Assets/figma/book-lmnas-red.png" alt="" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
+      </section>
 
-		.title {
-			position: absolute;
-			top: 5.43%;
-			left: 5.6%;
-			margin: 0;
-			color: var(--moss);
-			font-family: Rye, Georgia, serif;
-			font-size: clamp(42px, 8.75vw, 128px);
-			font-weight: 400;
-			line-height: 1.12;
-			letter-spacing: .05em;
-		}
+      <section class="contact-section" id="kontak" aria-labelledby="contact-title">
+        <img class="contact-tree" src="Assets/figma/contact-tree.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="section-inner contact-inner">
+          <h2 class="section-title" id="contact-title">Ada Pertanyaan?</h2>
+          <span class="faq-label">Narahubung</span>
+          <p>SMP: Flavia (<a href="tel:+6285113291516">0851 1329 1516</a>)</p>
+          <p>SMA: Fatiya (<a href="tel:+6285173085643">0851 7308 5643</a>)</p>
+        </div>
+      </section>
+    </main>
 
-		.rules {
-			position: absolute;
-			top: 17.25%;
-			left: 3.05%;
-			width: 79.63%;
-			min-height: 57.04%;
-			margin: 0;
-			padding: 3.3% 2.6% 3.2% 4.85%;
-			border: clamp(4px, .96vw, 14px) solid var(--moss);
-			border-radius: clamp(16px, 2.95vw, 43px);
-			background: var(--panel);
-			font-size: clamp(10px, 2.19vw, 32px);
-			line-height: 1.17;
-			letter-spacing: .05em;
-			text-align: justify;
-		}
-
-		.rules li { padding-left: .25em; }
-		.rules li + li { margin-top: 1.45em; }
-
-		.sponsors {
-			position: absolute;
-			top: 77.69%;
-			left: 0;
-			width: 100%;
-			min-height: 22.31%;
-			border-top: clamp(6px, 1.05vw, 15px) solid var(--gold);
-			padding: 3.25% 3.7% 0;
-		}
-
-		.sponsors::before {
-			content: "";
-			position: absolute;
-			top: -1px;
-			left: 0;
-			width: 100%;
-			height: 3px;
-			background: #e7b42e;
-		}
-
-		.footer-line {
-			position: absolute;
-			top: -1px;
-			left: 0;
-			width: 100%;
-			height: clamp(6px, 1.05vw, 15px);
-			object-fit: cover;
-		}
-
-		.sponsor-headings {
-			display: grid;
-			grid-template-columns: 1fr 1fr;
-			width: 74%;
-			color: var(--moss);
-			font-family: Rye, Georgia, serif;
-			font-size: clamp(16px, 4.38vw, 64px);
-			line-height: 1;
-			letter-spacing: .05em;
-		}
-
-		.sponsor-headings p { margin: 0; }
-
-		.social-art {
-			position: absolute;
-			top: 34%;
-			left: 3.1%;
-			width: 59.4%;
-			height: auto;
-		}
-
-		.mountains {
-			position: absolute;
-			right: -2%;
-			bottom: -1%;
-			width: 37%;
-			height: auto;
-		}
-
-		.mountain-texture {
-			position: absolute;
-			right: 7%;
-			bottom: -1%;
-			width: 25%;
-			height: auto;
-			opacity: .82;
-		}
-
-		@media (max-width: 620px) {
-			.header { padding: 0 4%; gap: 3%; }
-			.brand { min-width: 28px; }
-			.nav { gap: 8px; font-size: 7px; overflow: hidden; }
-			.title { top: 5.43%; left: 5%; font-size: 8.2vw; }
-			.rules { top: 17.25%; left: 5%; width: 90%; padding: 4.5% 4% 4.5% 7%; font-size: 2.55vw; }
-			.rules li + li { margin-top: 1.2em; }
-			.sponsors { padding-left: 4%; }
-			.sponsor-headings { width: 96%; font-size: 4vw; }
-			.social-art { top: 36%; left: 4%; width: 75%; }
-			.mountains { width: 43%; }
-		}
-	</style>
-</head>
-<body>
-	<main class="page">
-		<div class="texture" aria-hidden="true"></div>
-
-		<header class="header">
-			<img class="brand" src="https://www.figma.com/api/mcp/asset/e84f179f-a849-421e-a360-553178cd8aed.png" alt="Lambang Limas">
-			<nav class="nav" aria-label="Navigasi utama">
-				<a href="#home">Home</a>
-				<a href="#daftar">Daftar</a>
-				<a href="#pengumuman">Pengumuman</a>
-				<a href="#contact">Contact</a>
-				<a href="#silabus">Silabus</a>
-				<a href="#buku-panduan">Buku Panduan</a>
-				<a href="#peraturan" aria-current="page">Peraturan</a>
-				<a href="#faq">FAQ</a>
-			</nav>
-		</header>
-
-		<h1 class="title">Peraturan<br>Babak Penyisihan</h1>
-
-		<ol class="rules" id="peraturan">
-			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
-			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
-			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
-			<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
-		</ol>
-
-		<footer class="sponsors">
-			<img class="footer-line" src="https://www.figma.com/api/mcp/asset/e5f477f9-db86-4d23-b87c-d7521b6f94c7.png" alt="">
-			<div class="sponsor-headings">
-				<p>Sponsored by:</p>
-				<p>Media Partner:</p>
-			</div>
-			<img class="social-art" src="https://www.figma.com/api/mcp/asset/073cc7f9-a0b9-4958-aaf9-256138ec2db8.svg" alt="Lambang dan media sosial Limas">
-			<img class="mountain-texture" src="https://www.figma.com/api/mcp/asset/baf4b450-c3a4-4945-8e6d-43fb5678dad8.png" alt="">
-			<img class="mountains" src="https://www.figma.com/api/mcp/asset/97793768-f127-458c-ac12-8477b8625486.svg" alt="Ilustrasi pegunungan">
-		</footer>
-	</main>
-</body>
+    <footer class="footer" aria-label="Media partner, mitra, dan kanal resmi">
+      <div class="footer-stage">
+        <img class="footer-visual" src="Assets/figma/footer-panel-divider-home3.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <div class="footer-placeholders">
+          <section class="footer-placeholder footer-placeholder--media">
+            <h2 class="footer-heading footer-heading--media">Media Partner</h2>
+          </section>
+          <section class="footer-placeholder footer-placeholder--partner">
+            <h2 class="footer-heading footer-heading--partner">Mitra</h2>
+          </section>
+        </div>
+        <div class="footer-socials" aria-label="Kanal resmi LMNAS dan Semnastika UGM">
+          <img class="footer-socials-art" src="Assets/figma/footer-socials-home3.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+          <a href="https://www.facebook.com/lombamatematika/" class="footer-social footer-social--facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook LMNas dan Semnastika UGM"><span>LMNAS DAN SEMNASTIKA UGM</span></a>
+          <a href="https://www.instagram.com/lmnas_semnas/" class="footer-social footer-social--instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
+          <a href="https://www.youtube.com/@lmnas_semnas" class="footer-social footer-social--youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube LMNas dan Semnastika UGM"><span>@LMNAS &amp; SEMNASTIKA UGM</span></a>
+          <a href="https://x.com/lmnas_semnas" class="footer-social footer-social--x" target="_blank" rel="noopener noreferrer" aria-label="X LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
+          <a href="https://www.tiktok.com/@lmnas_semnas" class="footer-social footer-social--tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>
