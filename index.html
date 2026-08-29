@@ -25,7 +25,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css?v=90" />
+    <link rel="stylesheet" href="style.css?v=92" />
+    <script src="navigation.js?v=1" defer></script>
     <script src="site-config.js?v=1" defer></script>
     <script src="countdown.js?v=4" defer></script>
     <script src="script.js?v=9" defer></script>
@@ -37,7 +38,11 @@
       <a class="brand-mark" href="#home" aria-label="LMNAS 37">
         <img src="Assets/figma/nav-mark-216.png" alt="" />
       </a>
-      <nav aria-label="Navigasi utama">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+        <span>Menu</span>
+        <span class="nav-toggle-icon" aria-hidden="true"></span>
+      </button>
+      <nav id="primary-navigation" aria-label="Navigasi utama">
         <a href="#home">Home</a>
         <a href="buku-panduan/">Buku Panduan</a>
         <a href="peraturan/">Peraturan</a>

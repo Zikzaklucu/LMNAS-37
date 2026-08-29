@@ -7,7 +7,8 @@
     <meta name="theme-color" content="#3e5626" />
     <title>Buku Panduan LMNas 37</title>
     <link rel="icon" href="../Assets/figma/nav-mark-216.png" type="image/png" />
-    <link rel="stylesheet" href="style.css?v=4" />
+    <link rel="stylesheet" href="style.css?v=6" />
+    <script src="../navigation.js?v=1" defer></script>
     <script src="script.js?v=2" defer></script>
   </head>
   <body>
@@ -17,7 +18,11 @@
       <a class="brand-mark" href="../index.html#home" aria-label="LMNAS 37">
         <img src="../Assets/figma/nav-mark-216.png" alt="" />
       </a>
-      <nav aria-label="Navigasi utama">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+        <span>Menu</span>
+        <span class="nav-toggle-icon" aria-hidden="true"></span>
+      </button>
+      <nav id="primary-navigation" aria-label="Navigasi utama">
         <a href="../index.html#home">Home</a>
         <a href="./" aria-current="page">Buku Panduan</a>
         <a href="../peraturan/">Peraturan</a>

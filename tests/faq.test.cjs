@@ -11,10 +11,8 @@ const html = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const css = fs.readFileSync(path.join(root, "faq.css"), "utf8");
 const script = fs.readFileSync(path.join(root, "faq.js"), "utf8");
 const mainHtml = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
-const standaloneStylesPath = path.join(root, "site.css");
-
 const navLabels = (source) => {
-  const nav = source.match(/<nav aria-label="Navigasi utama">([\s\S]*?)<\/nav>/)?.[1] || "";
+  const nav = source.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
   return [...nav.matchAll(/<a\b[^>]*>([^<]+)<\/a>/g)].map((match) => match[1].trim());
 };
 
@@ -41,7 +39,7 @@ test("the accordion animates unknown answer heights with a CSS grid track", () =
 test("all three FAQ items are semantic, closed by default, and controllable", () => {
   assert.equal((html.match(/class="faq-card"/g) || []).length, 3);
   assert.equal((html.match(/class="faq-toggle"/g) || []).length, 3);
-  assert.equal((html.match(/aria-expanded="false"/g) || []).length, 3);
+  assert.equal((html.match(/<button class="faq-toggle"[^>]*aria-expanded="false"/g) || []).length, 3);
   assert.equal((html.match(/class="faq-answer"/g) || []).length, 3);
   assert.equal((html.match(/aria-hidden="true" inert/g) || []).length, 3);
   assert.equal((html.match(/class="faq-answer-inner"/g) || []).length, 3);
@@ -140,16 +138,11 @@ test("the FAQ reuses the main-page footer markup exactly", () => {
   assert.equal(footerMarkup(html), footerMarkup(mainHtml));
 });
 
-test("the FAQ carries a standalone snapshot of the shared site styles for deployment", () => {
-  assert.equal(fs.existsSync(standaloneStylesPath), true);
-  assert.match(html, /href="site\.css\?v=86"/);
-  assert.doesNotMatch(html, /href="\.\.\/style\.css/);
-
-  const standaloneStyles = fs.readFileSync(standaloneStylesPath, "utf8");
-  assert.match(standaloneStyles, /\.site-header \{/);
-  assert.match(standaloneStyles, /\.footer-stage \{/);
-  assert.match(standaloneStyles, /url\("\.\.\/Assets\/figma\/paper-texture\.webp"\)/);
-  assert.match(standaloneStyles, /url\("\.\.\/Assets\/fonts\/Naluka\.ttf"\)/);
+test("the FAQ loads the shared site styles before its page-specific styles", () => {
+  assert.match(html, /href="\.\.\/style\.css\?v=\d+"/);
+  assert.match(html, /href="faq\.css\?v=\d+"/);
+  assert.ok(html.indexOf('href="../style.css') < html.indexOf('href="faq.css'));
+  assert.doesNotMatch(html, /href="site\.css/);
 });
 
 test("the responsive FAQ keeps the desktop fidelity contract and a deliberate mobile flow", () => {

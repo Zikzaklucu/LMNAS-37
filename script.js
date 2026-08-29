@@ -168,7 +168,7 @@
     {
       name: "Aldan Azahwan Ikhsan",
       placement: "Juara 2 SMA",
-      photo: "Assets/figma/testimonial-aldan.jpg",
+      photo: "Assets/figma/testimonial-aldan.jpg?v=2",
       nameSize: 96,
       quoteSize: 26,
       quote: "Assalamualaikum warahmatullahi wabarakatuh. Perkenalkan, nama saya Aldan Azahwan Ikhsan. Saya sekarang bersekolah di SMA Karisma Bangsa. Saya merupakan peserta LMNas 35 dan LMNas 36, di mana di LMNas 35 saya mendapatkan medali emas di jenjang SMP, dan di LMNas 36 saya mendapatkan medali perunggu di jenjang SMA. Untuk kesan saya untuk LMNas 36 kemarin adalah itu lomba yang sangat challenging karena soalnya yang susah dan juga karena lawan-lawannya yang berat-berat. Tetapi walaupun lombanya sangat challenging, lombanya masih seru karena saya bisa ketemu banyak orang-orang keren, banyak orang-orang pintar, banyak orang-orang seru. Pesan saya untuk peserta tahun ini adalah, untuk kalian harus mempersiapkan untuk lembah ini memang secara maksimal. Tetapi walaupun kalian harus mempersiapkan secara maksimal, kalian masih harus have fun ya. I know you guys can do it. Semangat ya",

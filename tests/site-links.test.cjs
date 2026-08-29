@@ -34,7 +34,7 @@ test("the visible countdown heading matches its registration target", () => {
 });
 
 test("the navigation exposes the four approved page destinations", () => {
-  const desktopNavigation = html.match(/<nav aria-label="Navigasi utama">([\s\S]*?)<\/nav>/)?.[1] || "";
+  const desktopNavigation = html.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
 
   assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 4);
   assert.match(desktopNavigation, /<a href="#home">Home<\/a>/);

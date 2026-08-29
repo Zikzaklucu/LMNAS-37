@@ -45,8 +45,8 @@ test("the guide uses the same compact navigation as the main page", () => {
   const html = fs.readFileSync(htmlPath, "utf8");
   const mainHtml = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
   const css = fs.readFileSync(cssPath, "utf8");
-  const guideNavigation = html.match(/<nav aria-label="Navigasi utama">([\s\S]*?)<\/nav>/)?.[1] || "";
-  const mainNavigation = mainHtml.match(/<nav aria-label="Navigasi utama">([\s\S]*?)<\/nav>/)?.[1] || "";
+  const guideNavigation = html.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
+  const mainNavigation = mainHtml.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
   const labels = (navigation) => [...navigation.matchAll(/<a\b[^>]*>([^<]+)<\/a>/g)].map((match) => match[1].trim());
 
   assert.deepEqual(labels(mainNavigation), ["Home", "Buku Panduan", "Peraturan", "FAQ"]);

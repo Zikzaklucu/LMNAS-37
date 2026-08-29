@@ -149,6 +149,10 @@ a {
   color: var(--gold);
 }
 
+.nav-toggle {
+  display: none;
+}
+
 .site-header :focus-visible,
 .reader-control:focus-visible,
 .reader-zoom:focus-visible,
@@ -662,6 +666,134 @@ a {
 }
 
 @media (max-width: 640px) {
+  .site-header {
+    height: 56px;
+    padding: 0 10px;
+  }
+
+  .brand-mark {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    box-shadow: none;
+  }
+
+  .brand-mark img {
+    width: 30px;
+    height: 31px;
+    box-shadow: 0 3px 4px rgba(0, 0, 0, .25);
+  }
+
+  .site-header[data-nav-ready] .nav-toggle {
+    display: inline-flex;
+    min-width: 76px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin-left: auto;
+    padding: 0 11px;
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    color: #fffdf2;
+    background: var(--green-dark);
+    cursor: pointer;
+    font: 700 14px/1 var(--body);
+    letter-spacing: .03em;
+  }
+
+  .nav-toggle-icon,
+  .nav-toggle-icon::before,
+  .nav-toggle-icon::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    content: "";
+    transition: transform 180ms ease, opacity 180ms ease;
+  }
+
+  .nav-toggle-icon {
+    position: relative;
+  }
+
+  .nav-toggle-icon::before,
+  .nav-toggle-icon::after {
+    position: absolute;
+    left: 0;
+  }
+
+  .nav-toggle-icon::before {
+    top: -6px;
+  }
+
+  .nav-toggle-icon::after {
+    top: 6px;
+  }
+
+  .site-header[data-nav-open] .nav-toggle-icon {
+    background: transparent;
+  }
+
+  .site-header[data-nav-open] .nav-toggle-icon::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .site-header[data-nav-open] .nav-toggle-icon::after {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  .site-header > nav {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 8px;
+    left: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin: 0;
+    padding: 8px;
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    background: var(--green-dark);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .28);
+    transform-origin: top center;
+    transition: opacity 160ms ease, transform 180ms ease, visibility 180ms ease;
+  }
+
+  .site-header[data-nav-ready]:not([data-nav-open]) > nav {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px) scaleY(.96);
+  }
+
+  .site-header[data-nav-open] > nav {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .site-header nav a {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, .05);
+    font-size: 15px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .site-header nav a:hover,
+  .site-header nav a[aria-current] {
+    background: rgba(253, 220, 96, .12);
+  }
+
   .guide-footer {
     padding: 10px 8px 8px;
     background: #f3d275;
@@ -711,8 +843,10 @@ a {
     display: block;
     width: auto;
     margin: 18px 0 0;
+    padding-block: .08em .18em;
+    overflow: visible;
     font-size: clamp(27px, 8.6vw, 40px);
-    line-height: 1;
+    line-height: 1.1;
     white-space: normal;
   }
 
@@ -753,33 +887,31 @@ a {
     flex: 0 0 38px;
     place-items: center;
     border-radius: 50%;
-    color: #22530b;
-    background: #fcdd6c;
-    font-family: Arial, sans-serif;
-    font-size: 19px;
-    font-weight: 700;
-    content: "•";
+    background-color: transparent;
+    background-image: url("../Assets/figma/footer-socials-home3.svg");
+    background-repeat: no-repeat;
+    background-size: 904px 82.7px;
+    content: "";
   }
 
   .footer-social--facebook::before {
-    content: "f";
+    background-position: 0 0;
   }
 
   .footer-social--instagram::before {
-    content: "◎";
+    background-position: -378px 0;
   }
 
   .footer-social--youtube::before {
-    content: "▶";
-    font-size: 14px;
+    background-position: -658px 0;
   }
 
   .footer-social--x::before {
-    content: "X";
+    background-position: -209px -38px;
   }
 
   .footer-social--tiktok::before {
-    content: "♪";
+    background-position: -557px -45px;
   }
 
   .footer-social span {
