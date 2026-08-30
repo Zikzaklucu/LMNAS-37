@@ -1,6 +1,6 @@
 .peraturan-main {
   position: relative;
-  min-height: 2604px;
+  padding-bottom: 180px;
   overflow: hidden;
 }
 
@@ -24,30 +24,129 @@
 
 .rules-card {
   width: min(1165px, calc(100% - 18.91%));
-  min-height: 1848px;
   margin: 0 auto;
-  padding: 36px 54px 48px 92px;
+  padding: 56px 64px 72px;
   border: 14px solid var(--green);
   border-radius: 43px;
   color: #000;
   background: var(--cream);
-  font-size: 32px;
+  box-shadow: 0 20px 20px rgba(0, 0, 0, .2), 0 -12px 20px rgba(0, 0, 0, .1);
+}
+
+.rules-section h2 {
+  margin: 0 0 38px;
+  color: var(--green);
+  font-family: var(--display);
+  font-size: 58px;
+  font-weight: 400;
   letter-spacing: .05em;
-  line-height: 1.2;
-  text-align: justify;
+  line-height: 1.12;
+  text-align: center;
 }
 
-.rules-card li {
-  padding-left: 4px;
+.rules-section + .rules-section {
+  margin-top: 72px;
+  padding-top: 64px;
+  border-top: 4px dashed var(--green);
 }
 
-.rules-card li + li {
-  margin-top: 14px;
+.rules-list {
+  margin: 0;
+  padding-left: 1.55em;
+  font-size: 26px;
+  letter-spacing: .025em;
+  line-height: 1.5;
+}
+
+.rules-list > li::marker,
+.rules-sublist li::marker {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.rules-list > li {
+  padding-left: .3em;
+}
+
+.rules-list > li + li {
+  margin-top: .95em;
+}
+
+.rules-sublist {
+  margin: .7em 0 0;
+  padding-left: 1.4em;
+}
+
+.rules-sublist li {
+  padding-left: .2em;
+}
+
+.rules-sublist li + li {
+  margin-top: .35em;
+}
+
+.rules-list a {
+  color: var(--green-dark);
+  font-weight: 700;
+  text-underline-offset: .15em;
+}
+
+.rules-list a:hover {
+  text-decoration-thickness: 3px;
+}
+
+.rule-example {
+  margin: .75em 0 0;
+  padding: .8em 1em;
+  border-left: 6px solid var(--green);
+  border-radius: 0 12px 12px 0;
+  background: rgba(255, 255, 255, .3);
+}
+
+.camera-example-intro {
+  margin: 1em 0 .7em;
+  color: var(--green-dark);
+  font-weight: 700;
+}
+
+.camera-examples {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-left: -1.85em;
+}
+
+.camera-example {
+  min-width: 0;
+  margin: 0;
+}
+
+.camera-example img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border: 5px solid var(--green);
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.camera-example figcaption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35em;
+  margin-top: 10px;
+  color: #a42116;
+  font-size: .72em;
+  font-weight: 700;
+  text-align: center;
+}
+
+.camera-example--correct figcaption {
+  color: var(--green-dark);
 }
 
 @media (max-width: 1200px) {
   .peraturan-main {
-    min-height: 0;
     padding-bottom: 150px;
   }
 
@@ -65,16 +164,28 @@
 
   .rules-card {
     width: calc(100% - 72px);
-    min-height: 0;
-    padding: 44px 46px 60px 82px;
+    padding: 44px 46px 60px;
     border-width: 10px;
     border-radius: 34px;
-    font-size: clamp(20px, 2.5vw, 30px);
-    line-height: 1.35;
   }
 
-  .rules-card li + li {
-    margin-top: 1.35em;
+  .rules-section h2 {
+    margin-bottom: 32px;
+    font-size: clamp(40px, 5.4vw, 56px);
+  }
+
+  .rules-section + .rules-section {
+    margin-top: 56px;
+    padding-top: 52px;
+  }
+
+  .rules-list {
+    font-size: clamp(18px, 2.25vw, 25px);
+    line-height: 1.48;
+  }
+
+  .camera-examples {
+    margin-left: -1.6em;
   }
 }
 
@@ -96,13 +207,66 @@
 
   .rules-card {
     width: calc(100% - 36px);
-    padding: 28px 20px 36px 48px;
+    padding: 30px 20px 40px;
     border-width: 6px;
     border-radius: 24px;
+  }
+
+  .rules-section h2 {
+    margin-bottom: 26px;
+    font-size: clamp(31px, 9.2vw, 44px);
+    line-height: 1.08;
+  }
+
+  .rules-section + .rules-section {
+    margin-top: 40px;
+    padding-top: 38px;
+    border-top-width: 3px;
+  }
+
+  .rules-list {
+    padding-left: 1.35em;
     font-size: clamp(15px, 4.35vw, 18px);
-    letter-spacing: .025em;
-    line-height: 1.48;
-    text-align: left;
+    letter-spacing: .01em;
+    line-height: 1.55;
+  }
+
+  .rules-list > li {
+    padding-left: .15em;
+  }
+
+  .rules-list > li + li {
+    margin-top: 1.05em;
+  }
+
+  .rules-sublist {
+    padding-left: 1.25em;
+  }
+
+  .rule-example {
+    padding: .75em .85em;
+    border-left-width: 4px;
+  }
+
+  .camera-examples {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-left: -1.4em;
+  }
+
+  .camera-example {
+    width: min(100%, 320px);
+    margin-inline: auto;
+  }
+
+  .camera-example img {
+    border-width: 4px;
+    border-radius: 14px;
+  }
+
+  .camera-example figcaption {
+    margin-top: 8px;
+    font-size: .9em;
   }
 }
 
