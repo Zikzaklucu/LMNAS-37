@@ -58,12 +58,13 @@ test("the countdown exposes four paired lowercase unit labels", () => {
   assert.doesNotMatch(css, /\.countdown-unit-label \{[^}]*text-transform:\s*uppercase/);
 });
 
-test("the navigation exposes the four approved page destinations", () => {
+test("the navigation exposes the five approved page destinations", () => {
   const desktopNavigation = html.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
 
-  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 4);
+  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 5);
   assert.match(desktopNavigation, /<a href="#home">Home<\/a>/);
   assert.match(desktopNavigation, /<a href="buku-panduan\/">Buku Panduan<\/a>/);
+  assert.match(desktopNavigation, /<a href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus<\/a>/);
   assert.match(desktopNavigation, /<a href="peraturan\/">Peraturan<\/a>/);
   assert.match(desktopNavigation, /<a href="faq\/">FAQ<\/a>/);
 });
@@ -100,12 +101,10 @@ test("long countdown and tablet timeline have responsive containment rules", () 
   assert.match(css, /@media \(min-width: 561px\) and \(max-width: 640px\) \{[^}]*\.timeline-board h2 \{[^}]*left: 50%;[^}]*width: calc\(100% - 32px\);[^}]*transform: translateX\(-50%\);/s);
 });
 
-test("the About LMNas copy uses the approved education wording", () => {
+test("the About LMNas copy uses the approved historical and education wording", () => {
   const aboutSection = html.slice(html.indexOf('aria-labelledby="why-title"'), html.indexOf('id="peta-waktu"'));
-  assert.match(aboutSection, /SMP dan SMA atau sederajat dari seluruh Indonesia/);
-  assert.match(aboutSection, /talenta-talenta matematika dari berbagai daerah/);
-  assert.doesNotMatch(aboutSection, /SMA\/sederajat/);
-  assert.doesNotMatch(aboutSection, /(?<!-)talenta matematika/);
+  const aboutCopy = aboutSection.match(/<p>([^<]+)<\/p>/)?.[1];
+  assert.equal(aboutCopy, "Lomba Matematika Nasional Universitas Gadjah Mada (LMNas UGM) adalah salah satu kompetisi matematika tingkat nasional paling bergengsi di Indonesia yang diinisiasi oleh (Alm) Prof. Dr. rer. nat. Widodo, M.S. pada tahun 1989. Diselenggarakan oleh Himpunan Mahasiswa Matematika (Himatika) UGM, LMNas menjadi ajang kompetisi bernilai tinggi yang diikuti oleh lebih dari 2000 peserta setiap tahunnya dari seluruh penjuru Indonesia. LMNas memberikan kesempatan emas bagi seluruh siswa jenjang SD, SMP, dan SMA atau sederajat untuk menguji kemampuan, mengukir prestasi, dan mengasah potensi matematika mereka di skala nasional.");
   assert.match(html, /og:description[^>]*SMA\/sederajat/);
   assert.match(html, /twitter:description[^>]*SMA\/sederajat/);
 });
@@ -125,7 +124,7 @@ test("timeline dates use Montserrat while event headings and badges stay unchang
     "24 Oktober 2026",
     "14–15 November 2026",
   ]);
-  assert.match(css, /\.timeline-entry time \{[^}]*color: #000;[^}]*font-family: "Montserrat", sans-serif;[^}]*font-size: 32px;[^}]*font-weight: 400;[^}]*letter-spacing: \.05em;[^}]*line-height: 32px;[^}]*text-align: center;[^}]*white-space: nowrap;/);
+  assert.match(css, /\.timeline-entry time \{[^}]*color: #000;[^}]*font-family: "Montserrat", sans-serif;[^}]*font-size: 17px;[^}]*font-weight: 400;[^}]*letter-spacing: \.05em;[^}]*line-height: 32px;[^}]*text-align: center;[^}]*white-space: nowrap;/);
   assert.match(css, /\.timeline-entry h3 \{[^}]*color: var\(--green\);[^}]*font-family: var\(--display\);/);
   assert.match(css, /\.timeline-status \{[^}]*width: 176px;[^}]*height: 27px;[^}]*background: #8a5a17;/);
 });
@@ -152,6 +151,7 @@ test("the compact navbar keeps the logo left and Home right", () => {
   assert.match(css, /\.brand-mark \{[^}]*width: 40px;[^}]*height: 41px;[^}]*flex: 0 0 auto;/s);
   assert.match(css, /\.site-header > nav \{[^}]*gap: 30px;[^}]*margin-left: auto;/s);
   assert.match(css, /\.site-header nav a \{[^}]*color: #fffdf2;/s);
+  assert.match(css, /\.site-header nav a \{[^}]*display: inline-flex;[^}]*min-height: 44px;[^}]*align-items: center;/s);
   assert.match(css, /\.site-header nav a\[aria-current\] \{[^}]*color: var\(--gold\);[^}]*text-decoration: none;/s);
   assert.match(css, /\.site-header nav a:hover \{ color: var\(--gold\); \}/);
   assert.match(css, /@media \(max-width: 1332px\) \{[^}]*\.site-header \{[^}]*height: 56px;[^}]*padding: 0 18px;/s);
@@ -185,6 +185,14 @@ test("the mobile prize heading keeps its centering transform anchored at 50 perc
     css,
     /@media \(max-width: 560px\) \{[\s\S]*?\.prize-section \.section-title \{[^}]*left: 50%;[^}]*width: calc\(100% - 24px\);/,
   );
+});
+
+test("tablet hero and prize geometry remain inside their clipping sections", () => {
+  assert.match(
+    css,
+    /@media \(max-width: 1200px\) \{[\s\S]*?\.hero-copy \.hero-subhead \{[^}]*width: min\(620px, calc\(100vw - 40px\)\);[^}]*max-width: none;/,
+  );
+  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.prize-section \{ height: 1280px;/);
 });
 
 test("the desktop prize card leaves room below the footnotes", () => {
@@ -248,7 +256,7 @@ test("the footer fills the updated Home3 Figma partner regions", () => {
   assert.match(css, /\.footer-logo--standard \{ top: 28\.86%; left: 3\.19%; width: 17\.15%; height: 14\.25%; \}/);
   assert.match(css, /\.footer-logo--jogja-tv \{ top: 26\.69%; left: 58\.19%; width: 32\.29%; height: 9\.74%; \}/);
   assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.footer-partners \{[^}]*grid-template-columns: 1fr 1fr;[^}]*min-height: 410px;/);
-  assert.match(css, /@media \(min-width: 641px\) and \(max-width: 900px\) \{[\s\S]*?\.footer-socials \{[^}]*display: grid;[^}]*width: 100%;[^}]*margin-top: auto;/);
+  assert.match(css, /@media \(min-width: 641px\) and \(max-width: 1332px\) \{[\s\S]*?\.footer-socials \{[^}]*display: grid;[^}]*width: 100%;[^}]*margin-top: auto;/);
 });
 
 test("the lower-page Figma assets are present", () => {

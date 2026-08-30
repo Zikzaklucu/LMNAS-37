@@ -63,6 +63,7 @@ test("the content card preserves the LMNAS visual system and reflows on mobile",
 
 test("the peraturan page keeps shared navigation and footer content intact", () => {
   assert.match(html, /<a href="\.\/" aria-current="page">Peraturan<\/a>/);
+  assert.match(html, /<a href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus<\/a>/);
   assert.equal(footerMarkup(html), footerMarkup(mainHtml));
   assert.ok(html.indexOf('href="../style.css') < html.indexOf('href="peraturan.css'));
 });

@@ -132,7 +132,6 @@
   top: -40px;
   left: 50%;
   width: 1059px;
-  min-height: 279px;
   margin-bottom: -40px;
   padding: 64px 50px 35px;
   overflow: hidden;
@@ -219,7 +218,6 @@
     left: 50%;
     width: 90.2%;
     height: auto;
-    min-height: 240px;
     margin-bottom: -40px;
     padding: 64px 40px 34px;
     transform: translateX(-50%);
@@ -271,7 +269,6 @@
   .faq-answer-panel {
     top: -31px;
     width: calc(100% - 28px);
-    min-height: 0;
     margin-bottom: -31px;
     padding: 51px 18px 24px;
     overflow: visible;

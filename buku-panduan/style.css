@@ -132,6 +132,9 @@ a {
 }
 
 .site-header nav a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
   color: #fffdf2;
   font-size: 20px;
   line-height: 1.5;
@@ -367,8 +370,9 @@ a {
 .reader-zoom {
   position: absolute;
   z-index: 11;
-  top: 0;
-  left: 0;
+  top: 24px;
+  right: 24px;
+  left: auto;
   display: grid;
   width: 56px;
   height: 56px;
@@ -383,6 +387,12 @@ a {
   cursor: pointer;
   transform: none;
   transition: transform 400ms cubic-bezier(.22, 1, .36, 1);
+}
+
+@media (min-width: 701px) {
+  .book-anchor:has(.book.is-closed-front) .reader-zoom {
+    right: calc(14.92537% + 24px);
+  }
 }
 
 .reader-zoom svg {
@@ -727,6 +737,12 @@ a {
     display: block;
   }
 
+  .reader-zoom {
+    top: 10px;
+    right: max(10px, calc((100% - min(100%, 595px)) / 2 + 10px));
+    left: auto;
+  }
+
   .reader-control {
     position: static;
     grid-row: 2;
@@ -1065,7 +1081,7 @@ a {
   }
 }
 
-@media (min-width: 641px) and (max-width: 900px) {
+@media (min-width: 641px) and (max-width: 1332px) {
   .guide-footer {
     padding: 10px 8px 8px;
     background: #f3d275;

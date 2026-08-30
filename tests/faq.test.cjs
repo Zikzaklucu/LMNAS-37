@@ -27,7 +27,8 @@ test("the FAQ keeps the measured Figma geometry in a reflowing card stack", () =
   assert.match(css, /\.faq-card \{[^}]*position: relative;[^}]*width: 100%;[^}]*min-height: 81px;/s);
   assert.match(css, /\.faq-toggle \{[^}]*min-height: 81px;[^}]*gap: 24px;[^}]*padding: 20px 51px 20px 52px;/s);
   assert.doesNotMatch(css, /^\s*height: 81px;$/m);
-  assert.match(css, /\.faq-answer-panel \{[^}]*top: -40px;[^}]*left: 50%;[^}]*width: 1059px;[^}]*min-height: 279px;[^}]*margin-bottom: -40px;/s);
+  assert.match(css, /\.faq-answer-panel \{[^}]*top: -40px;[^}]*left: 50%;[^}]*width: 1059px;[^}]*margin-bottom: -40px;/s);
+  assert.doesNotMatch(css, /\.faq-answer-panel\s*\{[^}]*min-height\s*:/s);
   assert.doesNotMatch(css, /\.faq-card:nth-child\([123]\) \{ top:/);
 });
 
@@ -36,6 +37,8 @@ test("the accordion animates unknown answer heights with a CSS grid track", () =
   assert.match(css, /\.faq-card\.is-open \.faq-answer \{[^}]*grid-template-rows: 1fr;[^}]*transition-duration: 450ms;/s);
   assert.match(css, /\.faq-answer-inner \{[^}]*min-height: 0;[^}]*overflow: hidden;/s);
   assert.doesNotMatch(css, /max-height\s*:/);
+  assert.doesNotMatch(css, /\.faq-answer-panel\s*\{[^}]*height\s*:\s*\d/);
+  assert.doesNotMatch(css, /\.faq-answer-panel\s*\{[^}]*min-height\s*:/s);
 });
 
 test("all eleven FAQ items are semantic, closed by default, and controllable", () => {
@@ -132,8 +135,9 @@ test("the accordion preserves state through repeated open and close toggles", ()
 });
 
 test("the FAQ navbar matches the approved main-page destinations", () => {
-  assert.deepEqual(navLabels(mainHtml), ["Home", "Buku Panduan", "Peraturan", "FAQ"]);
-  assert.deepEqual(navLabels(html), ["Home", "Buku Panduan", "Peraturan", "FAQ"]);
+  assert.deepEqual(navLabels(mainHtml), ["Home", "Buku Panduan", "Silabus", "Peraturan", "FAQ"]);
+  assert.deepEqual(navLabels(html), ["Home", "Buku Panduan", "Silabus", "Peraturan", "FAQ"]);
+  assert.match(html, /<a href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus<\/a>/);
   assert.match(html, /<a href="\.\/" aria-current="page">FAQ<\/a>/);
 });
 

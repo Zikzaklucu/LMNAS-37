@@ -49,9 +49,11 @@ test("the guide uses the same compact navigation as the main page", () => {
   const mainNavigation = mainHtml.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
   const labels = (navigation) => [...navigation.matchAll(/<a\b[^>]*>([^<]+)<\/a>/g)].map((match) => match[1].trim());
 
-  assert.deepEqual(labels(mainNavigation), ["Home", "Buku Panduan", "Peraturan", "FAQ"]);
-  assert.deepEqual(labels(guideNavigation), ["Home", "Buku Panduan", "Peraturan", "FAQ"]);
+  assert.deepEqual(labels(mainNavigation), ["Home", "Buku Panduan", "Silabus", "Peraturan", "FAQ"]);
+  assert.deepEqual(labels(guideNavigation), ["Home", "Buku Panduan", "Silabus", "Peraturan", "FAQ"]);
   assert.match(mainNavigation, /href="buku-panduan\/"[^>]*>Buku Panduan/);
+  assert.match(mainNavigation, /href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus/);
+  assert.match(guideNavigation, /href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus/);
   assert.match(guideNavigation, /href="\.\/"[^>]*aria-current="page"[^>]*>Buku Panduan/);
   assert.match(guideNavigation, /href="\.\.\/index\.html#home"[^>]*>Home/);
   assert.match(guideNavigation, /href="\.\.\/peraturan\/"[^>]*>Peraturan/);
@@ -60,6 +62,7 @@ test("the guide uses the same compact navigation as the main page", () => {
   assert.match(css, /--header-height:\s*64px/);
   assert.match(css, /\.site-header\s*\{[^}]*position:\s*sticky;[^}]*justify-content:\s*flex-end;[^}]*height:\s*64px;[^}]*padding:\s*0 37px/s);
   assert.match(css, /\.site-header > nav\s*\{[^}]*gap:\s*30px;[^}]*margin-left:\s*auto/s);
+  assert.match(css, /\.site-header nav a\s*\{[^}]*display:\s*inline-flex;[^}]*min-height:\s*44px;[^}]*align-items:\s*center/s);
 });
 
 test("the guide shell contains the Figma title and filled partner footer", () => {
@@ -181,24 +184,23 @@ test("mobile navigation advances one design at a time and clamps endpoints", () 
   assert.equal(guide.getAdjacentPage(13, "next", "single"), 13);
 });
 
-test("the active-page enlargement uses a compact upper-right icon control", () => {
+test("the guide CTA opens the complete PDF in Google Drive", () => {
   const html = fs.readFileSync(htmlPath, "utf8");
   const css = fs.readFileSync(cssPath, "utf8");
-  const script = fs.readFileSync(scriptPath, "utf8");
 
-  assert.match(html, /<a class="reader-zoom"[^>]*data-zoom[^>]*aria-label="Perbesar halaman aktif">[\s\S]*?<svg[^>]*aria-hidden="true"[^>]*>[\s\S]*?<\/svg>[\s\S]*?<\/a>/);
-  assert.doesNotMatch(html, /<a class="reader-zoom"[^>]*>Perbesar halaman aktif<\/a>/);
+  assert.match(html, /<a class="reader-zoom"[^>]*href="https:\/\/drive\.google\.com\/file\/d\/10vxgSd67hemwKveXq0G0r_a7N6KTRuzf\/view\?usp=sharing"[^>]*target="_blank"[^>]*rel="noopener noreferrer"[^>]*aria-label="Buka Buku Panduan lengkap">[\s\S]*?<\/a>/);
+  assert.doesNotMatch(html, /reader-zoom[^>]*data-zoom/);
+  assert.doesNotMatch(html, /href="assets\/pages\/page-01\.webp"[^>]*target="_blank"/);
   assert.match(html, /<div class="book-anchor">[\s\S]*<a class="reader-zoom"/);
   assert.match(css, /\.book-anchor \{[\s\S]*?position: absolute;[\s\S]*?width: min\(1340px, calc\(100% - 100px\)\);[\s\S]*?aspect-ratio: 1190 \/ 842;[\s\S]*?transform: translateX\(-50%\);/);
-  assert.match(css, /\.reader-zoom \{[\s\S]*?position: absolute;[\s\S]*?top: 0;[\s\S]*?left: 0;[\s\S]*?width: 56px;[\s\S]*?height: 56px;/);
+  assert.match(css, /\.reader-zoom \{[\s\S]*?position: absolute;[\s\S]*?top: 24px;[\s\S]*?right: 24px;[\s\S]*?left: auto;[\s\S]*?width: 56px;[\s\S]*?height: 56px;/);
+  assert.match(css, /\.book-anchor:has\(\.book\.is-closed-front\) \.reader-zoom \{\s*right: calc\(14\.92537% \+ 24px\);\s*\}/);
   assert.match(css, /\.reader-zoom \{[\s\S]*?transition: transform 400ms cubic-bezier\(\.22, 1, \.36, 1\);/);
   assert.match(css, /\.reader-zoom:hover,\s*\.reader-zoom:focus-visible\s*\{[\s\S]*?background: var\(--gold\);/);
   assert.doesNotMatch(css, /\.reader-zoom:hover[^}]*transform:|\.reader-zoom:active[^}]*transform:/s);
-  assert.match(css, /@media \(max-width: 700px\) \{[\s\S]*?\.book-anchor \{[\s\S]*?position: relative;[\s\S]*?width: 100%;[\s\S]*?aspect-ratio: auto;[\s\S]*?\.reader-zoom \{[\s\S]*?width: 52px;[\s\S]*?height: 52px;/);
+  assert.match(css, /@media \(max-width: 700px\) \{[\s\S]*?\.book-anchor \{[\s\S]*?position: relative;[\s\S]*?width: 100%;[\s\S]*?aspect-ratio: auto;[\s\S]*?\.reader-zoom \{[\s\S]*?top: 10px;[\s\S]*?right: max\(10px, calc\(\(100% - min\(100%, 595px\)\) \/ 2 \+ 10px\)\);[\s\S]*?left: auto;[\s\S]*?\.reader-zoom \{[\s\S]*?width: 52px;[\s\S]*?height: 52px;/);
   assert.match(css, /\.reader-zoom:focus-visible/);
   assert.match(css, /\.reader-control,\s*\.reader-zoom\s*\{[\s\S]*?transition: none;/);
-  assert.match(script, /zoomLink\.href = current\.src;/);
-  assert.match(script, /zoomLink\.setAttribute\("aria-label", "Perbesar halaman aktif"\)/);
 });
 
 test("book navigation retains the original page-flip timing and stack flow", () => {
@@ -214,10 +216,12 @@ test("book navigation retains the original page-flip timing and stack flow", () 
   assert.doesNotMatch(script, /transitionFrame|transitionStackingZIndex|activeStackingTransition|handlePaperTransitionEnd|is-transitioning-/);
 });
 
-test("the expand button follows measured book bounds with independent FLIP motion", () => {
-  const css = fs.readFileSync(cssPath, "utf8");
+test("the PDF control keeps its fixed destination while following the visible book", () => {
+  const html = fs.readFileSync(htmlPath, "utf8");
   const script = fs.readFileSync(scriptPath, "utf8");
 
+  assert.match(html, /<script src="script\.js\?v=4" defer><\/script>/);
+  assert.match(script, /const zoomLink = document\.querySelector\("\.reader-zoom"\);/);
   assert.match(script, /function getVisibleBookBounds\(mode, root = book\)/);
   assert.match(script, /function measureBookBounds\(range, mode\)/);
   assert.match(script, /book\.cloneNode\(true\)/);
@@ -227,9 +231,9 @@ test("the expand button follows measured book bounds with independent FLIP motio
   assert.match(script, /zoomAnimationFrame = requestAnimationFrame\(\(\) => \{/);
   assert.match(script, /cancelAnimationFrame\(zoomAnimationFrame\)/);
   assert.match(script, /window\.addEventListener\("resize"/);
-  assert.doesNotMatch(script, /bookAnchor\.classList|bookAnchor\.style\.(?:transform|left|right|top)/);
-  assert.doesNotMatch(css, /\.book-anchor[^}]*will-change:/s);
-  assert.match(css, /\.reader-zoom \{[\s\S]*?transition: transform 400ms cubic-bezier\(\.22, 1, \.36, 1\);/);
+  assert.doesNotMatch(script, /zoomLink\.href\s*=|zoomLink\.setAttribute\("aria-label"/);
+  assert.doesNotMatch(script, /document\.querySelector\("\[data-zoom\]"\)/);
+  assert.doesNotMatch(script, /current\.src/);
 });
 
 test("desktop page flips do not use transition-time stacking diagnostics", () => {

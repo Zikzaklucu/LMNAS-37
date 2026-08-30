@@ -38,7 +38,10 @@ test("the four Figma testimonials are present without invented replacement copy"
   assert.match(script, /Perkenalkan, nama saya Rama Maheswara Pradnya Kusala dari SMP Negeri 1 Boyolali/);
   assert.match(script, /Halo semuanya, nama aku Jeremy Manuelle Gading/);
   assert.match(script, /name: "Janssen Samuel Halim"/);
-  assert.match(script, /placement: "Juara 1 SMA"/);
+  assert.match(script, /placement: "Peraih Medali Perunggu LMNas 36 tingkat SMA"/);
+  assert.match(script, /placement: "Juara 1 LMNas 36 tingkat SMP"/);
+  assert.match(script, /placement: "Peraih Medali Perak LMNas 36 tingkat SMP"/);
+  assert.match(script, /placement: "Juara 1 LMNas 36 tingkat SMA"/);
   assert.equal((script.match(/name: "Janssen Samuel Halim"/g) || []).length, 1);
   assert.match(script, /Halo semuanya, perkenalkan nama saya Janssen Samuel Halim sebagai juara 1 LMNas UGM yang ke-36\. Kesan saya saat mengikuti LMNas UGM adalah setiap soal yang disajikan, baik dari babak penyisihan, semifinal, final, juga grand final, sangat berkualitas, menarik dan menantang untuk saya kerjakan, dan sangat menyenangkan untuk saya diskusikan dengan teman-teman saya\. Setiap Panitia LMNas juga sangat berusaha keras dan juga dengan baik memenuhi segala kebutuhan peserta LMNas UGM\. Pesan saya untuk setiap peserta LMNas UGM tahun ini adalah persiapkan diri dengan baik, belajar dengan giat, raihlah prestasi yang terbaik, dan jangan lupa berdoa\. Terima kasih\./);
   assert.doesNotMatch(script, /Kompetisi ini menjadi pengalaman berharga untuk terus belajar/);
@@ -69,6 +72,13 @@ test("the testimonial card uses the original Home3 cream, green, and black treat
   assert.match(nameRule, /color:\s*var\(--green\)/);
   assert.match(awardRule, /color:\s*var\(--green\)/);
   assert.doesNotMatch(nameRule, /-webkit-text-fill-color:\s*transparent/);
+});
+
+test("narrow testimonial controls preserve touch targets without flex shrink", () => {
+  assert.match(
+    css,
+    /@media \(max-width: 360px\) \{[\s\S]*?\.testimonial-controls \{ gap: 4px; \}[\s\S]*?\.testimonial-arrow \{[^}]*width: 44px;[^}]*height: 44px;[^}]*flex: 0 0 44px;[^}]*background-size: 788\.45px 44px;[\s\S]*?\.testimonial-dots \{ gap: 4px; \}/,
+  );
 });
 
 test("the carousel uses the Figma testimonial color, type, and motion treatment", () => {

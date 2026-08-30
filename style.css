@@ -64,7 +64,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .brand-mark { width: 40px; height: 41px; flex: 0 0 auto; box-shadow: 0 3px 4px rgba(0,0,0,.25); }
 .brand-mark img { width: 100%; height: 100%; object-fit: contain; }
 .site-header > nav { display: flex; align-items: center; gap: 30px; margin-left: auto; }
-.site-header nav a { color: #fffdf2; font-size: 20px; line-height: 1.5; text-decoration: none; text-shadow: 0 0 4px rgba(0,0,0,.25); }
+.site-header nav a { display: inline-flex; min-height: 44px; align-items: center; color: #fffdf2; font-size: 20px; line-height: 1.5; text-decoration: none; text-shadow: 0 0 4px rgba(0,0,0,.25); }
 .site-header nav a[aria-current] { color: var(--gold); text-decoration: none; }
 .site-header nav a:hover { color: var(--gold); }
 .nav-toggle { display: none; }
@@ -127,7 +127,7 @@ h1, h2, h3, p { overflow: visible; }
 .timeline-entry:nth-child(4) div { width: 405px; }
 .timeline-entry h3 { margin: 0; color: var(--green); font-family: var(--display); font-size: 40px; font-weight: 400; letter-spacing: .05em; line-height: 57px; text-align: center; white-space: nowrap; }
 .timeline-entry:nth-child(4) h3 { white-space: normal; }
-.timeline-entry time { display: block; margin-top: 15px; color: #000; font-family: "Montserrat", sans-serif; font-size: 32px; font-weight: 400; letter-spacing: .05em; line-height: 32px; text-align: center; white-space: nowrap; }
+.timeline-entry time { display: block; margin-top: 15px; color: #000; font-family: "Montserrat", sans-serif; font-size: 17px; font-weight: 400; letter-spacing: .05em; line-height: 32px; text-align: center; white-space: nowrap; }
 .timeline-status { display: block; width: 176px; height: 27px; margin: 16px auto 0; padding: 0; border-radius: 6px; color: #fff; background: #8a5a17; font-size: 14px; font-weight: 500; letter-spacing: .05em; line-height: 27px; text-align: center; }
 .timeline-status--active { background: #006d26; }
 .timeline-status--complete { background: #ab2a02; }
@@ -266,7 +266,7 @@ h1, h2, h3, p { overflow: visible; }
   .hero-flowers { top: 340px; width: 430px; }
   .hero-copy { padding-top: 74px; }
   .hero h1 { font-size: clamp(70px, 13vw, 120px); }
-  .hero-copy .hero-subhead { width: 620px; margin-top: -8px; font-size: 18px; line-height: 1.3; }
+  .hero-copy .hero-subhead { width: min(620px, calc(100vw - 40px)); max-width: none; margin-top: -8px; font-size: 18px; line-height: 1.3; }
   .hero-copy .figma-button { margin-top: 34px; }
   .figma-button { width: 176px; height: 48px; border-radius: 6px; font-size: 25px; }
   .countdown-section { height: 500px; }
@@ -299,7 +299,7 @@ h1, h2, h3, p { overflow: visible; }
     height: auto;
   }
   .timeline-tree { top: 0; right: 0; width: 420px; }
-  .prize-section { height: 1240px; min-height: 0; margin-top: 0; padding-bottom: 0; }
+  .prize-section { height: 1280px; min-height: 0; margin-top: 0; padding-bottom: 0; }
   .prize-section .section-title { top: 360px; width: min(902px, calc(100% - 48px)); height: auto; font-size: clamp(58px, 8vw, 76px); line-height: 1.08; text-align: center; white-space: normal; scroll-margin-top: 96px; }
   .prize-card { top: 540px; display: flex; width: 100%; height: auto; min-height: 0; flex-direction: column; align-items: center; padding: 26px 40px 30px; }
   .prize-heading, .prize-amount, .prize-extras, .prize-promo-line, .prize-benefits { position: static; width: 100%; }
@@ -439,7 +439,7 @@ h1, h2, h3, p { overflow: visible; }
   .footer-social span { position: static; overflow: visible; width: auto; height: auto; margin: 0; clip: auto; clip-path: none; white-space: normal; }
 }
 
-@media (min-width: 641px) and (max-width: 900px) {
+@media (min-width: 641px) and (max-width: 1332px) {
   .footer { padding: 10px 8px 8px; background: #f3d275; }
   .footer-stage { display: flex; min-height: 760px; aspect-ratio: auto; flex-direction: column; padding: 30px 28px 24px; overflow: hidden; border-radius: 24px; background: #3e5626 url("Assets/figma/footer-panel.png") center / cover no-repeat; box-shadow: 0 4px 4px rgba(0,0,0,.25); }
   .footer-visual { display: none; }
@@ -648,6 +648,12 @@ h1, h2, h3, p { overflow: visible; }
   .testimonial-dots button { width: 44px; height: 44px; }
   .testimonial-dots button::after { width: 12px; height: 12px; }
   .testimonial-copy { margin-top: 22px; }
+}
+
+@media (max-width: 360px) {
+  .testimonial-controls { gap: 4px; }
+  .testimonial-arrow { width: 44px; height: 44px; flex: 0 0 44px; background-size: 788.45px 44px; }
+  .testimonial-dots { gap: 4px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

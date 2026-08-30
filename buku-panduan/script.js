@@ -151,7 +151,7 @@
     const book = document.querySelector("[data-book]");
     const mobileImage = document.querySelector(".mobile-page");
     const status = document.querySelector(".reader-status");
-    const zoomLink = document.querySelector("[data-zoom]");
+    const zoomLink = document.querySelector(".reader-zoom");
     const previousButton = document.querySelector('[data-direction="previous"]');
     const nextButton = document.querySelector('[data-direction="next"]');
     const bookAnchor = document.querySelector(".book-anchor");
@@ -345,9 +345,6 @@
       mobileImage.alt = `${current.label}, halaman ${currentPage} dari ${PAGES.length}`;
       commitMobilePage(current, navigationVersion);
       preloadAdjacentPages(currentPage, mode);
-      zoomLink.href = current.src;
-      zoomLink.setAttribute("aria-label", "Perbesar halaman aktif");
-
       status.textContent = `Halaman ${currentPage} dari ${PAGES.length}`;
 
       previousButton.disabled = range.start === 1;
