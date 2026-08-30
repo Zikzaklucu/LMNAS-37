@@ -133,9 +133,21 @@
   }
 
   let timerId;
+  const countdownParts = ["days", "hours", "minutes", "seconds"].map((part) => (
+    typeof display.querySelector === "function"
+      ? display.querySelector(`[data-countdown-part="${part}"]`)
+      : null
+  ));
+  const hasStructuredDisplay = countdownParts.every(Boolean);
   const updateCountdown = () => {
     const state = countdown.formatCountdown(target);
-    display.textContent = state.value;
+    if (hasStructuredDisplay) {
+      state.value.split(":").forEach((value, index) => {
+        countdownParts[index].textContent = value;
+      });
+    } else {
+      display.textContent = state.value;
+    }
     display.setAttribute("aria-label", `${countdownLabel}: ${state.label}`);
 
     if (state.complete && timerId) {
@@ -170,15 +182,13 @@
       placement: "Juara 2 SMA",
       photo: "Assets/figma/testimonial-aldan.jpg?v=2",
       nameSize: 96,
-      quoteSize: 26,
-      quote: "Assalamualaikum warahmatullahi wabarakatuh. Perkenalkan, nama saya Aldan Azahwan Ikhsan. Saya sekarang bersekolah di SMA Karisma Bangsa. Saya merupakan peserta LMNas 35 dan LMNas 36, di mana di LMNas 35 saya mendapatkan medali emas di jenjang SMP, dan di LMNas 36 saya mendapatkan medali perunggu di jenjang SMA. Untuk kesan saya untuk LMNas 36 kemarin adalah itu lomba yang sangat challenging karena soalnya yang susah dan juga karena lawan-lawannya yang berat-berat. Tetapi walaupun lombanya sangat challenging, lombanya masih seru karena saya bisa ketemu banyak orang-orang keren, banyak orang-orang pintar, banyak orang-orang seru. Pesan saya untuk peserta tahun ini adalah, untuk kalian harus mempersiapkan untuk lembah ini memang secara maksimal. Tetapi walaupun kalian harus mempersiapkan secara maksimal, kalian masih harus have fun ya. I know you guys can do it. Semangat ya",
+      quote: "Assalamualaikum warahmatullahi wabarakatuh. Perkenalkan, nama saya Aldan Azahwan Ikhsan. Saya sekarang bersekolah di SMA Karisma Bangsa. Saya merupakan peserta LMNas 35 dan LMNas 36, di mana di LMNas 35 saya mendapatkan medali emas di jenjang SMP, dan di LMNas 36 saya mendapatkan medali perunggu di jenjang SMA. Kesan saya untuk LMNas 36 kemarin adalah lomba yang sangat <em>challenging</em> karena soalnya susah dan lawan-lawannya berat. Namun, lombanya tetap seru karena saya bisa bertemu banyak orang yang keren, pintar, dan seru. Pesan saya untuk peserta tahun ini adalah kalian harus mempersiapkan lomba ini secara maksimal. Namun, tetap harus <em>have fun</em> ya. <em>I know you guys can do it.</em> Semangat ya",
     },
     {
       name: "Rama Maheswara Pradnya Kusala",
       placement: "Juara 1 SMP",
       photo: "Assets/figma/testimonial-rama-790d8f.png",
       nameSize: 90,
-      quoteSize: 38,
       quote: "Perkenalkan, nama saya Rama Maheswara Pradnya Kusala dari SMP Negeri 1 Boyolali. Saya sangat bangga bisa menjadi bagian dari LMNas 36, karena LMNas adalah kompetisi yang berkelas, mulai dari soalnya yang berbobot, pesertanya yang kompetitif, dan juga hadiahnya yang fantastis. Harapan saya untuk LMNas 37 adalah dapat berjalan lancar seperti biasanya dan juga soal-soalnya yang lebih bervariasi lagi. Sekian dari saya, terima kasih.",
     },
     {
@@ -186,8 +196,14 @@
       placement: "Juara 2 SMP",
       photo: "Assets/figma/testimonial-jeremy-7f6210.png",
       nameSize: 96,
-      quoteSize: 27,
       quote: "Halo semuanya, nama aku Jeremy Manuelle Gading. Aku merupakan peraih medali perak pada LMNas 36 pada tingkat SMP tahun lalu. Nah kali ini saya ingin memberikan beberapa pesan-pesan saya terkait tentang Lomba Matematika Nasional Universitas Gajah Mada atau bisa dikenal dengan LMNas UGM. Yang pasti yang pertama saya merasakan banyak sekali pertemanan yang terjadi, baik itu pertemanan di luar lomba dan di dalam lomba. Yang kedua, saya ingin terima kasih kepada tim Panitia yang telah berusaha sekeras-kerasnya untuk menindak terkait kecurangan. Karena kita pun tahu bahwa sportivitas dan tindakan kecurangan itu sangat-sangat tidak diizinkan di dalam lomba manapun. Dan yang terakhir, saya ingin mengucapkan terima kasih juga kepada tim Panitia yang telah menyusun secara sebaik-baik dari mereka. Itu saja, terima kasih.",
+    },
+    {
+      name: "Janssen Samuel Halim",
+      placement: "Juara 1 SMA",
+      photo: "Assets/figma/testimonial-janssen-20f486.png",
+      nameSize: 96,
+      quote: "Halo semuanya, perkenalkan nama saya Janssen Samuel Halim sebagai juara 1 LMNas UGM yang ke-36. Kesan saya saat mengikuti LMNas UGM adalah setiap soal yang disajikan, baik dari babak penyisihan, semifinal, final, juga grand final, sangat berkualitas, menarik dan menantang untuk saya kerjakan, dan sangat menyenangkan untuk saya diskusikan dengan teman-teman saya. Setiap Panitia LMNas juga sangat berusaha keras dan juga dengan baik memenuhi segala kebutuhan peserta LMNas UGM. Pesan saya untuk setiap peserta LMNas UGM tahun ini adalah persiapkan diri dengan baik, belajar dengan giat, raihlah prestasi yang terbaik, dan jangan lupa berdoa. Terima kasih.",
     },
   ];
 
@@ -196,7 +212,6 @@
     slide.setAttribute("role", "group");
     slide.setAttribute("aria-roledescription", "slide");
     slide.style.setProperty("--testimonial-name-size", `${item.nameSize}px`);
-    slide.style.setProperty("--testimonial-quote-size", `${item.quoteSize}px`);
     slide.innerHTML = `<figure class="testimonial-card">
       <div class="testimonial-frame">
         <img class="testimonial-photo" src="${item.photo}" alt="Potret ${item.name}" loading="${index ? "lazy" : "eager"}" decoding="async" />
@@ -205,7 +220,7 @@
       <figcaption>
         <div class="testimonial-name"><h3>${item.name}</h3></div>
         <p class="testimonial-award">${item.placement}</p>
-        <blockquote>${item.quote}</blockquote>
+        <blockquote class="testimonial-copy">${item.quote}</blockquote>
       </figcaption>
     </figure>`;
   });
@@ -233,6 +248,21 @@
     window.clearTimeout(entryTimer);
     slides.forEach((slide) => slide.classList.remove("testimonial-slide--entering"));
   };
+
+  const syncHeight = () => {
+    const activeSlide = slides[activeIndex];
+    if (!activeSlide) return;
+    viewport.style.height = "";
+    track.style.height = "";
+    const height = activeSlide.scrollHeight;
+    viewport.style.height = `${height}px`;
+    track.style.height = `${height}px`;
+  };
+
+  const heightObserver = "ResizeObserver" in window
+    ? new ResizeObserver(syncHeight)
+    : null;
+  slides.forEach((slide) => heightObserver?.observe(slide));
 
   const updateSemantics = () => {
     slides.forEach((slide, index) => {
@@ -277,6 +307,7 @@
     root.style.setProperty("--testimonial-track-ease", easing);
     track.style.transition = animate ? "" : "none";
     activeIndex = destinationIndex;
+    syncHeight();
     track.style.transform = `translate3d(${-activeIndex * 100}%, 0, 0)`;
     updateSemantics();
 
@@ -401,6 +432,9 @@
     entry: false,
     force: true,
   }));
+
+  document.fonts?.ready.then(syncHeight);
+  window.addEventListener("resize", syncHeight, { passive: true });
 
   root.classList.add("testimonial-carousel--ready");
   update(0, { animate: false, entry: false, force: true });

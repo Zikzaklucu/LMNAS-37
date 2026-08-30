@@ -1,18 +1,6 @@
 "use strict";
 
 const toggles = document.querySelectorAll(".faq-toggle");
-const prefersReducedMotion = typeof window !== "undefined"
-  && typeof window.matchMedia === "function"
-  && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-if (!prefersReducedMotion
-  && typeof requestAnimationFrame === "function"
-  && document.body?.classList) {
-  document.body.classList.add("motion-enabled");
-  requestAnimationFrame(() => {
-    document.body.classList.add("motion-ready");
-  });
-}
 
 const setPanelState = (toggle, answer, card, shouldOpen) => {
   toggle.setAttribute("aria-expanded", String(shouldOpen));

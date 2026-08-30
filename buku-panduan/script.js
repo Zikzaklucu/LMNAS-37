@@ -154,21 +154,82 @@
     const zoomLink = document.querySelector("[data-zoom]");
     const previousButton = document.querySelector('[data-direction="previous"]');
     const nextButton = document.querySelector('[data-direction="next"]');
+    const bookAnchor = document.querySelector(".book-anchor");
 
-    if (!reader || !book || !mobileImage || !status || !zoomLink || !previousButton || !nextButton) {
+    if (!reader || !book || !mobileImage || !status || !zoomLink || !previousButton || !nextButton || !bookAnchor) {
       return;
     }
 
     const papers = renderBook(book);
     const mobileQuery = window.matchMedia("(max-width: 700px)");
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let currentPage = 1;
     let touchStartX = 0;
     let touchStartY = 0;
+    let navigationVersion = 0;
+    const preparedImages = new Map();
+    let zoomAnimationFrame = 0;
 
     const getMode = () => (mobileQuery.matches ? "single" : "spread");
 
-    function setActiveFaces(range, mode) {
-      book.querySelectorAll("[data-page]").forEach((face) => {
+    function prepareImage(src) {
+      if (preparedImages.has(src)) return preparedImages.get(src);
+
+      const ready = new Promise((resolve) => {
+        const image = new Image();
+        let settled = false;
+
+        const finish = (loaded) => {
+          if (settled) return;
+          settled = true;
+          resolve(loaded);
+        };
+
+        const decodeIfReady = () => {
+          if (typeof image.decode !== "function") {
+            finish(image.naturalWidth > 0);
+            return;
+          }
+
+          image.decode()
+            .then(() => finish(image.naturalWidth > 0))
+            .catch(() => finish(image.naturalWidth > 0));
+        };
+
+        image.addEventListener("load", decodeIfReady, { once: true });
+        image.addEventListener("error", () => finish(false), { once: true });
+        image.decoding = "async";
+        image.src = src;
+
+        if (image.complete) decodeIfReady();
+      });
+
+      preparedImages.set(src, ready);
+      return ready;
+    }
+
+    function commitMobilePage(page, version) {
+      if (mobileImage.getAttribute("src") === page.src) return;
+
+      void prepareImage(page.src).then((loaded) => {
+        if (!loaded || version !== navigationVersion) return;
+        mobileImage.src = page.src;
+      });
+    }
+
+    function preloadAdjacentPages(page, mode) {
+      const adjacent = new Set([
+        getAdjacentPage(page, "previous", mode),
+        getAdjacentPage(page, "next", mode),
+      ]);
+
+      adjacent.forEach((number) => {
+        if (number !== page) prepareImage(PAGES[number - 1].src);
+      });
+    }
+
+    function setActiveFaces(root, range, mode) {
+      root.querySelectorAll("[data-page]").forEach((face) => {
         const number = Number.parseInt(face.dataset.page, 10);
         const visible = mode === "single"
           ? false
@@ -177,38 +238,139 @@
       });
     }
 
-    function update() {
+    function applyBookState(root, bookPapers, range, mode) {
+      bookPapers.forEach((paper, index) => {
+        const flipped = index < range.spread;
+        paper.style.zIndex = String(flipped ? index + 1 : papers.length - index);
+        paper.classList.toggle("is-flipped", flipped);
+      });
+
+      root.classList.toggle("is-closed-front", range.spread === 0);
+      setActiveFaces(root, range, mode);
+    }
+
+    function getBounds(elements) {
+      const rects = elements
+        .map((element) => element.getBoundingClientRect())
+        .filter((rect) => rect.width > 0 && rect.height > 0);
+      if (!rects.length) return null;
+
+      return {
+        top: Math.min(...rects.map((rect) => rect.top)),
+        right: Math.max(...rects.map((rect) => rect.right)),
+        bottom: Math.max(...rects.map((rect) => rect.bottom)),
+        left: Math.min(...rects.map((rect) => rect.left)),
+      };
+    }
+
+    function getVisibleBookBounds(mode, root = book) {
+      if (mode === "single") return getBounds([mobileImage]);
+      return getBounds([...root.querySelectorAll('.page-face[aria-hidden="false"]')]);
+    }
+
+    function getZoomPosition(bounds, mode) {
+      if (!bounds) return null;
+      const anchorRect = bookAnchor.getBoundingClientRect();
+      const inset = mode === "single" ? 10 : 24;
+      return {
+        left: bounds.right - anchorRect.left - zoomLink.offsetWidth - inset,
+        top: bounds.top - anchorRect.top + inset,
+      };
+    }
+
+    function setZoomPosition(position) {
+      if (!position) return;
+      zoomLink.style.left = `${position.left}px`;
+      zoomLink.style.right = "auto";
+      zoomLink.style.top = `${position.top}px`;
+    }
+
+    function stopZoomAnimation() {
+      if (zoomAnimationFrame) {
+        cancelAnimationFrame(zoomAnimationFrame);
+        zoomAnimationFrame = 0;
+      }
+      zoomLink.style.transition = "none";
+      zoomLink.style.transform = "none";
+    }
+
+    function animateZoomButton(previousRect, position, mode) {
+      stopZoomAnimation();
+      if (!position) {
+        setZoomPosition(getZoomPosition(getVisibleBookBounds(mode), mode));
+        return;
+      }
+
+      setZoomPosition(position);
+      const targetRect = zoomLink.getBoundingClientRect();
+      const deltaX = previousRect.left - targetRect.left;
+      const deltaY = previousRect.top - targetRect.top;
+
+      if (reducedMotionQuery.matches) return;
+
+      zoomLink.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      void zoomLink.offsetWidth;
+      zoomAnimationFrame = requestAnimationFrame(() => {
+        zoomLink.style.transition = "transform 400ms cubic-bezier(.22, 1, .36, 1)";
+        zoomLink.style.transform = "none";
+        zoomAnimationFrame = 0;
+      });
+    }
+
+    function measureBookBounds(range, mode) {
+      if (mode === "single") return getVisibleBookBounds(mode);
+
+      const measurementBook = book.cloneNode(true);
+      measurementBook.style.visibility = "hidden";
+      measurementBook.style.pointerEvents = "none";
+      measurementBook.style.transition = "none";
+      const measurementPapers = [...measurementBook.querySelectorAll(".paper")];
+      measurementPapers.forEach((paper) => {
+        paper.style.transition = "none";
+      });
+      applyBookState(measurementBook, measurementPapers, range, mode);
+      book.parentElement.append(measurementBook);
+      const bounds = getVisibleBookBounds(mode, measurementBook);
+      measurementBook.remove();
+      return bounds;
+    }
+
+    function update({ positionZoom = true } = {}) {
       const mode = getMode();
       const range = getVisibleRange(currentPage, mode);
 
-      papers.forEach((paper, index) => {
-        const flipped = index < range.spread;
-        paper.classList.toggle("is-flipped", flipped);
-        paper.style.zIndex = String(flipped ? index + 1 : papers.length - index);
-      });
-
-      book.classList.toggle("is-closed-front", range.spread === 0);
-      setActiveFaces(range, mode);
+      applyBookState(book, papers, range, mode);
 
       const current = PAGES[currentPage - 1];
-      mobileImage.src = current.src;
       mobileImage.alt = `${current.label}, halaman ${currentPage} dari ${PAGES.length}`;
+      commitMobilePage(current, navigationVersion);
+      preloadAdjacentPages(currentPage, mode);
       zoomLink.href = current.src;
-      zoomLink.setAttribute("aria-label", `Perbesar ${current.label}, halaman ${currentPage}`);
+      zoomLink.setAttribute("aria-label", "Perbesar halaman aktif");
 
-      status.textContent = range.start === range.end
-        ? `Halaman ${range.start} dari ${PAGES.length}`
-        : `Halaman ${range.start}–${range.end} dari ${PAGES.length}`;
+      status.textContent = `Halaman ${currentPage} dari ${PAGES.length}`;
 
       previousButton.disabled = range.start === 1;
       nextButton.disabled = range.end === PAGES.length;
+
+      if (positionZoom) {
+        setZoomPosition(getZoomPosition(getVisibleBookBounds(mode), mode));
+      }
     }
 
     function navigate(direction) {
-      const nextPage = getAdjacentPage(currentPage, direction, getMode());
+      const mode = getMode();
+      const nextPage = getAdjacentPage(currentPage, direction, mode);
       if (nextPage === currentPage) return;
+
+      const nextRange = getVisibleRange(nextPage, mode);
+      const previousButtonRect = zoomLink.getBoundingClientRect();
+      const targetPosition = getZoomPosition(measureBookBounds(nextRange, mode), mode);
+
+      navigationVersion += 1;
       currentPage = nextPage;
-      update();
+      update({ positionZoom: false });
+      animateZoomButton(previousButtonRect, targetPosition, mode);
     }
 
     previousButton.addEventListener("click", () => navigate("previous"));
@@ -239,7 +401,19 @@
       navigate(deltaX < 0 ? "next" : "previous");
     }, { passive: true });
 
-    mobileQuery.addEventListener("change", update);
+    mobileQuery.addEventListener("change", () => {
+      stopZoomAnimation();
+      update();
+    });
+    window.addEventListener("resize", () => {
+      stopZoomAnimation();
+      const mode = getMode();
+      setZoomPosition(getZoomPosition(getVisibleBookBounds(mode), mode));
+    }, { passive: true });
+    reducedMotionQuery.addEventListener("change", () => {
+      stopZoomAnimation();
+      update();
+    });
     update();
   }
 

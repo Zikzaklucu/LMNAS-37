@@ -25,6 +25,8 @@ test("the FAQ keeps the measured Figma geometry in a reflowing card stack", () =
   assert.match(css, /\.faq-main h1 \{[^}]*top: 168px;[^}]*left: calc\(50% - 596px\);[^}]*font-size: 150px;/s);
   assert.match(css, /\.faq-list \{[^}]*display: grid;[^}]*width: 1174px;[^}]*padding-top: 405px;[^}]*gap: 32px;/s);
   assert.match(css, /\.faq-card \{[^}]*position: relative;[^}]*width: 100%;[^}]*min-height: 81px;/s);
+  assert.match(css, /\.faq-toggle \{[^}]*min-height: 81px;[^}]*gap: 24px;[^}]*padding: 20px 51px 20px 52px;/s);
+  assert.doesNotMatch(css, /^\s*height: 81px;$/m);
   assert.match(css, /\.faq-answer-panel \{[^}]*top: -40px;[^}]*left: 50%;[^}]*width: 1059px;[^}]*min-height: 279px;[^}]*margin-bottom: -40px;/s);
   assert.doesNotMatch(css, /\.faq-card:nth-child\([123]\) \{ top:/);
 });
@@ -36,15 +38,18 @@ test("the accordion animates unknown answer heights with a CSS grid track", () =
   assert.doesNotMatch(css, /max-height\s*:/);
 });
 
-test("all three FAQ items are semantic, closed by default, and controllable", () => {
-  assert.equal((html.match(/class="faq-card"/g) || []).length, 3);
-  assert.equal((html.match(/class="faq-toggle"/g) || []).length, 3);
-  assert.equal((html.match(/<button class="faq-toggle"[^>]*aria-expanded="false"/g) || []).length, 3);
-  assert.equal((html.match(/class="faq-answer"/g) || []).length, 3);
-  assert.equal((html.match(/aria-hidden="true" inert/g) || []).length, 3);
-  assert.equal((html.match(/class="faq-answer-inner"/g) || []).length, 3);
-  assert.equal((html.match(/class="faq-answer-panel"/g) || []).length, 3);
-  assert.equal((html.match(/class="faq-answer-content"/g) || []).length, 3);
+test("all eleven FAQ items are semantic, closed by default, and controllable", () => {
+  assert.equal((html.match(/class="faq-card"/g) || []).length, 11);
+  assert.equal((html.match(/class="faq-toggle"/g) || []).length, 11);
+  assert.equal((html.match(/<button class="faq-toggle"[^>]*aria-expanded="false"/g) || []).length, 11);
+  assert.equal((html.match(/class="faq-answer"/g) || []).length, 11);
+  assert.equal((html.match(/aria-hidden="true" inert/g) || []).length, 11);
+  assert.equal((html.match(/class="faq-answer-inner"/g) || []).length, 11);
+  assert.equal((html.match(/class="faq-answer-panel"/g) || []).length, 11);
+  assert.equal((html.match(/class="faq-answer-content"/g) || []).length, 11);
+  assert.match(html, /href="https:\/\/pendaftaran\.lmnas-ugm\.com"/);
+  assert.match(html, /href="\.\.\/peraturan\/"/);
+  assert.doesNotMatch(html, /Lorem ipsum/);
   assert.match(script, /addEventListener\("click"/);
   assert.match(script, /setAttribute\("aria-expanded", String\(shouldOpen\)\)/);
   assert.match(script, /answer\.setAttribute\("aria-hidden", String\(!shouldOpen\)\)/);
@@ -53,14 +58,12 @@ test("all three FAQ items are semantic, closed by default, and controllable", ()
   assert.doesNotMatch(script, /innerHTML|eval\(|setInterval/);
 });
 
-test("the FAQ motion is tactile, staggered, and reduced-motion safe", () => {
-  assert.match(css, /@keyframes faq-title-enter/);
-  assert.match(css, /@keyframes faq-card-enter/);
-  assert.match(css, /\.faq-page\.motion-ready \.faq-card:nth-child\(3\) \{ animation-delay: 480ms; \}/);
+test("the FAQ has no page-load reveal and remains reduced-motion safe for interaction", () => {
+  assert.doesNotMatch(css, /motion-enabled|motion-ready|faq-title-enter|faq-card-enter|animation-delay/);
+  assert.doesNotMatch(script, /motion-enabled|motion-ready|requestAnimationFrame/);
   assert.match(css, /\.faq-toggle:active \{[^}]*scaleY\(\.98\)/s);
-  assert.match(script, /requestAnimationFrame/);
-  assert.match(script, /prefers-reduced-motion: reduce/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(css, /\.faq-answer-content \{[^}]*transition:/s);
 });
 
 test("the accordion preserves state through repeated open and close toggles", () => {
@@ -149,5 +152,8 @@ test("the responsive FAQ keeps the desktop fidelity contract and a deliberate mo
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.faq-main \{[^}]*height: auto;[^}]*padding: 80px 0 150px;/);
   assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.faq-card,[\s\S]*?width: calc\(100% - 24px\);/);
   assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.faq-answer-content \{[^}]*font-size: 15px;[^}]*text-align: left;/);
+  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.faq-toggle \{[^}]*font-size: clamp\(30px, 3\.3vw, 40px\);[^}]*line-height: 1\.08;/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.faq-toggle \{[^}]*min-height: 64px;[^}]*gap: 12px;[^}]*padding: 12px 14px 12px 16px;[^}]*font-size: clamp\(21px, 6vw, 28px\);/);
+  assert.doesNotMatch(css, /^\s*height: 64px;$/m);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });

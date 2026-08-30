@@ -62,16 +62,17 @@ test("the guide uses the same compact navigation as the main page", () => {
   assert.match(css, /\.site-header > nav\s*\{[^}]*gap:\s*30px;[^}]*margin-left:\s*auto/s);
 });
 
-test("the guide shell contains the Figma title and approved footer composition", () => {
+test("the guide shell contains the Figma title and filled partner footer", () => {
   const html = fs.readFileSync(htmlPath, "utf8");
 
   assert.match(html, /<h1[^>]*>Buku Panduan<\/h1>/);
   assert.doesNotMatch(html, /class="guide-kicker"|class="guide-intro"/);
   assert.match(html, /class="footer-visual"[^>]+footer-panel-divider-home3\.png/);
-  assert.match(html, /class="footer-placeholder footer-placeholder--media"/);
-  assert.match(html, /class="footer-placeholder footer-placeholder--partner"/);
+  assert.match(html, /class="footer-partner-group footer-partner-group--media"/);
+  assert.match(html, /class="footer-partner-group footer-partner-group--mitra"/);
   assert.match(html, />Media Partner<\/h2>/);
   assert.match(html, />Mitra<\/h2>/);
+  assert.equal((html.match(/class="footer-logo footer-logo--/g) || []).length, 11);
   assert.match(html, /class="footer-socials"/);
 });
 
@@ -103,12 +104,26 @@ test("the guide footer reuses the main-page footer composition exactly", () => {
   for (const selector of [
     ".footer-stage",
     ".footer-visual",
-    ".footer-placeholders",
-    ".footer-placeholders::after",
-    ".footer-placeholder",
+    ".footer-partners",
+    ".footer-partners::after",
+    ".footer-partner-group",
     ".footer-heading",
     ".footer-heading--media",
     ".footer-heading--partner",
+    ".footer-logo-list",
+    ".footer-logo",
+    ".footer-logo img",
+    ".footer-logo--standard",
+    ".footer-logo--bsm",
+    ".footer-logo--mic",
+    ".footer-logo--taman-batik",
+    ".footer-logo--raden",
+    ".footer-logo--wisma",
+    ".footer-logo--imperial",
+    ".footer-logo--jogja-tv",
+    ".footer-logo--ikut-event",
+    ".footer-logo--ikahimatika",
+    ".footer-logo--kotaperak",
     ".footer-socials",
     ".footer-socials-art",
     ".footer-social",
@@ -164,6 +179,91 @@ test("mobile navigation advances one design at a time and clamps endpoints", () 
   assert.equal(guide.getAdjacentPage(1, "previous", "single"), 1);
   assert.equal(guide.getAdjacentPage(1, "next", "single"), 2);
   assert.equal(guide.getAdjacentPage(13, "next", "single"), 13);
+});
+
+test("the active-page enlargement uses a compact upper-right icon control", () => {
+  const html = fs.readFileSync(htmlPath, "utf8");
+  const css = fs.readFileSync(cssPath, "utf8");
+  const script = fs.readFileSync(scriptPath, "utf8");
+
+  assert.match(html, /<a class="reader-zoom"[^>]*data-zoom[^>]*aria-label="Perbesar halaman aktif">[\s\S]*?<svg[^>]*aria-hidden="true"[^>]*>[\s\S]*?<\/svg>[\s\S]*?<\/a>/);
+  assert.doesNotMatch(html, /<a class="reader-zoom"[^>]*>Perbesar halaman aktif<\/a>/);
+  assert.match(html, /<div class="book-anchor">[\s\S]*<a class="reader-zoom"/);
+  assert.match(css, /\.book-anchor \{[\s\S]*?position: absolute;[\s\S]*?width: min\(1340px, calc\(100% - 100px\)\);[\s\S]*?aspect-ratio: 1190 \/ 842;[\s\S]*?transform: translateX\(-50%\);/);
+  assert.match(css, /\.reader-zoom \{[\s\S]*?position: absolute;[\s\S]*?top: 0;[\s\S]*?left: 0;[\s\S]*?width: 56px;[\s\S]*?height: 56px;/);
+  assert.match(css, /\.reader-zoom \{[\s\S]*?transition: transform 400ms cubic-bezier\(\.22, 1, \.36, 1\);/);
+  assert.match(css, /\.reader-zoom:hover,\s*\.reader-zoom:focus-visible\s*\{[\s\S]*?background: var\(--gold\);/);
+  assert.doesNotMatch(css, /\.reader-zoom:hover[^}]*transform:|\.reader-zoom:active[^}]*transform:/s);
+  assert.match(css, /@media \(max-width: 700px\) \{[\s\S]*?\.book-anchor \{[\s\S]*?position: relative;[\s\S]*?width: 100%;[\s\S]*?aspect-ratio: auto;[\s\S]*?\.reader-zoom \{[\s\S]*?width: 52px;[\s\S]*?height: 52px;/);
+  assert.match(css, /\.reader-zoom:focus-visible/);
+  assert.match(css, /\.reader-control,\s*\.reader-zoom\s*\{[\s\S]*?transition: none;/);
+  assert.match(script, /zoomLink\.href = current\.src;/);
+  assert.match(script, /zoomLink\.setAttribute\("aria-label", "Perbesar halaman aktif"\)/);
+});
+
+test("book navigation retains the original page-flip timing and stack flow", () => {
+  const css = fs.readFileSync(cssPath, "utf8");
+  const script = fs.readFileSync(scriptPath, "utf8");
+
+  assert.match(css, /\.book-anchor \{[\s\S]*?transform: translateX\(-50%\);/);
+  assert.doesNotMatch(css, /\.book-anchor[^}]*transition:/s);
+  assert.doesNotMatch(css, /\.book-anchor\.is-transitioning-/);
+  assert.match(css, /\.book\s*\{[\s\S]*?transition: transform 720ms cubic-bezier\(0\.65, 0, 0\.35, 1\);/);
+  assert.match(css, /\.paper\s*\{[\s\S]*?transition: transform 720ms cubic-bezier\(0\.65, 0, 0\.35, 1\);/);
+  assert.match(script, /paper\.style\.zIndex = String\(flipped \? index \+ 1 : papers\.length - index\);/);
+  assert.doesNotMatch(script, /transitionFrame|transitionStackingZIndex|activeStackingTransition|handlePaperTransitionEnd|is-transitioning-/);
+});
+
+test("the expand button follows measured book bounds with independent FLIP motion", () => {
+  const css = fs.readFileSync(cssPath, "utf8");
+  const script = fs.readFileSync(scriptPath, "utf8");
+
+  assert.match(script, /function getVisibleBookBounds\(mode, root = book\)/);
+  assert.match(script, /function measureBookBounds\(range, mode\)/);
+  assert.match(script, /book\.cloneNode\(true\)/);
+  assert.match(script, /function animateZoomButton\(previousRect, position, mode\)/);
+  assert.match(script, /zoomLink\.getBoundingClientRect\(\)/);
+  assert.match(script, /zoomLink\.style\.transform = `translate\(\$\{deltaX\}px, \$\{deltaY\}px\)`/);
+  assert.match(script, /zoomAnimationFrame = requestAnimationFrame\(\(\) => \{/);
+  assert.match(script, /cancelAnimationFrame\(zoomAnimationFrame\)/);
+  assert.match(script, /window\.addEventListener\("resize"/);
+  assert.doesNotMatch(script, /bookAnchor\.classList|bookAnchor\.style\.(?:transform|left|right|top)/);
+  assert.doesNotMatch(css, /\.book-anchor[^}]*will-change:/s);
+  assert.match(css, /\.reader-zoom \{[\s\S]*?transition: transform 400ms cubic-bezier\(\.22, 1, \.36, 1\);/);
+});
+
+test("desktop page flips do not use transition-time stacking diagnostics", () => {
+  const script = fs.readFileSync(scriptPath, "utf8");
+
+  assert.doesNotMatch(script, /activeStackingTransition|transitionStackingZIndex|handlePaperTransitionEnd|transitionend/);
+  assert.doesNotMatch(script, /style\.zIndex = String\(transition/);
+});
+
+test("mobile page artwork commits only after cached image readiness", () => {
+  const script = fs.readFileSync(scriptPath, "utf8");
+
+  assert.match(script, /const preparedImages = new Map\(\);/);
+  assert.match(script, /function prepareImage\(src\)/);
+  assert.match(script, /image\.addEventListener\("load", decodeIfReady/);
+  assert.match(script, /image\.addEventListener\("error", \(\) => finish\(false\)/);
+  assert.match(script, /image\.decode\(\)/);
+  assert.match(script, /function commitMobilePage\(page, version\)/);
+  assert.match(script, /if \(!loaded \|\| version !== navigationVersion\) return;/);
+  assert.match(script, /mobileImage\.src = page\.src;/);
+  assert.match(script, /function preloadAdjacentPages\(page, mode\)/);
+  assert.match(script, /preloadAdjacentPages\(currentPage, mode\);/);
+  assert.doesNotMatch(script, /mobileImage\.src = current\.src;/);
+});
+
+test("the page counter stays in sentence case for initial and dynamic states", () => {
+  const html = fs.readFileSync(htmlPath, "utf8");
+  const css = fs.readFileSync(cssPath, "utf8");
+  const script = fs.readFileSync(scriptPath, "utf8");
+
+  assert.match(html, /<p class="reader-status"[^>]*>Halaman 1 dari 13<\/p>/);
+  assert.match(script, /status\.textContent = `Halaman \$\{currentPage\} dari \$\{PAGES\.length\}`;/);
+  assert.doesNotMatch(css, /\.reader-status[^}]*text-transform:\s*uppercase/i);
+  assert.doesNotMatch(html, /HALAMAN 1 DARI 13/);
 });
 
 test("the stylesheet protects fidelity, focus visibility, and reduced motion", () => {

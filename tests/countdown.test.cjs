@@ -128,6 +128,51 @@ test("the runtime timer label keeps the Registrasi Gelombang I target", () => {
   assert.match(attributes.get("aria-label"), /(?:hari|telah dibuka)/);
 });
 
+test("the runtime timer updates each visible countdown number", () => {
+  const script = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
+  const parts = Object.fromEntries(["days", "hours", "minutes", "seconds"].map((part) => [part, { textContent: "" }]));
+  const attributes = new Map();
+  const display = {
+    dataset: {
+      countdownLabel: "Registrasi Gelombang I",
+      countdownTarget: "2099-09-01T00:00:00+07:00",
+    },
+    querySelector(selector) {
+      const part = selector.match(/data-countdown-part="([^"]+)"/)?.[1];
+      return parts[part] || null;
+    },
+    setAttribute(name, value) {
+      attributes.set(name, value);
+    },
+  };
+  const document = {
+    querySelector(selector) {
+      return selector === "[data-countdown-target]" ? display : null;
+    },
+    querySelectorAll() {
+      return [];
+    },
+    getElementById() {
+      return null;
+    },
+  };
+  const window = {
+    LmnasCountdown: countdown,
+    clearInterval() {},
+    setInterval() {
+      return 1;
+    },
+  };
+
+  vm.runInNewContext(script, { Date, document, window });
+
+  assert.match(parts.days.textContent, /^\d+$/);
+  for (const part of ["hours", "minutes", "seconds"]) {
+    assert.match(parts[part].textContent, /^\d{2}$/);
+  }
+  assert.match(attributes.get("aria-label"), /hari|jam|menit|detik/);
+});
+
 test("timeline status refreshes periodically instead of becoming stale", () => {
   const script = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
 

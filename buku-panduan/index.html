@@ -7,9 +7,9 @@
     <meta name="theme-color" content="#3e5626" />
     <title>Buku Panduan LMNas 37</title>
     <link rel="icon" href="../Assets/figma/nav-mark-216.png" type="image/png" />
-    <link rel="stylesheet" href="style.css?v=6" />
+    <link rel="stylesheet" href="style.css?v=15" />
     <script src="../navigation.js?v=1" defer></script>
-    <script src="script.js?v=2" defer></script>
+    <script src="script.js?v=3" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Lewati ke buku panduan</a>
@@ -45,12 +45,19 @@
           </button>
 
           <div class="page-viewport">
-            <div class="book-stage" aria-label="Tampilan buku dua halaman">
-              <div class="book is-closed-front" data-book></div>
+            <div class="book-anchor">
+              <div class="book-stage" aria-label="Tampilan buku dua halaman">
+                <div class="book is-closed-front" data-book></div>
+              </div>
+              <figure class="mobile-reader">
+                <img class="mobile-page" src="assets/pages/page-01.webp" alt="Sampul Buku Panduan LMNas 37" draggable="false" />
+              </figure>
+              <a class="reader-zoom" href="assets/pages/page-01.webp" target="_blank" rel="noopener noreferrer" data-zoom aria-label="Perbesar halaman aktif">
+                <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                  <path d="M18 6H6v12M30 6h12v12M18 42H6V30M42 30v12H30" />
+                </svg>
+              </a>
             </div>
-            <figure class="mobile-reader">
-              <img class="mobile-page" src="assets/pages/page-01.webp" alt="Sampul Buku Panduan LMNas 37" draggable="false" />
-            </figure>
           </div>
 
           <button class="reader-control reader-control--next" type="button" data-direction="next" aria-label="Halaman berikutnya">
@@ -62,7 +69,6 @@
 
         <div class="reader-meta">
           <p class="reader-status" aria-live="polite" aria-atomic="true">Halaman 1 dari 13</p>
-          <a class="reader-zoom" href="assets/pages/page-01.webp" target="_blank" rel="noopener noreferrer" data-zoom>Perbesar halaman aktif</a>
         </div>
       </section>
     </main>
@@ -70,21 +76,36 @@
     <footer class="guide-footer" aria-label="Media partner, mitra, dan kanal resmi">
       <div class="footer-stage">
         <img class="footer-visual" src="../Assets/figma/footer-panel-divider-home3.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-        <div class="footer-placeholders">
-          <section class="footer-placeholder footer-placeholder--media">
-            <h2 class="footer-heading footer-heading--media">Media Partner</h2>
-          </section>
-          <section class="footer-placeholder footer-placeholder--partner">
+        <div class="footer-partners">
+          <section class="footer-partner-group footer-partner-group--mitra">
             <h2 class="footer-heading footer-heading--partner">Mitra</h2>
+            <ul class="footer-logo-list" aria-label="Mitra LMNAS 37">
+              <li class="footer-logo footer-logo--standard"><img src="../Assets/sponsors/standard.png" alt="Standard" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--bsm"><img src="../Assets/sponsors/bsm-rental-figma.png" alt="BSM Rental" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--mic"><img src="../Assets/sponsors/mic-hotel.png" alt="MIC Hotel" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--taman-batik"><img src="../Assets/sponsors/taman-batik-terang-bulan.png" alt="Taman Batik Terang Bulan" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--raden"><img src="../Assets/sponsors/raden-ht.png" alt="Raden HT" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--wisma"><img src="../Assets/sponsors/wisma-kagama.png" alt="Wisma Kagama" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--imperial"><img src="../Assets/sponsors/imperial-digital-printing-figma.png" alt="Imperial Digital Printing" loading="lazy" decoding="async" /></li>
+            </ul>
+          </section>
+          <section class="footer-partner-group footer-partner-group--media">
+            <h2 class="footer-heading footer-heading--media">Media Partner</h2>
+            <ul class="footer-logo-list" aria-label="Media partner LMNAS 37">
+              <li class="footer-logo footer-logo--jogja-tv"><img src="../Assets/partners/jogja-tv.png" alt="Jogja TV" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--ikut-event"><img src="../Assets/partners/ikut-event-figma.png" alt="Ikut Event" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--ikahimatika"><img src="../Assets/partners/ikahimatika-56586a.png" alt="Ikahimatika" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--kotaperak"><img src="../Assets/partners/kotaperak-figma.png" alt="Kotaperak 94.6 FM" loading="lazy" decoding="async" /></li>
+            </ul>
           </section>
         </div>
         <div class="footer-socials" aria-label="Kanal resmi LMNAS dan Semnastika UGM">
           <img class="footer-socials-art" src="../Assets/figma/footer-socials-home3.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-          <a href="https://www.facebook.com/lombamatematika/" class="footer-social footer-social--facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook LMNas dan Semnastika UGM"><span>LMNAS DAN SEMNASTIKA UGM</span></a>
-          <a href="https://www.instagram.com/lmnas_semnas/" class="footer-social footer-social--instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
-          <a href="https://www.youtube.com/@lmnas_semnas" class="footer-social footer-social--youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube LMNas dan Semnastika UGM"><span>@LMNAS &amp; SEMNASTIKA UGM</span></a>
-          <a href="https://x.com/lmnas_semnas" class="footer-social footer-social--x" target="_blank" rel="noopener noreferrer" aria-label="X LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
-          <a href="https://www.tiktok.com/@lmnas_semnas" class="footer-social footer-social--tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
+          <a href="https://www.facebook.com/lombamatematika/" class="footer-social footer-social--facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook LMNas dan Semnastika UGM"><span>LMNas dan Semnastika UGM</span></a>
+          <a href="https://www.instagram.com/lmnas_semnas/" class="footer-social footer-social--instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram LMNas dan Semnastika UGM"><span>@lmnas_semnas</span></a>
+          <a href="https://www.youtube.com/@lmnas_semnas" class="footer-social footer-social--youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube LMNas dan Semnastika UGM"><span>@lmnas &amp; Semnastika UGM</span></a>
+          <a href="https://x.com/lmnas_semnas" class="footer-social footer-social--x" target="_blank" rel="noopener noreferrer" aria-label="X LMNas dan Semnastika UGM"><span>@lmnas_semnas</span></a>
+          <a href="https://www.tiktok.com/@lmnas_semnas" class="footer-social footer-social--tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok LMNas dan Semnastika UGM"><span>@lmnas_semnas</span></a>
         </div>
       </div>
     </footer>

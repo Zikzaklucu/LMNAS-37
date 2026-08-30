@@ -208,14 +208,19 @@ a {
   min-width: 0;
 }
 
-.book-stage {
+.book-anchor {
   position: absolute;
   top: 6px;
   left: 50%;
   width: min(1340px, calc(100% - 100px));
   aspect-ratio: 1190 / 842;
-  perspective: 3200px;
   transform: translateX(-50%);
+}
+
+.book-stage {
+  position: absolute;
+  inset: 0;
+  perspective: 3200px;
 }
 
 .book {
@@ -261,6 +266,7 @@ a {
   background-repeat: no-repeat;
   background-size: contain;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   box-shadow: 0 8px 18px rgba(62, 86, 38, 0.24);
   transform-style: preserve-3d;
 }
@@ -358,11 +364,47 @@ a {
   opacity: 0.25;
 }
 
+.reader-zoom {
+  position: absolute;
+  z-index: 11;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: 56px;
+  height: 56px;
+  min-height: 44px;
+  place-items: center;
+  padding: 0;
+  border: 3px solid var(--green-title);
+  border-radius: 50%;
+  color: var(--canvas);
+  background: var(--green);
+  text-decoration: none;
+  cursor: pointer;
+  transform: none;
+  transition: transform 400ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.reader-zoom svg {
+  width: 30px;
+  height: 30px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.reader-zoom:hover,
+.reader-zoom:focus-visible {
+  color: var(--green-title);
+  background: var(--gold);
+}
+
 .reader-meta {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 24px;
   margin-top: 26px;
   color: var(--green-title);
   text-align: center;
@@ -374,21 +416,6 @@ a {
   font-family: var(--branded-body);
   font-size: 24px;
   letter-spacing: 0.05em;
-}
-
-.reader-zoom {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  padding: 8px 4px;
-  border-bottom: 2px solid currentColor;
-  font-family: var(--branded-body);
-  font-size: 20px;
-  text-decoration: none;
-}
-
-.reader-zoom:hover {
-  color: #1f3716;
 }
 
 .guide-footer {
@@ -412,7 +439,12 @@ a {
   object-fit: fill;
 }
 
-.footer-placeholders {
+.footer-partners {
+  position: absolute;
+  inset: 0;
+}
+
+.footer-partner-group {
   position: absolute;
   inset: 0;
 }
@@ -435,12 +467,41 @@ a {
 }
 
 .footer-heading--media {
-  left: 0;
+  right: 0;
 }
 
 .footer-heading--partner {
-  right: 0;
+  left: 0;
 }
+
+.footer-logo-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-logo {
+  position: absolute;
+}
+
+.footer-logo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.footer-logo--standard { top: 28.86%; left: 3.19%; width: 17.15%; height: 14.25%; }
+.footer-logo--bsm { top: 26.87%; left: 20%; width: 13.06%; height: 14.07%; }
+.footer-logo--mic { top: 26.9%; left: 34.07%; width: 9.05%; height: 13.57%; }
+.footer-logo--taman-batik { top: 47.99%; left: 2.43%; width: 12.38%; height: 10.39%; }
+.footer-logo--raden { top: 48.15%; left: 15.83%; width: 14.03%; height: 10.28%; }
+.footer-logo--wisma { top: 48.8%; left: 31.52%; width: 3.95%; height: 10.25%; }
+.footer-logo--imperial { top: 43.46%; left: 37.01%; width: 6.18%; height: 16.05%; }
+.footer-logo--jogja-tv { top: 26.69%; left: 58.19%; width: 32.29%; height: 9.74%; }
+.footer-logo--ikut-event { top: 41.37%; left: 56.05%; width: 8.45%; height: 21.96%; }
+.footer-logo--ikahimatika { top: 39.68%; left: 63.89%; width: 10.76%; height: 27.95%; }
+.footer-logo--kotaperak { top: 42.02%; left: 74.03%; width: 17.22%; height: 17.85%; }
 
 .footer-socials {
   position: absolute;
@@ -451,27 +512,53 @@ a {
 }
 
 .footer-socials-art {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  opacity: 1;
+  display: none;
 }
 
 .footer-social {
   position: absolute;
-  display: block;
+  display: flex;
+  width: 100%;
+  height: 45%;
   min-height: 44px;
+  align-items: center;
+  gap: 12px;
   border-radius: 6px;
+  color: #fcdd6c;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
 }
 
+.footer-social::before {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  background-color: transparent;
+  background-image: url("../Assets/figma/footer-socials-home3.svg");
+  background-repeat: no-repeat;
+  background-size: 904px 82.7px;
+  content: "";
+}
+
+.footer-social--facebook::before { background-position: 0 0; }
+.footer-social--instagram::before { background-position: -378px 0; }
+.footer-social--youtube::before { background-position: -658px 0; }
+.footer-social--x::before { background-position: -209px -38px; }
+.footer-social--tiktok::before { background-position: -557px -45px; }
+
 .footer-social span {
-  position: absolute;
-  overflow: hidden;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
+  position: static;
+  overflow: visible;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip: auto;
+  clip-path: none;
   white-space: nowrap;
 }
 
@@ -569,6 +656,10 @@ a {
     top: 0;
   }
 
+  .book-anchor {
+    top: 0;
+  }
+
   .reader-control {
     width: 56px;
     height: 56px;
@@ -619,6 +710,15 @@ a {
     grid-row: 1;
   }
 
+  .book-anchor {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    aspect-ratio: auto;
+    transform: none;
+  }
+
   .book-stage {
     display: none;
   }
@@ -652,6 +752,16 @@ a {
     flex-direction: column;
     gap: 6px;
     margin-top: 18px;
+  }
+
+  .reader-zoom {
+    width: 52px;
+    height: 52px;
+  }
+
+  .reader-zoom svg {
+    width: 28px;
+    height: 28px;
   }
 
   .reader-status {
@@ -801,7 +911,7 @@ a {
 
   .footer-stage {
     display: flex;
-    min-height: 610px;
+    min-height: 760px;
     aspect-ratio: auto;
     flex-direction: column;
     padding: 30px 18px 24px;
@@ -815,14 +925,14 @@ a {
     display: none;
   }
 
-  .footer-placeholders {
+  .footer-partners {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 270px;
+    min-height: 410px;
   }
 
-  .footer-placeholders::after {
+  .footer-partners::after {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -833,21 +943,50 @@ a {
     transform: translateX(-50%);
   }
 
-  .footer-placeholder {
+  .footer-partner-group {
+    position: relative;
+    inset: auto;
     min-width: 0;
-    padding-inline: 12px;
+    padding-inline: 10px;
   }
 
   .footer-heading {
     position: static;
     display: block;
     width: auto;
-    margin: 18px 0 0;
+    margin: 8px 0 10px;
     padding-block: .08em .18em;
     overflow: visible;
     font-size: clamp(27px, 8.6vw, 40px);
     line-height: 1.1;
     white-space: normal;
+  }
+
+  .footer-logo-list {
+    display: grid;
+    align-content: start;
+    justify-items: center;
+    gap: 5px;
+  }
+
+  .footer-logo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 42px;
+  }
+
+  .footer-logo--bsm,
+  .footer-logo--wisma,
+  .footer-logo--imperial {
+    height: 46px;
+  }
+
+  .footer-logo--jogja-tv,
+  .footer-logo--ikut-event,
+  .footer-logo--ikahimatika,
+  .footer-logo--kotaperak {
+    height: 62px;
   }
 
   .footer-socials {
@@ -874,7 +1013,7 @@ a {
     align-items: center;
     gap: 12px;
     color: #fcdc6c;
-    font-family: "Rumble Brave", Georgia, serif;
+    font-family: var(--body);
     font-size: clamp(17px, 5.3vw, 23px);
     line-height: 1;
     text-decoration: none;
@@ -926,6 +1065,154 @@ a {
   }
 }
 
+@media (min-width: 641px) and (max-width: 900px) {
+  .guide-footer {
+    padding: 10px 8px 8px;
+    background: #f3d275;
+  }
+
+  .footer-stage {
+    display: flex;
+    min-height: 760px;
+    aspect-ratio: auto;
+    flex-direction: column;
+    padding: 30px 28px 24px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: #3e5626 url("../Assets/figma/footer-panel.png") center / cover no-repeat;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, .25);
+  }
+
+  .footer-visual {
+    display: none;
+  }
+
+  .footer-partners {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 410px;
+  }
+
+  .footer-partners::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    background: #fcdd6c;
+    content: "";
+    transform: translateX(-50%);
+  }
+
+  .footer-partner-group {
+    position: relative;
+    inset: auto;
+    min-width: 0;
+    padding-inline: 24px;
+  }
+
+  .footer-heading {
+    position: static;
+    display: block;
+    width: auto;
+    margin: 8px 0 10px;
+    padding-block: .08em .18em;
+    overflow: visible;
+    font-size: 40px;
+    line-height: 1.1;
+    white-space: normal;
+  }
+
+  .footer-logo-list {
+    display: grid;
+    align-content: start;
+    justify-items: center;
+    gap: 5px;
+  }
+
+  .footer-logo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 42px;
+  }
+
+  .footer-logo--bsm,
+  .footer-logo--wisma,
+  .footer-logo--imperial {
+    height: 46px;
+  }
+
+  .footer-logo--jogja-tv,
+  .footer-logo--ikut-event,
+  .footer-logo--ikahimatika,
+  .footer-logo--kotaperak {
+    height: 62px;
+  }
+
+  .footer-socials {
+    position: relative;
+    top: auto;
+    left: auto;
+    display: grid;
+    width: 100%;
+    aspect-ratio: auto;
+    gap: 5px;
+    margin-top: auto;
+  }
+
+  .footer-socials-art {
+    display: none;
+  }
+
+  .footer-social {
+    position: relative;
+    inset: auto;
+    display: flex;
+    width: 100%;
+    height: 48px;
+    align-items: center;
+    gap: 12px;
+    color: #fcdc6c;
+    font-family: var(--body);
+    font-size: 23px;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .footer-social::before {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border-radius: 50%;
+    background-color: transparent;
+    background-image: url("../Assets/figma/footer-socials-home3.svg");
+    background-repeat: no-repeat;
+    background-size: 904px 82.7px;
+    content: "";
+  }
+
+  .footer-social--facebook::before { background-position: 0 0; }
+  .footer-social--instagram::before { background-position: -378px 0; }
+  .footer-social--youtube::before { background-position: -658px 0; }
+  .footer-social--x::before { background-position: -209px -38px; }
+  .footer-social--tiktok::before { background-position: -557px -45px; }
+
+  .footer-social span {
+    position: static;
+    overflow: visible;
+    width: auto;
+    height: auto;
+    margin: 0;
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -933,7 +1220,8 @@ a {
 
   .book,
   .paper,
-  .reader-control {
+  .reader-control,
+  .reader-zoom {
     transition: none;
   }
 }

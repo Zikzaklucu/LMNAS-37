@@ -24,8 +24,8 @@
     <link rel="icon" href="Assets/figma/nav-mark-216.png" type="image/png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css?v=92" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css?v=104" />
     <script src="navigation.js?v=1" defer></script>
     <script src="site-config.js?v=1" defer></script>
     <script src="countdown.js?v=4" defer></script>
@@ -70,7 +70,12 @@
         <div class="countdown-copy">
           <p class="section-kicker">Menuju</p>
           <h2 id="countdown-title">Registrasi Gelombang I</h2>
-          <p class="countdown-value" role="timer" aria-atomic="true" aria-label="Menghitung waktu menuju Registrasi Gelombang I" data-countdown-label="Registrasi Gelombang I" data-countdown-target="2026-09-01T00:00:00+07:00">0:00:00:00</p>
+          <p class="countdown-value" role="timer" aria-atomic="true" aria-label="Menghitung waktu menuju Registrasi Gelombang I" data-countdown-label="Registrasi Gelombang I" data-countdown-target="2026-09-01T00:00:00+07:00">
+            <span class="countdown-unit"><span class="countdown-number" data-countdown-part="days">0</span><span class="countdown-unit-label" aria-hidden="true">hari</span></span>
+            <span class="countdown-unit"><span class="countdown-number" data-countdown-part="hours">00</span><span class="countdown-unit-label" aria-hidden="true">jam</span></span>
+            <span class="countdown-unit"><span class="countdown-number" data-countdown-part="minutes">00</span><span class="countdown-unit-label" aria-hidden="true">menit</span></span>
+            <span class="countdown-unit"><span class="countdown-number" data-countdown-part="seconds">00</span><span class="countdown-unit-label" aria-hidden="true">detik</span></span>
+          </p>
         </div>
       </section>
 
@@ -79,16 +84,16 @@
         <div class="section-inner">
           <h2 class="section-title" id="why-title">Kenapa LMNas?</h2>
           <div class="cream-card why-card">
-            <p>LMNas UGM merupakan kompetisi matematika tingkat nasional yang diselenggarakan oleh Himpunan Mahasiswa Matematika UGM. Ajang ini memberi ruang bagi pelajar SMP dan SMA/sederajat dari seluruh Indonesia untuk mengasah penalaran matematis, sportivitas, dan semangat berkompetisi. Melalui rangkaian babak yang terstruktur, peserta dapat belajar, menguji kemampuan, dan bertemu dengan talenta matematika dari berbagai daerah.</p>
+            <p>LMNas UGM merupakan kompetisi matematika tingkat nasional yang diselenggarakan oleh Himpunan Mahasiswa Matematika UGM. Ajang ini memberi ruang bagi pelajar SMP dan SMA atau sederajat dari seluruh Indonesia untuk mengasah penalaran matematis, sportivitas, dan semangat berkompetisi. Melalui rangkaian babak yang terstruktur, peserta dapat belajar, menguji kemampuan, dan bertemu dengan talenta-talenta matematika dari berbagai daerah.</p>
           </div>
         </div>
       </section>
 
       <section class="timeline-section" id="peta-waktu" aria-labelledby="timeline-title">
-        <img class="timeline-monkey" src="Assets/figma/timeline-monkey.svg?v=2" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <img class="timeline-monkey" src="Assets/figma/timeline-monkey.svg?v=2" width="187" height="281" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="timeline-inner">
           <div class="timeline-board">
-            <h2 id="timeline-title">LINIMASA</h2>
+            <h2 id="timeline-title">Linimasa</h2>
             <p>LMNas 37</p>
           </div>
           <ol class="timeline-list">
@@ -120,8 +125,7 @@
             <p class="prize-heading prize-heading--total">Total Hadiah</p>
             <p class="prize-amount">Rp38.000.000,00</p>
             <p class="prize-extras">+ Medali, Sertifikat, dan Piala Bergilir</p>
-            <p class="prize-heading prize-heading--second">Beserta</p>
-            <p class="prize-promo-title">Promo Pendaftaran</p>
+            <p class="prize-promo-line">dan dapatkan<br />promo pendaftaran</p>
             <div class="prize-benefits">
               <div class="prize-benefit">
                 <img src="Assets/figma/prize-book.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
@@ -142,9 +146,10 @@
         <div class="section-inner">
           <h2 class="section-title" id="testimonial-title">Kata Mereka</h2>
           <div class="testimonial-carousel" data-testimonial-carousel role="region" aria-roledescription="carousel" aria-labelledby="testimonial-title">
-            <p class="visually-hidden" data-carousel-status aria-live="polite">Slide 1 dari 3</p>
+            <p class="visually-hidden" data-carousel-status aria-live="polite">Slide 1 dari 4</p>
             <div class="testimonial-viewport" data-carousel-viewport>
               <div class="testimonial-track" data-carousel-track>
+                <article class="testimonial-slide" data-carousel-slide></article>
                 <article class="testimonial-slide" data-carousel-slide></article>
                 <article class="testimonial-slide" data-carousel-slide></article>
                 <article class="testimonial-slide" data-carousel-slide></article>
@@ -156,6 +161,7 @@
                 <button type="button" data-carousel-dot="0" aria-label="Testimoni 1" aria-current="true"></button>
                 <button type="button" data-carousel-dot="1" aria-label="Testimoni 2"></button>
                 <button type="button" data-carousel-dot="2" aria-label="Testimoni 3"></button>
+                <button type="button" data-carousel-dot="3" aria-label="Testimoni 4"></button>
               </div>
               <button class="testimonial-arrow" type="button" data-carousel-next aria-label="Testimoni berikutnya"></button>
             </div>
@@ -176,22 +182,22 @@
       <section class="registration-section" id="pendaftaran" aria-labelledby="registration-title">
         <img class="registration-tree" src="Assets/figma/registration-tree.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="section-inner">
-          <p class="registration-kicker">Tunggu Apa lagi?</p>
+          <p class="registration-kicker">Tunggu Apa Lagi?</p>
           <h2 class="registration-title" id="registration-title">Daftar Sekarang!</h2>
           <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>Daftar</a>
           <div class="book-promo" aria-labelledby="book-promo-title">
             <div class="book-promo-copy">
               <h3 id="book-promo-title">
-                <span class="visually-hidden">Buku Pembahasan Soal LMNas 36</span>
+                <span class="visually-hidden">Buku Soal dan Pembahasan LMNas</span>
                 <img class="book-title-line book-title-line--one" src="Assets/figma/book-title-line-1.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
                 <img class="book-title-line book-title-line--two" src="Assets/figma/book-title-line-2.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
               </h3>
-              <p><span class="visually-hidden">Beli Disini :</span><img class="book-store-label" src="Assets/figma/book-store-label.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" /></p>
-              <div class="book-stores" aria-label="Toko buku pembahasan LMNas 36">
-                <a href="https://shopee.co.id/lmnasstore" target="_blank" rel="noopener noreferrer" aria-label="Beli buku pembahasan LMNas 36 di Shopee">
+              <p class="book-purchase-cta"><span class="visually-hidden">Beli sekarang</span><span aria-hidden="true">Beli sekarang</span></p>
+              <div class="book-stores" aria-label="Saluran pembelian buku LMNas">
+                <a class="book-store-link book-store-link--shopee" href="https://shopee.co.id/lmnasstore" target="_blank" rel="noopener noreferrer" aria-label="Beli melalui Shopee">
                   <img src="Assets/figma/book-store-shopee.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
                 </a>
-                <a href="https://www.tokopedia.com/lmnas-semnas" target="_blank" rel="noopener noreferrer" aria-label="Beli buku pembahasan LMNas 36 di Tokopedia">
+                <a class="book-store-link book-store-link--tokopedia" href="https://www.tokopedia.com/lmnas-semnas" target="_blank" rel="noopener noreferrer" aria-label="Beli melalui Tokopedia">
                   <img src="Assets/figma/book-store-tokopedia.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
                 </a>
               </div>
@@ -208,9 +214,11 @@
         <img class="contact-tree" src="Assets/figma/contact-tree.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="section-inner contact-inner">
           <h2 class="section-title" id="contact-title">Ada Pertanyaan?</h2>
-          <span class="faq-label">Narahubung</span>
-          <p>SMP: Flavia (<a href="tel:+6285113291516">0851 1329 1516</a>)</p>
-          <p>SMA: Fatiya (<a href="tel:+6285173085643">0851 7308 5643</a>)</p>
+          <p class="contact-intro">Anda dapat menghubungi contact person di bawah ini:</p>
+          <div class="contact-list">
+            <p class="contact-person"><strong>SMP</strong><a class="contact-whatsapp" href="https://wa.me/6285113291516" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp SMP — Flavia"><img class="contact-whatsapp-icon" src="Assets/figma/contact-whatsapp-figma.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><span>0851 1329 1516</span></a><em>Flavia</em></p>
+            <p class="contact-person"><strong>SMA</strong><a class="contact-whatsapp" href="https://wa.me/6285173085643" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp SMA — Fatiya"><img class="contact-whatsapp-icon" src="Assets/figma/contact-whatsapp-figma.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><span>0851 7308 5643</span></a><em>Fatiya</em></p>
+          </div>
         </div>
       </section>
     </main>
@@ -218,21 +226,36 @@
     <footer class="footer" aria-label="Media partner, mitra, dan kanal resmi">
       <div class="footer-stage">
         <img class="footer-visual" src="Assets/figma/footer-panel-divider-home3.png" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-        <div class="footer-placeholders">
-          <section class="footer-placeholder footer-placeholder--media">
-            <h2 class="footer-heading footer-heading--media">Media Partner</h2>
-          </section>
-          <section class="footer-placeholder footer-placeholder--partner">
+        <div class="footer-partners">
+          <section class="footer-partner-group footer-partner-group--mitra">
             <h2 class="footer-heading footer-heading--partner">Mitra</h2>
+            <ul class="footer-logo-list" aria-label="Mitra LMNAS 37">
+              <li class="footer-logo footer-logo--standard"><img src="Assets/sponsors/standard.png" alt="Standard" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--bsm"><img src="Assets/sponsors/bsm-rental-figma.png" alt="BSM Rental" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--mic"><img src="Assets/sponsors/mic-hotel.png" alt="MIC Hotel" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--taman-batik"><img src="Assets/sponsors/taman-batik-terang-bulan.png" alt="Taman Batik Terang Bulan" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--raden"><img src="Assets/sponsors/raden-ht.png" alt="Raden HT" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--wisma"><img src="Assets/sponsors/wisma-kagama.png" alt="Wisma Kagama" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--imperial"><img src="Assets/sponsors/imperial-digital-printing-figma.png" alt="Imperial Digital Printing" loading="lazy" decoding="async" /></li>
+            </ul>
+          </section>
+          <section class="footer-partner-group footer-partner-group--media">
+            <h2 class="footer-heading footer-heading--media">Media Partner</h2>
+            <ul class="footer-logo-list" aria-label="Media partner LMNAS 37">
+              <li class="footer-logo footer-logo--jogja-tv"><img src="Assets/partners/jogja-tv.png" alt="Jogja TV" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--ikut-event"><img src="Assets/partners/ikut-event-figma.png" alt="Ikut Event" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--ikahimatika"><img src="Assets/partners/ikahimatika-56586a.png" alt="Ikahimatika" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--kotaperak"><img src="Assets/partners/kotaperak-figma.png" alt="Kotaperak 94.6 FM" loading="lazy" decoding="async" /></li>
+            </ul>
           </section>
         </div>
         <div class="footer-socials" aria-label="Kanal resmi LMNAS dan Semnastika UGM">
           <img class="footer-socials-art" src="Assets/figma/footer-socials-home3.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-          <a href="https://www.facebook.com/lombamatematika/" class="footer-social footer-social--facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook LMNas dan Semnastika UGM"><span>LMNAS DAN SEMNASTIKA UGM</span></a>
-          <a href="https://www.instagram.com/lmnas_semnas/" class="footer-social footer-social--instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
-          <a href="https://www.youtube.com/@lmnas_semnas" class="footer-social footer-social--youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube LMNas dan Semnastika UGM"><span>@LMNAS &amp; SEMNASTIKA UGM</span></a>
-          <a href="https://x.com/lmnas_semnas" class="footer-social footer-social--x" target="_blank" rel="noopener noreferrer" aria-label="X LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
-          <a href="https://www.tiktok.com/@lmnas_semnas" class="footer-social footer-social--tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok LMNas dan Semnastika UGM"><span>@LMNAS_SEMNAS</span></a>
+          <a href="https://www.facebook.com/lombamatematika/" class="footer-social footer-social--facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook LMNas dan Semnastika UGM"><span>LMNas dan Semnastika UGM</span></a>
+          <a href="https://www.instagram.com/lmnas_semnas/" class="footer-social footer-social--instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram LMNas dan Semnastika UGM"><span>@lmnas_semnas</span></a>
+          <a href="https://www.youtube.com/@lmnas_semnas" class="footer-social footer-social--youtube" target="_blank" rel="noopener noreferrer" aria-label="YouTube LMNas dan Semnastika UGM"><span>@lmnas &amp; Semnastika UGM</span></a>
+          <a href="https://x.com/lmnas_semnas" class="footer-social footer-social--x" target="_blank" rel="noopener noreferrer" aria-label="X LMNas dan Semnastika UGM"><span>@lmnas_semnas</span></a>
+          <a href="https://www.tiktok.com/@lmnas_semnas" class="footer-social footer-social--tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok LMNas dan Semnastika UGM"><span>@lmnas_semnas</span></a>
         </div>
       </div>
     </footer>
