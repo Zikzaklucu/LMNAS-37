@@ -16,19 +16,32 @@ try {
 test("formats the remaining time as days, hours, minutes, and seconds", () => {
   assert.equal(typeof countdown?.formatCountdown, "function");
 
-  const target = new Date("2026-09-01T00:00:00+07:00");
+  const target = new Date("2026-09-01T12:00:00+07:00");
   const now = new Date("2026-08-23T17:13:42+07:00");
 
   assert.deepEqual(countdown.formatCountdown(target, now), {
-    value: "8:06:46:18",
-    label: "8 hari, 6 jam, 46 menit, 18 detik",
+    value: "8:18:46:18",
+    label: "8 hari, 18 jam, 46 menit, 18 detik",
     complete: false,
   });
 });
 
+test("keeps registration closed until exactly noon WIB", () => {
+  const target = new Date("2026-09-01T12:00:00+07:00");
+
+  assert.equal(
+    countdown.formatCountdown(target, new Date("2026-09-01T11:59:59+07:00")).complete,
+    false,
+  );
+  assert.equal(
+    countdown.formatCountdown(target, new Date("2026-09-01T12:00:00+07:00")).complete,
+    true,
+  );
+});
+
 test("stops at zero when registration has opened", () => {
-  const target = new Date("2026-09-01T00:00:00+07:00");
-  const now = new Date("2026-09-01T00:01:00+07:00");
+  const target = new Date("2026-09-01T12:00:00+07:00");
+  const now = new Date("2026-09-01T12:01:00+07:00");
 
   assert.deepEqual(countdown.formatCountdown(target, now), {
     value: "0:00:00:00",

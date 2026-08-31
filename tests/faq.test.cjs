@@ -61,6 +61,14 @@ test("all eleven FAQ items are semantic, closed by default, and controllable", (
   assert.doesNotMatch(script, /innerHTML|eval\(|setInterval/);
 });
 
+test("the material FAQ links directly to the official syllabus", () => {
+  const materialAnswer = html.match(/<div class="faq-answer" id="faq-answer-8"[\s\S]*?<\/article>/)?.[0] || "";
+
+  assert.match(materialAnswer, /Materi lomba lebih lanjut dapat dilihat pada <a href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">silabus LMNas UGM<\/a>\./);
+  assert.match(css, /\.faq-answer-content a \{[^}]*color: var\(--green-dark\);[^}]*font-weight: 700;[^}]*text-decoration-thickness: 2px;[^}]*text-underline-offset: 3px;/s);
+  assert.match(css, /\.faq-answer-content a:focus-visible \{[^}]*outline: 3px solid var\(--green-dark\);[^}]*outline-offset: 3px;/s);
+});
+
 test("the FAQ has no page-load reveal and remains reduced-motion safe for interaction", () => {
   assert.doesNotMatch(css, /motion-enabled|motion-ready|faq-title-enter|faq-card-enter|animation-delay/);
   assert.doesNotMatch(script, /motion-enabled|motion-ready|requestAnimationFrame/);

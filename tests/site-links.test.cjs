@@ -22,8 +22,24 @@ test("all Daftar CTA buttons use the registration website", () => {
 });
 
 test("the registration CTA preserves the approved mixed-case copy", () => {
+  assert.match(html, /<a class="figma-button" href="https:\/\/pendaftaran\.lmnas-ugm\.com" data-registration-link>Daftar<\/a>/);
+  assert.doesNotMatch(html, />DAFTAR<\/a>/);
   assert.match(html, /<p class="registration-kicker">Tunggu Apa Lagi\?<\/p>/);
   assert.doesNotMatch(css, /\.registration-kicker[^}]*text-transform:\s*uppercase/);
+});
+
+test("the hero leads with LMNAS 37, then the formal event name and theme", () => {
+  const hero = html.slice(html.indexOf('<section class="hero"'), html.indexOf('<section class="countdown-section"'));
+  const titleIndex = hero.indexOf('<h1 id="hero-title">LMNAS 37</h1>');
+  const eventNameIndex = hero.indexOf('<p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada</p>');
+  const themeIndex = hero.indexOf('<p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br />to Broader Thinking and Limitless Potential”</p>');
+
+  assert.ok(titleIndex >= 0);
+  assert.ok(titleIndex < eventNameIndex);
+  assert.ok(eventNameIndex < themeIndex);
+  assert.doesNotMatch(hero, /Selamat Datang/i);
+  assert.match(css, /\.hero-event-name \{[^}]*font-family: "Rumble Brave", Georgia, serif;[^}]*font-size: 32px;[^}]*line-height: 1\.15;/);
+  assert.match(css, /\.hero-copy \.hero-subhead \{[^}]*font-family: var\(--body\);[^}]*font-size: 20px;/);
 });
 
 test("the skip link targets the main content landmark", () => {
@@ -263,7 +279,8 @@ test("the Kata Mereka section uses the Figma portrait and card geometry", () => 
   assert.match(html, /<h2 class="section-title" id="testimonial-title">Kata Mereka<\/h2>/);
   assert.match(css, /\.testimonial-section \.section-title \{[^}]*font-size: 128px;[^}]*letter-spacing: \.2em;/);
   assert.match(css, /\.testimonial-photo \{[^}]*top: 89px;[^}]*left: 106px;[^}]*width: 396px;[^}]*height: 448px;/);
-  assert.match(css, /\.testimonial-copy \{[^}]*width: min\(1085px, calc\(100% - 48px\)\);[^}]*height: 514px;[^}]*font-size: 27px;/);
+  assert.match(css, /\.testimonial-copy \{[^}]*width: min\(1085px, calc\(100% - 48px\)\);[^}]*height: auto;[^}]*min-height: 0;[^}]*font-size: 27px;/);
+  assert.doesNotMatch(css, /\.testimonial-copy \{[^}]*min-height: 514px;/);
 });
 
 test("the lower page includes the complete Figma section sequence", () => {
@@ -356,25 +373,29 @@ test("the book promotion uses the original Figma title, store, and cover geometr
   assert.doesNotMatch(css, /\.book-covers img \{[^}]*filter:/);
 });
 
-test("the book promotion links its marketplace artwork to the verified official stores", () => {
+test("the book promotion exposes all four verified official order channels", () => {
   const bookIndex = html.indexOf('<div class="book-promo"');
   const contactIndex = html.indexOf('<section class="contact-section"');
   const bookPromo = html.slice(bookIndex, contactIndex);
 
   assert.match(bookPromo, /<a class="book-store-link book-store-link--shopee" href="https:\/\/shopee\.co\.id\/lmnasstore" target="_blank" rel="noopener noreferrer" aria-label="Beli melalui Shopee">[\s\S]*?book-store-shopee\.svg[\s\S]*?<\/a>/);
   assert.match(bookPromo, /<a class="book-store-link book-store-link--tokopedia" href="https:\/\/www\.tokopedia\.com\/lmnas-semnas" target="_blank" rel="noopener noreferrer" aria-label="Beli melalui Tokopedia">[\s\S]*?book-store-tokopedia\.svg[\s\S]*?<\/a>/);
-  assert.equal((bookPromo.match(/<a class="book-store-link/g) || []).length, 2);
-  assert.doesNotMatch(bookPromo, /book-store-link--whatsapp|book-store-link--tiktok|wa\.me|tiktok\.com/);
-  assert.match(css, /\.book-stores \{ display: flex; gap: 16px; \}/);
+  assert.match(bookPromo, /<a class="book-store-link book-store-link--whatsapp" href="https:\/\/wa\.me\/6285183126827" target="_blank" rel="noopener noreferrer" aria-label="Beli melalui WhatsApp">[\s\S]*?<span class="book-store-icon book-store-icon--whatsapp" aria-hidden="true"><\/span>[\s\S]*?<span class="book-store-name">WhatsApp<\/span>[\s\S]*?<\/a>/);
+  assert.match(bookPromo, /<a class="book-store-link book-store-link--tiktok" href="https:\/\/www\.tiktok\.com\/@lmnas_semnas" target="_blank" rel="noopener noreferrer" aria-label="Beli melalui TikTok">[\s\S]*?<span class="book-store-icon book-store-icon--tiktok" aria-hidden="true"><\/span>[\s\S]*?<span class="book-store-name">TikTok<\/span>[\s\S]*?<\/a>/);
+  assert.equal((bookPromo.match(/<a class="book-store-link/g) || []).length, 4);
+  assert.match(css, /\.book-stores \{ display: grid; width: 356px; grid-template-columns: repeat\(2, 170px\); gap: 12px 16px; \}/);
   assert.match(css, /\.book-stores a \{[^}]*display: flex;[^}]*width: 170px;[^}]*height: 62px;[^}]*align-items: center;[^}]*justify-content: center;[^}]*border: 5px solid var\(--green\);[^}]*border-radius: 12px;/);
   assert.match(css, /\.book-stores img \{ width: auto; height: 30px; max-width: calc\(100% - 24px\); \}/);
   assert.match(css, /\.book-store-link--tokopedia img \{ height: 32px; \}/);
+  assert.match(css, /\.book-store-link--whatsapp, \.book-store-link--tiktok \{[^}]*gap: 8px;[^}]*font-family: var\(--body\);[^}]*font-size: 18px;[^}]*font-weight: 700;/);
+  assert.match(css, /\.book-store-icon--whatsapp \{[^}]*contact-whatsapp-figma\.svg/);
+  assert.match(css, /\.book-store-icon--tiktok \{[^}]*footer-socials-home3\.svg/);
   assert.match(css, /\.book-stores a \{[^}]*transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;/);
   assert.match(css, /\.book-stores a:focus-visible \{ outline: 3px solid var\(--gold\); outline-offset: 4px; \}/);
   assert.match(css, /\.book-stores a:active \{ transform: translateY\(0\); box-shadow: 0 2px 4px rgba\(0,0,0,\.18\); \}/);
   assert.match(css, /@media \(hover: hover\) and \(pointer: fine\) \{\s*\.book-stores a:hover \{ transform: translateY\(-2px\); box-shadow: 0 5px 9px rgba\(0,0,0,\.22\); border-color: var\(--green-dark\); \}\s*\}/);
   assert.doesNotMatch(css, /\.book-stores \{ flex-direction: column/);
-  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.book-stores \{ justify-content: center; gap: 12px; \}[\s\S]*?\.book-stores a \{ display: flex; width: 145px; height: 58px; max-width: calc\(50% - 6px\); align-items: center; \}/);
+  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.book-stores \{ width: min\(100%, 340px\); grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); justify-content: center; gap: 12px;[\s\S]*?\.book-stores a \{ width: 100%; height: 58px; max-width: none;/);
   assert.match(fs.readFileSync(path.join(__dirname, "..", "Assets", "figma", "book-store-shopee.svg"), "utf8"), /<svg width="958" height="307" viewBox="0 0 958 307"/);
   assert.match(fs.readFileSync(path.join(__dirname, "..", "Assets", "figma", "book-store-tokopedia.svg"), "utf8"), /<svg width="845" height="277" viewBox="0 0 845 277"/);
 });
@@ -423,7 +444,7 @@ test("the footer exposes every official channel as a safe external link", () => 
 test("the book promotion stays contained across the tablet-to-desktop seam", () => {
   assert.match(
     css,
-    /@media \(min-width: 1201px\) and \(max-width: 1332px\) \{[\s\S]*?\.book-promo \{[^}]*width: min\(100%, calc\(100vw - 160px\)\);[^}]*grid-template-columns: minmax\(0, 1fr\) minmax\(260px, 38%\);[^}]*transform: none;/,
+    /@media \(min-width: 1200px\) and \(max-width: 1332px\) \{[\s\S]*?\.book-promo \{[^}]*width: min\(100%, calc\(100vw - 160px\)\);[^}]*grid-template-columns: minmax\(0, 1fr\) minmax\(260px, 38%\);[^}]*transform: none;/,
   );
   assert.match(css, /\.registration-section \{[^}]*overflow-x: clip;[^}]*overflow-y: visible;/);
   assert.doesNotMatch(css, /\.registration-section \{[^}]*overflow: hidden;/);
@@ -541,7 +562,8 @@ test("published dates and registration links are hydrated from the site configur
   const script = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
 
   assert.equal(config.registration.url, "https://pendaftaran.lmnas-ugm.com");
-  assert.equal(config.countdown.target, "2026-09-01T00:00:00+07:00");
+  assert.equal(config.countdown.target, "2026-09-01T12:00:00+07:00");
+  assert.equal(config.phases["registration-one"].start, "2026-09-01T12:00:00+07:00");
   assert.deepEqual(Object.keys(config.phases), [
     "registration-one",
     "registration-two",
@@ -551,6 +573,8 @@ test("published dates and registration links are hydrated from the site configur
   assert.match(html, /<script src="site-config\.js\?v=1" defer><\/script>/);
   assert.equal((html.match(/data-registration-link/g) || []).length, 2);
   assert.equal((html.match(/data-phase-key=/g) || []).length, 4);
+  assert.match(html, /data-countdown-target="2026-09-01T12:00:00\+07:00"/);
+  assert.match(html, /data-phase-key="registration-one" data-phase-start="2026-09-01T12:00:00\+07:00"/);
   assert.match(script, /const config = window\.LMNAS_SITE_CONFIG/);
   assert.match(script, /document\.querySelectorAll\("\[data-registration-link\]"\)/);
   assert.match(script, /document\.querySelectorAll\("\[data-phase-key\]"\)/);

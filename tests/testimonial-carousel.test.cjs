@@ -128,7 +128,8 @@ test("reduced motion keeps only a short opacity fade", () => {
 
 test("testimonial height follows the active slide instead of clipping at a fixed section height", () => {
   assert.match(css, /\.testimonial-section \{ height: auto; min-height: 0;[^}]*overflow-x: clip; overflow-y: visible;/);
-  assert.match(css, /\.testimonial-copy \{[^}]*height: auto;[^}]*min-height: 514px;/);
+  assert.match(css, /\.testimonial-copy \{[^}]*height: auto;[^}]*min-height: 0;/);
+  assert.doesNotMatch(css, /\.testimonial-copy \{[^}]*min-height: 514px;/);
   assert.match(css, /\.testimonial-viewport \{ width: 100%; overflow-x: clip; overflow-y: visible;/);
   assert.match(script, /const syncHeight = \(\) =>/);
   assert.match(script, /viewport\.style\.height = ""/);

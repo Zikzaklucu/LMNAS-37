@@ -158,6 +158,18 @@
     transform 240ms cubic-bezier(.22, 1, .36, 1);
 }
 
+.faq-answer-content a {
+  color: var(--green-dark);
+  font-weight: 700;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.faq-answer-content a:focus-visible {
+  outline: 3px solid var(--green-dark);
+  outline-offset: 3px;
+}
+
 .faq-card.is-open .faq-answer-content {
   opacity: 1;
   transform: translateY(0);
