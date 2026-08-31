@@ -1,0 +1,57 @@
+"use strict";
+
+const test = require("node:test");
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+
+const root = path.join(__dirname, "..");
+const pagesBase = "https://zikzaklucu.github.io/LMNAS-37/";
+const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), "utf8");
+
+const absolutizeCssUrls = (css, publicUrl) => css.replace(
+  /url\((["'])([^"']+)\1\)/g,
+  (match, quote, value) => {
+    if (/^(?:https?:|data:|#)/i.test(value)) return match;
+    return `url(${quote}${new URL(value, publicUrl).href}${quote})`;
+  },
+);
+
+test("the deploy bundle mirrors the canonical shared stylesheet", () => {
+  const canonical = read("style.css");
+  const expectedShared = absolutizeCssUrls(canonical, `${pagesBase}style.css`);
+
+  assert.equal(
+    read("LMNas_Deployed/style.css"),
+    `/* LMNAS 37 WordPress deploy bundle: local assets resolve through GitHub Pages. */\n${expectedShared}`,
+  );
+  assert.equal(
+    read("LMNas_Deployed/faq/style.css"),
+    `/* LMNAS 37 FAQ WordPress deploy CSS: shared styles followed by FAQ styles. */\n/* Inlined from ../style.css. */\n${expectedShared.trimEnd()}\n\n/* Inlined from faq/faq.css. */\n${absolutizeCssUrls(read("faq/faq.css"), `${pagesBase}faq/faq.css`)}`,
+  );
+  assert.equal(
+    read("LMNas_Deployed/peraturan/style.css"),
+    `/* LMNAS 37 Peraturan WordPress deploy CSS: shared styles followed by page styles. */\n/* Inlined from ../style.css. */\n${expectedShared.trimEnd()}\n\n/* Inlined from peraturan/peraturan.css. */\n${absolutizeCssUrls(read("peraturan/peraturan.css"), `${pagesBase}peraturan/peraturan.css`)}`,
+  );
+});
+
+test("the deployed home page includes the approved hero flowers and registration video", () => {
+  const deployed = read("LMNas_Deployed/index.html");
+
+  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=113" \/>/);
+  assert.match(deployed, /<p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada<\/p>/);
+  assert.match(
+    deployed,
+    /<div class="hero-cta">\s*<img class="hero-flowers" src="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/Assets\/figma\/hero-flowers\.svg"[^>]*>\s*<a class="figma-button"[^>]*>Daftar<\/a>\s*<\/div>/,
+  );
+  assert.match(
+    deployed,
+    /<iframe\s+src="https:\/\/www\.youtube-nocookie\.com\/embed\/_ruwWMc1S_w"\s+title="Video Alur Pendaftaran LMNAS 37"[^>]*allowfullscreen><\/iframe>/,
+  );
+  assert.doesNotMatch(deployed, /registration-video\.png/);
+});
+
+test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => {
+  assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=2" \/>/);
+  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=2" \/>/);
+});

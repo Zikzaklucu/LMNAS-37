@@ -42,6 +42,20 @@ test("the hero leads with LMNAS 37, then the formal event name and theme", () =>
   assert.match(css, /\.hero-copy \.hero-subhead \{[^}]*font-family: var\(--body\);[^}]*font-size: 20px;/);
 });
 
+test("the hero flowers stay vertically centered beside the registration CTA", () => {
+  const hero = html.slice(html.indexOf('<section class="hero"'), html.indexOf('<section class="countdown-section"'));
+
+  assert.match(
+    hero,
+    /<div class="hero-cta">\s*<img class="hero-flowers"[^>]*>\s*<a class="figma-button"[^>]*>Daftar<\/a>\s*<\/div>/,
+  );
+  assert.match(css, /\.hero-cta \{[^}]*position: relative;[^}]*margin-top: 34px;/);
+  assert.match(
+    css,
+    /\.hero-cta \.hero-flowers \{[^}]*top: 50%;[^}]*left: 50%;[^}]*transform: translate\(-50%, -50%\);/,
+  );
+});
+
 test("the skip link targets the main content landmark", () => {
   assert.match(html, /<a class="skip-link" href="#main-content">/);
   assert.match(html, /<main id="main-content">/);
@@ -606,14 +620,15 @@ test("navigation and footer labels follow the approved copy and footer links mee
   assert.match(css, /\.footer-social \{[^}]*min-height: 44px;/);
 });
 
-test("the registration-flow panel shows the original in-progress video artwork", () => {
+test("the registration-flow panel embeds the supplied YouTube video accessibly", () => {
   assert.match(
     html,
-    /<figure class="video-card">\s*<img src="Assets\/figma\/registration-video\.png" alt="Video alur pendaftaran LMNAS 37" loading="lazy" decoding="async" \/>\s*<\/figure>/,
+    /<figure class="video-card">\s*<iframe\s+src="https:\/\/www\.youtube-nocookie\.com\/embed\/_ruwWMc1S_w"\s+title="Video Alur Pendaftaran LMNAS 37"\s+loading="lazy"[^>]*allowfullscreen><\/iframe>\s*<\/figure>/,
   );
-  assert.doesNotMatch(html, /<a class="video-card"/);
+  assert.doesNotMatch(html, /registration-video\.png/);
+  assert.doesNotMatch(html, /youtube-nocookie\.com\/embed\/_ruwWMc1S_w\?[^"']*autoplay=1/);
   assert.match(css, /\.video-card \{[^}]*background: #000;/);
-  assert.match(css, /\.video-card img \{[^}]*width: 100%;[^}]*height: 100%;[^}]*object-fit: cover;/);
+  assert.match(css, /\.video-card iframe \{[^}]*width: 100%;[^}]*height: 100%;[^}]*border: 0;/);
   assert.match(css, /\.flow-section \.section-title \{[^}]*margin: 0 auto 34px;/);
   assert.match(css, /\.flow-heading-art \{[^}]*top: 84px;/);
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.flow-section \.section-title \{[^}]*margin-bottom: 48px;/);

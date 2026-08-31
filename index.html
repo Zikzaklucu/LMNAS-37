@@ -25,7 +25,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css?v=111" />
+    <link rel="stylesheet" href="style.css?v=113" />
     <script src="navigation.js?v=4" defer></script>
     <script src="site-config.js?v=1" defer></script>
     <script src="countdown.js?v=4" defer></script>
@@ -63,13 +63,15 @@
       <section class="hero" id="home" aria-labelledby="hero-title">
         <img class="hero-art" src="Assets/figma/hero-expedition.svg" alt="" aria-hidden="true" />
         <img class="hero-mascot" src="Assets/figma/expedition-mascot.png" alt="" aria-hidden="true" />
-        <img class="hero-flowers" src="Assets/figma/hero-flowers.svg" alt="" aria-hidden="true" />
         <img class="hero-wood-divider" src="Assets/figma/hero-wood-divider.png" alt="" aria-hidden="true" />
         <div class="hero-copy">
           <h1 id="hero-title">LMNAS 37</h1>
           <p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada</p>
           <p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br />to Broader Thinking and Limitless Potential”</p>
-          <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>Daftar</a>
+          <div class="hero-cta">
+            <img class="hero-flowers" src="Assets/figma/hero-flowers.svg" alt="" aria-hidden="true" />
+            <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>Daftar</a>
+          </div>
         </div>
       </section>
 
@@ -183,7 +185,13 @@
         <div class="section-inner">
           <h2 class="section-title" id="flow-title">Alur Pendaftaran</h2>
           <figure class="video-card">
-            <img src="Assets/figma/registration-video.png" alt="Video alur pendaftaran LMNAS 37" loading="lazy" decoding="async" />
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/_ruwWMc1S_w"
+              title="Video Alur Pendaftaran LMNAS 37"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
           </figure>
         </div>
       </section>
