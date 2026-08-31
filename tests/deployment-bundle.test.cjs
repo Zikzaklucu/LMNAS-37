@@ -53,7 +53,7 @@ test("the deployed home page includes the approved hero flowers and registration
 
 test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => {
   assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=2" \/>/);
-  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=2" \/>/);
+  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=4" \/>/);
 });
 
 test("the WordPress deploy bundle uses the confirmed WordPress route contract", () => {

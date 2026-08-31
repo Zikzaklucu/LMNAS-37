@@ -178,6 +178,13 @@
   const frame = "Assets/figma/portrait-frame.png";
   const testimonials = [
     {
+      name: "Janssen Samuel Halim",
+      placement: "Juara 1 LMNas 36 tingkat SMA",
+      photo: "Assets/figma/testimonial-janssen-20f486.png",
+      nameSize: 96,
+      quote: "Halo semuanya, perkenalkan nama saya Janssen Samuel Halim sebagai juara 1 LMNas UGM yang ke-36. Kesan saya saat mengikuti LMNas UGM adalah setiap soal yang disajikan, baik dari babak penyisihan, semifinal, final, juga grand final, sangat berkualitas, menarik dan menantang untuk saya kerjakan, dan sangat menyenangkan untuk saya diskusikan dengan teman-teman saya. Setiap Panitia LMNas juga sangat berusaha keras dan juga dengan baik memenuhi segala kebutuhan peserta LMNas UGM. Pesan saya untuk setiap peserta LMNas UGM tahun ini adalah persiapkan diri dengan baik, belajar dengan giat, raihlah prestasi yang terbaik, dan jangan lupa berdoa. Terima kasih.",
+    },
+    {
       name: "Aldan Azahwan Ikhsan",
       placement: "Peraih Medali Perunggu LMNas 36 tingkat SMA",
       photo: "Assets/figma/testimonial-aldan.jpg?v=2",
@@ -197,13 +204,6 @@
       photo: "Assets/figma/testimonial-jeremy-7f6210.png",
       nameSize: 96,
       quote: "Halo semuanya, nama aku Jeremy Manuelle Gading. Aku merupakan peraih medali perak pada LMNas 36 pada tingkat SMP tahun lalu. Nah kali ini saya ingin memberikan beberapa pesan-pesan saya terkait tentang Lomba Matematika Nasional Universitas Gajah Mada atau bisa dikenal dengan LMNas UGM. Yang pasti yang pertama saya merasakan banyak sekali pertemanan yang terjadi, baik itu pertemanan di luar lomba dan di dalam lomba. Yang kedua, saya ingin terima kasih kepada tim Panitia yang telah berusaha sekeras-kerasnya untuk menindak terkait kecurangan. Karena kita pun tahu bahwa sportivitas dan tindakan kecurangan itu sangat-sangat tidak diizinkan di dalam lomba manapun. Dan yang terakhir, saya ingin mengucapkan terima kasih juga kepada tim Panitia yang telah menyusun secara sebaik-baik dari mereka. Itu saja, terima kasih.",
-    },
-    {
-      name: "Janssen Samuel Halim",
-      placement: "Juara 1 LMNas 36 tingkat SMA",
-      photo: "Assets/figma/testimonial-janssen-20f486.png",
-      nameSize: 96,
-      quote: "Halo semuanya, perkenalkan nama saya Janssen Samuel Halim sebagai juara 1 LMNas UGM yang ke-36. Kesan saya saat mengikuti LMNas UGM adalah setiap soal yang disajikan, baik dari babak penyisihan, semifinal, final, juga grand final, sangat berkualitas, menarik dan menantang untuk saya kerjakan, dan sangat menyenangkan untuk saya diskusikan dengan teman-teman saya. Setiap Panitia LMNas juga sangat berusaha keras dan juga dengan baik memenuhi segala kebutuhan peserta LMNas UGM. Pesan saya untuk setiap peserta LMNas UGM tahun ini adalah persiapkan diri dengan baik, belajar dengan giat, raihlah prestasi yang terbaik, dan jangan lupa berdoa. Terima kasih.",
     },
   ];
 

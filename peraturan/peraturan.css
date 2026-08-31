@@ -111,8 +111,8 @@
 
 .camera-examples {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
   margin-left: -1.85em;
 }
 
@@ -122,11 +122,25 @@
 }
 
 .camera-example img {
+  display: block;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  height: auto;
+  aspect-ratio: 3 / 2;
   border: 5px solid var(--green);
   border-radius: 18px;
   object-fit: cover;
+}
+
+.camera-example--correct img {
+  object-position: center 64%;
+}
+
+.camera-example:nth-child(2) img {
+  object-position: center 68%;
+}
+
+.camera-example:nth-child(3) img {
+  object-position: center 45%;
 }
 
 .camera-example figcaption {
@@ -249,14 +263,12 @@
   }
 
   .camera-examples {
-    grid-template-columns: 1fr;
     gap: 24px;
     margin-left: -1.4em;
   }
 
   .camera-example {
-    width: min(100%, 320px);
-    margin-inline: auto;
+    width: 100%;
   }
 
   .camera-example img {

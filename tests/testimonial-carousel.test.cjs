@@ -25,6 +25,16 @@ test("the testimonial carousel exposes four semantic slides and controls", () =>
   assert.match(html, /role="region" aria-roledescription="carousel"/);
 });
 
+test("testimonials follow the requested winner order", () => {
+  const placements = [...script.matchAll(/placement: "([^"]+)"/g)].map((match) => match[1]);
+  assert.deepEqual(placements, [
+    "Juara 1 LMNas 36 tingkat SMA",
+    "Peraih Medali Perunggu LMNas 36 tingkat SMA",
+    "Juara 1 LMNas 36 tingkat SMP",
+    "Peraih Medali Perak LMNas 36 tingkat SMP",
+  ]);
+});
+
 test("every winner has a distinct local portrait", () => {
   for (const photo of photos) {
     assert.match(script, new RegExp(`Assets/figma/${photo.replaceAll(".", "\\.")}`));
