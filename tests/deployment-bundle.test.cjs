@@ -55,3 +55,44 @@ test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => 
   assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=2" \/>/);
   assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=2" \/>/);
 });
+
+test("the WordPress deploy bundle uses the confirmed WordPress route contract", () => {
+  const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&");
+  const routes = {
+    "LMNas_Deployed/index.html": [
+      "https://lmnas.fmipa.ugm.ac.id/bukupanduanlmnas37/",
+      "https://lmnas.fmipa.ugm.ac.id/peraturan-lmnas-37/",
+      "https://lmnas.fmipa.ugm.ac.id/faq-lmnas-37/",
+    ],
+    "LMNas_Deployed/faq/index.html": [
+      "https://lmnas.fmipa.ugm.ac.id",
+      "https://lmnas.fmipa.ugm.ac.id/bukupanduanlmnas37/",
+      "https://lmnas.fmipa.ugm.ac.id/peraturan-lmnas-37/",
+      "https://lmnas.fmipa.ugm.ac.id/faq-lmnas-37/",
+    ],
+    "LMNas_Deployed/peraturan/index.html": [
+      "https://lmnas.fmipa.ugm.ac.id",
+      "https://lmnas.fmipa.ugm.ac.id/bukupanduanlmnas37/",
+      "https://lmnas.fmipa.ugm.ac.id/peraturan-lmnas-37/",
+      "https://lmnas.fmipa.ugm.ac.id/faq-lmnas-37/",
+    ],
+    "LMNas_Deployed/buku-panduan/index.html": [
+      "https://lmnas.fmipa.ugm.ac.id",
+      "https://lmnas.fmipa.ugm.ac.id/bukupanduanlmnas37/",
+      "https://lmnas.fmipa.ugm.ac.id/peraturan-lmnas-37/",
+      "https://lmnas.fmipa.ugm.ac.id/faq-lmnas-37/",
+    ],
+  };
+
+  for (const [file, fileRoutes] of Object.entries(routes)) {
+    const page = read(file);
+    for (const route of fileRoutes) {
+      assert.match(page, new RegExp(`href="${escapeRegExp(route)}`));
+    }
+  }
+
+  assert.match(
+    read("LMNas_Deployed/faq/index.html"),
+    /href="https:\/\/lmnas\.fmipa\.ugm\.ac\.id\/peraturan-lmnas-37\/">halaman peraturan Babak Penyisihan/,
+  );
+});
