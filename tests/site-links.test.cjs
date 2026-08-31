@@ -8,6 +8,7 @@ const vm = require("node:vm");
 
 const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+const navigationScript = fs.readFileSync(path.join(__dirname, "..", "navigation.js"), "utf8");
 
 test("all Daftar CTA buttons use the registration website", () => {
   const hrefs = [...html.matchAll(/<a class="figma-button" href="([^"]+)"[^>]*>Daftar<\/a>/g)]
@@ -58,15 +59,71 @@ test("the countdown exposes four paired lowercase unit labels", () => {
   assert.doesNotMatch(css, /\.countdown-unit-label \{[^}]*text-transform:\s*uppercase/);
 });
 
-test("the navigation exposes the five approved page destinations", () => {
+test("the navigation exposes the approved pages and both contact-person routes", () => {
   const desktopNavigation = html.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
 
-  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 5);
+  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 8);
   assert.match(desktopNavigation, /<a href="#home">Home<\/a>/);
+  assert.match(desktopNavigation, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
   assert.match(desktopNavigation, /<a href="buku-panduan\/">Buku Panduan<\/a>/);
   assert.match(desktopNavigation, /<a href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus<\/a>/);
   assert.match(desktopNavigation, /<a href="peraturan\/">Peraturan<\/a>/);
   assert.match(desktopNavigation, /<a href="faq\/">FAQ<\/a>/);
+  assert.match(desktopNavigation, /<div class="nav-contact">[\s\S]*?<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>[\s\S]*?<div id="nav-contact-menu" class="nav-contact-menu" hidden>[\s\S]*?<a href="https:\/\/wa\.me\/6285113291516" target="_blank" rel="noopener noreferrer">SMP Contact Person<\/a>[\s\S]*?<a href="https:\/\/wa\.me\/6285173085643" target="_blank" rel="noopener noreferrer">SMA Contact Person<\/a>[\s\S]*?<\/div>[\s\S]*?<\/div>/);
+  assert.match(css, /\.nav-contact-menu \{[^}]*position: absolute;[^}]*display: grid;/);
+  assert.match(css, /--green: #3e5626;/);
+  assert.match(css, /\.nav-contact-menu \{[^}]*background: var\(--green\);/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.site-header\[data-nav-ready\] \.nav-toggle \{[^}]*background: var\(--green\);[\s\S]*?\.site-header > nav \{[^}]*background: var\(--green\);/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.nav-contact \{ grid-column: 1 \/ -1;/);
+  assert.match(navigationScript, /querySelector\("\.nav-contact"\)/);
+  assert.match(navigationScript, /setContactOpen\(false\)/);
+});
+
+test("clicking Contact opens its two-option disclosure", () => {
+  const listeners = {};
+  const contactMenu = { hidden: true };
+  const contactToggle = {
+    addEventListener: (type, handler) => { listeners[`contact:${type}`] = handler; },
+    setAttribute: (name, value) => { contactToggle[name] = value; },
+    focus: () => {},
+  };
+  const contact = {
+    contains: () => true,
+    querySelector: (selector) => ({ ".nav-contact-toggle": contactToggle, ".nav-contact-menu": contactMenu }[selector]),
+  };
+  const toggle = {
+    firstElementChild: { textContent: "Menu" },
+    offsetParent: {},
+    addEventListener: (type, handler) => { listeners[`toggle:${type}`] = handler; },
+    setAttribute: () => {},
+    focus: () => {},
+  };
+  const navigation = {
+    addEventListener: (type, handler) => { listeners[`navigation:${type}`] = handler; },
+  };
+  const header = {
+    querySelector: (selector) => ({ ".nav-toggle": toggle, nav: navigation, ".nav-contact": contact }[selector]),
+    toggleAttribute: () => {},
+    hasAttribute: () => false,
+    contains: () => true,
+    setAttribute: () => {},
+  };
+  const documentListeners = {};
+  const context = {
+    window: {
+      matchMedia: () => ({ matches: true, addEventListener: () => {} }),
+    },
+    document: {
+      querySelectorAll: () => [header],
+      addEventListener: (type, handler) => { documentListeners[type] = handler; },
+    },
+  };
+
+  vm.runInNewContext(navigationScript, context);
+  assert.equal(typeof listeners["contact:click"], "function");
+  listeners["contact:click"]();
+  assert.equal(contactMenu.hidden, false);
+  assert.equal(contactToggle["aria-expanded"], "true");
 });
 
 test("contact links match the verified WhatsApp destinations and visible numbers", () => {
@@ -105,6 +162,7 @@ test("the About LMNas copy uses the approved historical and education wording", 
   const aboutSection = html.slice(html.indexOf('aria-labelledby="why-title"'), html.indexOf('id="peta-waktu"'));
   const aboutCopy = aboutSection.match(/<p>([^<]+)<\/p>/)?.[1];
   assert.equal(aboutCopy, "Lomba Matematika Nasional Universitas Gadjah Mada (LMNas UGM) adalah salah satu kompetisi matematika tingkat nasional paling bergengsi di Indonesia yang diinisiasi oleh (Alm) Prof. Dr. rer. nat. Widodo, M.S. pada tahun 1989. Diselenggarakan oleh Himpunan Mahasiswa Matematika (Himatika) UGM, LMNas menjadi ajang kompetisi bernilai tinggi yang diikuti oleh lebih dari 2000 peserta setiap tahunnya dari seluruh penjuru Indonesia. LMNas memberikan kesempatan emas bagi seluruh siswa jenjang SD, SMP, dan SMA atau sederajat untuk menguji kemampuan, mengukir prestasi, dan mengasah potensi matematika mereka di skala nasional.");
+  assert.match(css, /\.why-card p \{[^}]*font-size: 27px;[^}]*letter-spacing: \.03em;[^}]*line-height: 1\.3;[^}]*text-align: justify;/);
   assert.match(html, /og:description[^>]*SMA\/sederajat/);
   assert.match(html, /twitter:description[^>]*SMA\/sederajat/);
 });

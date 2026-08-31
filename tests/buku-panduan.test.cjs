@@ -49,8 +49,16 @@ test("the guide uses the same compact navigation as the main page", () => {
   const mainNavigation = mainHtml.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
   const labels = (navigation) => [...navigation.matchAll(/<a\b[^>]*>([^<]+)<\/a>/g)].map((match) => match[1].trim());
 
-  assert.deepEqual(labels(mainNavigation), ["Home", "Buku Panduan", "Silabus", "Peraturan", "FAQ"]);
-  assert.deepEqual(labels(guideNavigation), ["Home", "Buku Panduan", "Silabus", "Peraturan", "FAQ"]);
+  assert.deepEqual(labels(mainNavigation), ["Home", "Daftar", "Buku Panduan", "Silabus", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
+  assert.deepEqual(labels(guideNavigation), ["Home", "Daftar", "Buku Panduan", "Silabus", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
+  assert.match(mainNavigation, /href="https:\/\/pendaftaran\.lmnas-ugm\.com"[^>]*>Daftar/);
+  assert.match(guideNavigation, /href="https:\/\/pendaftaran\.lmnas-ugm\.com"[^>]*>Daftar/);
+  assert.match(guideNavigation, /<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>/);
+  assert.match(guideNavigation, /href="https:\/\/wa\.me\/6285113291516"[^>]*>SMP Contact Person/);
+  assert.match(guideNavigation, /href="https:\/\/wa\.me\/6285173085643"[^>]*>SMA Contact Person/);
+  assert.match(css, /--green: #3e5626;/);
+  assert.match(css, /\.nav-contact-menu \{[\s\S]*?background: var\(--green\);[\s\S]*?\}/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.site-header\[data-nav-ready\] \.nav-toggle \{[\s\S]*?background: var\(--green\);[\s\S]*?\.site-header > nav \{[\s\S]*?background: var\(--green\);/);
   assert.match(mainNavigation, /href="buku-panduan\/"[^>]*>Buku Panduan/);
   assert.match(mainNavigation, /href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus/);
   assert.match(guideNavigation, /href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus/);
