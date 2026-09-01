@@ -184,7 +184,7 @@ test("contact links match the verified WhatsApp destinations and visible numbers
 
 test("long countdown and tablet timeline have responsive containment rules", () => {
   assert.match(css, /\.countdown-copy h2 \{[^}]*width: 1120px;[^}]*font-size: 100px;[^}]*line-height: 1\.15;/s);
-  assert.match(css, /\.countdown-copy \.section-kicker \{[^}]*white-space: nowrap;/s);
+  assert.match(css, /\.countdown-copy \.section-kicker \{[^}]*width: 100%;[^}]*margin-inline: auto;[^}]*justify-self: center;[^}]*text-align: center;[^}]*white-space: nowrap;/s);
   assert.match(css, /\.countdown-copy--active h2 \{[^}]*order: 1;/s);
   assert.match(css, /\.countdown-copy--active \.section-kicker \{[^}]*order: 2;/s);
   assert.match(css, /\.countdown-copy--active \.countdown-value \{[^}]*order: 3;/s);

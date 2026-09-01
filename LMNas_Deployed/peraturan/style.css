@@ -101,7 +101,7 @@ h1, h2, h3, p { overflow: visible; }
 .countdown-scene { position: absolute; z-index: -2; top: -536px; left: 8px; width: 1152.09px; max-width: none; pointer-events: none; }
 .countdown-art { position: absolute; z-index: -1; top: -24px; left: 50%; width: 1498px; max-width: none; transform: translateX(-50%); }
 .countdown-copy { position: relative; z-index: 2; display: grid; justify-items: center; padding-top: 138px; text-align: center; }
-.countdown-copy .section-kicker { width: 189px; font-family: var(--display); font-size: 48px; letter-spacing: .05em; line-height: 1; white-space: nowrap; }
+.countdown-copy .section-kicker { width: 100%; margin-inline: auto; justify-self: center; font-family: var(--display); font-size: 48px; letter-spacing: .05em; line-height: 1; text-align: center; white-space: nowrap; }
 .countdown-copy h2 { width: 1120px; max-width: calc(100% - 48px); margin: 26px 0 0; color: var(--green); font-family: var(--display); font-size: 100px; font-weight: 400; letter-spacing: .05em; line-height: 1.15; }
 .countdown-copy--active h2 { order: 1; }
 .countdown-copy--active .section-kicker { order: 2; }
@@ -299,7 +299,7 @@ h1, h2, h3, p { overflow: visible; }
   .countdown-scene { top: -470px; left: 50%; width: 1000px; transform: translateX(-57%); }
   .countdown-art { width: 1000px; }
   .countdown-copy { padding-top: 70px; }
-  .countdown-copy .section-kicker { width: auto; font-size: 36px; }
+  .countdown-copy .section-kicker { width: 100%; font-size: 36px; }
   .countdown-copy h2 { width: 100%; margin-top: 20px; font-size: clamp(58px, 12vw, 100px); line-height: 1.15; }
   .countdown-value { width: min(760px, calc(100% - 36px)); margin-top: 18px; font-size: clamp(46px, 8vw, 62px); line-height: 1.1; }
   .countdown-unit-label { font-size: 16px; }
@@ -534,7 +534,7 @@ h1, h2, h3, p { overflow: visible; }
   .countdown-scene { top: -360px; width: 760px; transform: translateX(-57%); }
   .countdown-art { top: -12px; width: 430px; }
   .countdown-copy { width: 100%; min-width: 0; grid-template-columns: minmax(0, 1fr); padding-top: 55px; }
-  .countdown-copy .section-kicker { width: auto; font-size: 30px; }
+  .countdown-copy .section-kicker { width: 100%; font-size: 30px; }
   .countdown-copy h2 { width: calc(100% - 24px); font-size: clamp(46px, 16vw, 58px); line-height: 1.05; }
   .countdown-value { width: calc(100% - 24px); gap: 4px; font-size: clamp(30px, 9vw, 40px); }
   .countdown-unit { gap: 5px; }
