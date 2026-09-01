@@ -625,10 +625,15 @@ test("the registration-flow panel embeds the supplied YouTube video accessibly",
     html,
     /<figure class="video-card">\s*<iframe\s+src="https:\/\/www\.youtube-nocookie\.com\/embed\/_ruwWMc1S_w"\s+title="Video Alur Pendaftaran LMNAS 37"\s+loading="lazy"[^>]*allowfullscreen><\/iframe>\s*<\/figure>/,
   );
+  assert.match(
+    html,
+    /<a class="flow-details-link" href="https:\/\/drive\.google\.com\/file\/d\/1pYd8Sj2RYEzygERhh99JPcT_kCFOKEy8\/view\?usp=sharing" target="_blank" rel="noopener noreferrer">Untuk informasi selengkapnya, lihat di sini\.<\/a>/,
+  );
   assert.doesNotMatch(html, /registration-video\.png/);
   assert.doesNotMatch(html, /youtube-nocookie\.com\/embed\/_ruwWMc1S_w\?[^"']*autoplay=1/);
   assert.match(css, /\.video-card \{[^}]*background: #000;/);
   assert.match(css, /\.video-card iframe \{[^}]*width: 100%;[^}]*height: 100%;[^}]*border: 0;/);
+  assert.match(css, /\.flow-details-link \{[^}]*font-family: var\(--body\);/);
   assert.match(css, /\.flow-section \.section-title \{[^}]*margin: 0 auto 34px;/);
   assert.match(css, /\.flow-heading-art \{[^}]*top: 84px;/);
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.flow-section \.section-title \{[^}]*margin-bottom: 48px;/);

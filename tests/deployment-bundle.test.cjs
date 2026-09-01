@@ -38,7 +38,7 @@ test("the deploy bundle mirrors the canonical shared stylesheet", () => {
 test("the deployed home page includes the approved hero flowers and registration video", () => {
   const deployed = read("LMNas_Deployed/index.html");
 
-  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=113" \/>/);
+  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=114" \/>/);
   assert.match(deployed, /<p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada<\/p>/);
   assert.match(
     deployed,
@@ -48,12 +48,16 @@ test("the deployed home page includes the approved hero flowers and registration
     deployed,
     /<iframe\s+src="https:\/\/www\.youtube-nocookie\.com\/embed\/_ruwWMc1S_w"\s+title="Video Alur Pendaftaran LMNAS 37"[^>]*allowfullscreen><\/iframe>/,
   );
+  assert.match(
+    deployed,
+    /<a class="flow-details-link" href="https:\/\/drive\.google\.com\/file\/d\/1pYd8Sj2RYEzygERhh99JPcT_kCFOKEy8\/view\?usp=sharing" target="_blank" rel="noopener noreferrer">Untuk informasi selengkapnya, lihat di sini\.<\/a>/,
+  );
   assert.doesNotMatch(deployed, /registration-video\.png/);
 });
 
 test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => {
-  assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=2" \/>/);
-  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=4" \/>/);
+  assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=3" \/>/);
+  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=5" \/>/);
 });
 
 test("the WordPress deploy bundle uses the confirmed WordPress route contract", () => {
