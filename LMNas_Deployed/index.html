@@ -460,8 +460,8 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
     if (waveOneState === "active") {
       return {
         key: "WAVE_1_OPEN",
-        kicker: "Registrasi Gelombang I",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang I",
         countdownTarget: waveOne.end,
         countdownLabel: "Registrasi Gelombang I — berakhir dalam",
         showCountdown: true,
@@ -482,8 +482,8 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
     if (waveTwoState === "active") {
       return {
         key: "WAVE_2_OPEN",
-        kicker: "Registrasi Gelombang II",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang II",
         countdownTarget: waveTwo.end,
         countdownLabel: "Registrasi Gelombang II — berakhir dalam",
         showCountdown: true,
@@ -686,6 +686,9 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   const countdownKicker = typeof document.querySelector === "function"
     ? document.querySelector(".countdown-copy .section-kicker")
     : null;
+  const countdownCopy = typeof document.querySelector === "function"
+    ? document.querySelector(".countdown-copy")
+    : null;
   const countdownTitle = typeof document.getElementById === "function"
     ? document.getElementById("countdown-title")
     : null;
@@ -699,6 +702,11 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   const updateCountdown = () => {
     const now = new Date();
     const phase = countdown.resolveRegistrationPhase(now, config);
+    const isActiveRegistration = phase.key === "WAVE_1_OPEN" || phase.key === "WAVE_2_OPEN";
+
+    if (countdownCopy?.classList) {
+      countdownCopy.classList.toggle("countdown-copy--active", isActiveRegistration);
+    }
 
     if (countdownKicker) {
       countdownKicker.textContent = phase.kicker;

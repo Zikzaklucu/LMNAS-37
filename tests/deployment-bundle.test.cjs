@@ -108,5 +108,6 @@ test("the deployed home page inlines the complete registration state machine", (
   assert.match(deployed, /key: "BEFORE_WAVE_2"/);
   assert.match(deployed, /key: "REGISTRATION_CLOSED"/);
   assert.match(deployed, /countdown\.resolveRegistrationPhase\(now, config\)/);
+  assert.match(deployed, /countdown-copy--active/);
   assert.match(deployed, /display\.style\.visibility = "hidden"/);
 });

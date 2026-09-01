@@ -121,6 +121,9 @@
   const countdownKicker = typeof document.querySelector === "function"
     ? document.querySelector(".countdown-copy .section-kicker")
     : null;
+  const countdownCopy = typeof document.querySelector === "function"
+    ? document.querySelector(".countdown-copy")
+    : null;
   const countdownTitle = typeof document.getElementById === "function"
     ? document.getElementById("countdown-title")
     : null;
@@ -134,6 +137,11 @@
   const updateCountdown = () => {
     const now = new Date();
     const phase = countdown.resolveRegistrationPhase(now, config);
+    const isActiveRegistration = phase.key === "WAVE_1_OPEN" || phase.key === "WAVE_2_OPEN";
+
+    if (countdownCopy?.classList) {
+      countdownCopy.classList.toggle("countdown-copy--active", isActiveRegistration);
+    }
 
     if (countdownKicker) {
       countdownKicker.textContent = phase.kicker;

@@ -184,6 +184,10 @@ test("contact links match the verified WhatsApp destinations and visible numbers
 
 test("long countdown and tablet timeline have responsive containment rules", () => {
   assert.match(css, /\.countdown-copy h2 \{[^}]*width: 1120px;[^}]*font-size: 100px;[^}]*line-height: 1\.15;/s);
+  assert.match(css, /\.countdown-copy \.section-kicker \{[^}]*white-space: nowrap;/s);
+  assert.match(css, /\.countdown-copy--active h2 \{[^}]*order: 1;/s);
+  assert.match(css, /\.countdown-copy--active \.section-kicker \{[^}]*order: 2;/s);
+  assert.match(css, /\.countdown-copy--active \.countdown-value \{[^}]*order: 3;/s);
   assert.match(css, /@media \(min-width: 561px\) and \(max-width: 1200px\) \{[^}]*\.timeline-list \.timeline-entry div \{ width: calc\(100% - 57px\); \}/s);
   assert.match(css, /@media \(min-width: 561px\) and \(max-width: 640px\) \{[^}]*\.timeline-board h2 \{[^}]*left: 50%;[^}]*width: calc\(100% - 32px\);[^}]*transform: translateX\(-50%\);/s);
 });

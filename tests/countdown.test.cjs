@@ -84,8 +84,8 @@ test("resolves every registration phase and its countdown presentation", () => {
       "2026-09-05T12:00:00+07:00",
       {
         key: "WAVE_1_OPEN",
-        kicker: "Registrasi Gelombang I",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang I",
         countdownTarget: "2026-09-12T23:59:59+07:00",
         countdownLabel: "Registrasi Gelombang I — berakhir dalam",
         showCountdown: true,
@@ -95,8 +95,8 @@ test("resolves every registration phase and its countdown presentation", () => {
       "2026-09-12T23:59:59+07:00",
       {
         key: "WAVE_1_OPEN",
-        kicker: "Registrasi Gelombang I",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang I",
         countdownTarget: "2026-09-12T23:59:59+07:00",
         countdownLabel: "Registrasi Gelombang I — berakhir dalam",
         showCountdown: true,
@@ -117,8 +117,8 @@ test("resolves every registration phase and its countdown presentation", () => {
       "2026-09-13T00:00:00+07:00",
       {
         key: "WAVE_2_OPEN",
-        kicker: "Registrasi Gelombang II",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang II",
         countdownTarget: "2026-09-26T23:59:59+07:00",
         countdownLabel: "Registrasi Gelombang II — berakhir dalam",
         showCountdown: true,
@@ -128,8 +128,8 @@ test("resolves every registration phase and its countdown presentation", () => {
       "2026-09-20T12:00:00+07:00",
       {
         key: "WAVE_2_OPEN",
-        kicker: "Registrasi Gelombang II",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang II",
         countdownTarget: "2026-09-26T23:59:59+07:00",
         countdownLabel: "Registrasi Gelombang II — berakhir dalam",
         showCountdown: true,
@@ -139,8 +139,8 @@ test("resolves every registration phase and its countdown presentation", () => {
       "2026-09-26T23:59:59+07:00",
       {
         key: "WAVE_2_OPEN",
-        kicker: "Registrasi Gelombang II",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang II",
         countdownTarget: "2026-09-26T23:59:59+07:00",
         countdownLabel: "Registrasi Gelombang II — berakhir dalam",
         showCountdown: true,
@@ -190,9 +190,9 @@ test("renders the resolved registration state into the homepage countdown", () =
   const config = context.window.LMNAS_SITE_CONFIG;
   const cases = [
     ["2026-09-01T11:59:59+07:00", "Menuju", "Registrasi Gelombang I", "2026-09-01T12:00:00+07:00", true],
-    ["2026-09-05T12:00:00+07:00", "Registrasi Gelombang I", "Berakhir dalam", "2026-09-12T23:59:59+07:00", true],
+    ["2026-09-05T12:00:00+07:00", "Berakhir dalam", "Registrasi Gelombang I", "2026-09-12T23:59:59+07:00", true],
     ["2026-09-12T23:59:59.001+07:00", "Menuju", "Registrasi Gelombang II", "2026-09-13T00:00:00+07:00", true],
-    ["2026-09-13T00:00:00+07:00", "Registrasi Gelombang II", "Berakhir dalam", "2026-09-26T23:59:59+07:00", true],
+    ["2026-09-13T00:00:00+07:00", "Berakhir dalam", "Registrasi Gelombang II", "2026-09-26T23:59:59+07:00", true],
     ["2026-09-27T00:00:00+07:00", "Registrasi", "LMNas 37 telah ditutup", null, false],
   ];
 
@@ -201,6 +201,18 @@ test("renders the resolved registration state into the homepage countdown", () =
     const attributes = new Map();
     const kicker = { textContent: "Menuju" };
     const title = { textContent: "Registrasi Gelombang I" };
+    const countdownCopyClasses = new Set();
+    const countdownCopy = {
+      classList: {
+        toggle(name, force) {
+          if (force) {
+            countdownCopyClasses.add(name);
+          } else {
+            countdownCopyClasses.delete(name);
+          }
+        },
+      },
+    };
     const display = {
       dataset: {
         countdownLabel: "Registrasi Gelombang I",
@@ -222,6 +234,7 @@ test("renders the resolved registration state into the homepage countdown", () =
       querySelector(selector) {
         if (selector === "[data-countdown-target]") return display;
         if (selector === ".countdown-copy .section-kicker") return kicker;
+        if (selector === ".countdown-copy") return countdownCopy;
         return null;
       },
       querySelectorAll() {
@@ -252,6 +265,11 @@ test("renders the resolved registration state into the homepage countdown", () =
     assert.equal(display.dataset.countdownTarget ?? null, expectedTarget, timestamp);
     assert.equal(display.style.visibility === "hidden", !visible, timestamp);
     assert.equal(attributes.get("aria-hidden") ?? null, visible ? null : "true", timestamp);
+    assert.equal(
+      countdownCopyClasses.has("countdown-copy--active"),
+      expectedKicker === "Berakhir dalam",
+      timestamp,
+    );
   }
 });
 

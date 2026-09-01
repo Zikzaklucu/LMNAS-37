@@ -101,8 +101,11 @@ h1, h2, h3, p { overflow: visible; }
 .countdown-scene { position: absolute; z-index: -2; top: -536px; left: 8px; width: 1152.09px; max-width: none; pointer-events: none; }
 .countdown-art { position: absolute; z-index: -1; top: -24px; left: 50%; width: 1498px; max-width: none; transform: translateX(-50%); }
 .countdown-copy { position: relative; z-index: 2; display: grid; justify-items: center; padding-top: 138px; text-align: center; }
-.countdown-copy .section-kicker { width: 189px; font-family: var(--display); font-size: 48px; letter-spacing: .05em; line-height: 1; }
+.countdown-copy .section-kicker { width: 189px; font-family: var(--display); font-size: 48px; letter-spacing: .05em; line-height: 1; white-space: nowrap; }
 .countdown-copy h2 { width: 1120px; max-width: calc(100% - 48px); margin: 26px 0 0; color: var(--green); font-family: var(--display); font-size: 100px; font-weight: 400; letter-spacing: .05em; line-height: 1.15; }
+.countdown-copy--active h2 { order: 1; }
+.countdown-copy--active .section-kicker { order: 2; }
+.countdown-copy--active .countdown-value { order: 3; }
 .countdown-value { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: start; gap: 20px; width: min(820px, calc(100% - 48px)); margin: 25px 0 0; color: var(--green); font-family: "Rumble Brave", Georgia, serif; font-size: 68px; letter-spacing: .05em; line-height: 1.016; }
 .countdown-unit { display: grid; justify-items: center; gap: 8px; min-width: 0; }
 .countdown-unit-label { color: var(--green); font-family: var(--body); font-size: 18px; font-weight: 600; letter-spacing: .02em; line-height: 1; }

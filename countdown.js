@@ -71,8 +71,8 @@
     if (waveOneState === "active") {
       return {
         key: "WAVE_1_OPEN",
-        kicker: "Registrasi Gelombang I",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang I",
         countdownTarget: waveOne.end,
         countdownLabel: "Registrasi Gelombang I — berakhir dalam",
         showCountdown: true,
@@ -93,8 +93,8 @@
     if (waveTwoState === "active") {
       return {
         key: "WAVE_2_OPEN",
-        kicker: "Registrasi Gelombang II",
-        title: "Berakhir dalam",
+        kicker: "Berakhir dalam",
+        title: "Registrasi Gelombang II",
         countdownTarget: waveTwo.end,
         countdownLabel: "Registrasi Gelombang II — berakhir dalam",
         showCountdown: true,
