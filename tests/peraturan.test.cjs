@@ -31,7 +31,7 @@ test("the page publishes every supplied preliminary-round rule", () => {
 });
 
 test("the supplied website and objection email are actionable", () => {
-  assert.match(html, /href="http:\/\/lmnas\.fmipa\.ugm\.ac\.id"[^>]*>situs web LMNas UGM<\/a>/);
+  assert.match(html, /href="https:\/\/lmnas\.fmipa\.ugm\.ac\.id\/"[^>]*>situs web LMNas UGM<\/a>/);
   assert.match(html, /href="mailto:sanggahanlmnas@gmail\.com">sanggahanlmnas@gmail\.com<\/a>/);
 });
 
@@ -66,7 +66,7 @@ test("the peraturan page keeps shared navigation and footer content intact", () 
   assert.match(html, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
   assert.match(html, /<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>/);
   assert.match(html, /<a href="https:\/\/wa\.me\/6285113291516" target="_blank" rel="noopener noreferrer">SMP Contact Person<\/a>/);
-  assert.match(html, /<a href="https:\/\/wa\.me\/6285173085643" target="_blank" rel="noopener noreferrer">SMA Contact Person<\/a>/);
+  assert.match(html, /<a href="https:\/\/wa\.me\/6285173085634" target="_blank" rel="noopener noreferrer">SMA Contact Person<\/a>/);
   assert.match(html, /<a href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus<\/a>/);
   assert.equal(footerMarkup(html), footerMarkup(mainHtml));
   assert.ok(html.indexOf('href="../style.css') < html.indexOf('href="peraturan.css'));

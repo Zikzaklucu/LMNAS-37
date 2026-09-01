@@ -99,7 +99,7 @@ test("the navigation exposes the approved pages and both contact-person routes",
   assert.match(desktopNavigation, /<a href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus<\/a>/);
   assert.match(desktopNavigation, /<a href="peraturan\/">Peraturan<\/a>/);
   assert.match(desktopNavigation, /<a href="faq\/">FAQ<\/a>/);
-  assert.match(desktopNavigation, /<div class="nav-contact">[\s\S]*?<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>[\s\S]*?<div id="nav-contact-menu" class="nav-contact-menu" hidden>[\s\S]*?<a href="https:\/\/wa\.me\/6285113291516" target="_blank" rel="noopener noreferrer">SMP Contact Person<\/a>[\s\S]*?<a href="https:\/\/wa\.me\/6285173085643" target="_blank" rel="noopener noreferrer">SMA Contact Person<\/a>[\s\S]*?<\/div>[\s\S]*?<\/div>/);
+  assert.match(desktopNavigation, /<div class="nav-contact">[\s\S]*?<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>[\s\S]*?<div id="nav-contact-menu" class="nav-contact-menu" hidden>[\s\S]*?<a href="https:\/\/wa\.me\/6285113291516" target="_blank" rel="noopener noreferrer">SMP Contact Person<\/a>[\s\S]*?<a href="https:\/\/wa\.me\/6285173085634" target="_blank" rel="noopener noreferrer">SMA Contact Person<\/a>[\s\S]*?<\/div>[\s\S]*?<\/div>/);
   assert.match(css, /\.nav-contact-menu \{[^}]*position: absolute;[^}]*display: grid;/);
   assert.match(css, /--green: #3e5626;/);
   assert.match(css, /\.nav-contact-menu \{[^}]*background: var\(--green\);/);
@@ -165,7 +165,7 @@ test("contact links match the verified WhatsApp destinations and visible numbers
   assert.equal(contacts.length, 2);
   assert.deepEqual(contacts.map(([, destination]) => destination), [
     "https://wa.me/6285113291516",
-    "https://wa.me/6285173085643",
+    "https://wa.me/6285173085634",
   ]);
   assert.deepEqual(contacts.map(([, , label]) => label), [
     "WhatsApp SMP — Flavia",
@@ -173,7 +173,7 @@ test("contact links match the verified WhatsApp destinations and visible numbers
   ]);
   assert.deepEqual(contacts.map(([, , , visible]) => visible), [
     "0851 1329 1516",
-    "0851 7308 5643",
+    "0851 7308 5634",
   ]);
   assert.equal((contact.match(/class="contact-whatsapp-icon"/g) || []).length, 2);
   assert.equal((contact.match(/src="Assets\/figma\/contact-whatsapp-figma\.svg"/g) || []).length, 2);
@@ -576,7 +576,6 @@ test("published dates and registration links are hydrated from the site configur
   const script = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
 
   assert.equal(config.registration.url, "https://pendaftaran.lmnas-ugm.com");
-  assert.equal(config.countdown.target, "2026-09-01T12:00:00+07:00");
   assert.equal(config.phases["registration-one"].start, "2026-09-01T12:00:00+07:00");
   assert.deepEqual(Object.keys(config.phases), [
     "registration-one",

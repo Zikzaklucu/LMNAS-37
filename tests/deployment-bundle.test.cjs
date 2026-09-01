@@ -100,3 +100,13 @@ test("the WordPress deploy bundle uses the confirmed WordPress route contract", 
     /href="https:\/\/lmnas\.fmipa\.ugm\.ac\.id\/peraturan-lmnas-37\/">halaman peraturan Babak Penyisihan/,
   );
 });
+
+test("the deployed home page inlines the complete registration state machine", () => {
+  const deployed = read("LMNas_Deployed/index.html");
+
+  assert.match(deployed, /const resolveRegistrationPhase = \(now = new Date\(\), config = \{\}\) =>/);
+  assert.match(deployed, /key: "BEFORE_WAVE_2"/);
+  assert.match(deployed, /key: "REGISTRATION_CLOSED"/);
+  assert.match(deployed, /countdown\.resolveRegistrationPhase\(now, config\)/);
+  assert.match(deployed, /display\.style\.visibility = "hidden"/);
+});

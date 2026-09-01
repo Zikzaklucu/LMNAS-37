@@ -1,8 +1,4 @@
 window.LMNAS_SITE_CONFIG = Object.freeze({
-  countdown: Object.freeze({
-    label: "Registrasi Gelombang I",
-    target: "2026-09-01T12:00:00+07:00",
-  }),
   phases: Object.freeze({
     "registration-one": Object.freeze({
       start: "2026-09-01T12:00:00+07:00",

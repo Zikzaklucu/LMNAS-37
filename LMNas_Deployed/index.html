@@ -50,7 +50,7 @@
           <button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact</button>
           <div id="nav-contact-menu" class="nav-contact-menu" hidden>
             <a href="https://wa.me/6285113291516" target="_blank" rel="noopener noreferrer">SMP Contact Person</a>
-            <a href="https://wa.me/6285173085643" target="_blank" rel="noopener noreferrer">SMA Contact Person</a>
+            <a href="https://wa.me/6285173085634" target="_blank" rel="noopener noreferrer">SMA Contact Person</a>
           </div>
         </div>
       </nav>
@@ -240,7 +240,7 @@
           <p class="contact-intro">Anda dapat menghubungi contact person di bawah ini:</p>
           <div class="contact-list">
             <p class="contact-person"><strong>SMP</strong><a class="contact-whatsapp" href="https://wa.me/6285113291516" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp SMP — Flavia"><img class="contact-whatsapp-icon" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/contact-whatsapp-figma.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><span>0851 1329 1516</span></a><em>Flavia</em></p>
-            <p class="contact-person"><strong>SMA</strong><a class="contact-whatsapp" href="https://wa.me/6285173085643" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp SMA — Fatiya"><img class="contact-whatsapp-icon" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/contact-whatsapp-figma.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><span>0851 7308 5643</span></a><em>Fatiya</em></p>
+            <p class="contact-person"><strong>SMA</strong><a class="contact-whatsapp" href="https://wa.me/6285173085634" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp SMA — Fatiya"><img class="contact-whatsapp-icon" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/contact-whatsapp-figma.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" /><span>0851 7308 5634</span></a><em>Fatiya</em></p>
           </div>
         </div>
       </section>
@@ -363,10 +363,6 @@
 
       /* Inlined from site-config.js. */
 window.LMNAS_SITE_CONFIG = Object.freeze({
-  countdown: Object.freeze({
-    label: "Registrasi Gelombang I",
-    target: "2026-09-01T12:00:00+07:00",
-  }),
   phases: Object.freeze({
     "registration-one": Object.freeze({
       start: "2026-09-01T12:00:00+07:00",
@@ -410,6 +406,18 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   const DAY = 24 * HOUR;
   const padTwoDigits = (value) => String(value).padStart(2, "0");
 
+  const getPhaseWindowState = (start, end, now) => {
+    if (now < start) {
+      return "upcoming";
+    }
+
+    if (now <= end) {
+      return "active";
+    }
+
+    return "complete";
+  };
+
   const formatCountdown = (target, now = new Date()) => {
     const remaining = Math.max(0, target.getTime() - now.getTime());
     const complete = remaining === 0;
@@ -420,23 +428,87 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
 
     return {
       value: `${days}:${padTwoDigits(hours)}:${padTwoDigits(minutes)}:${padTwoDigits(seconds)}`,
-      label: complete
-        ? "Registrasi Gelombang I telah dibuka"
-        : `${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`,
+      label: `${days} hari, ${hours} jam, ${minutes} menit, ${seconds} detik`,
       complete,
     };
   };
 
+  const resolveRegistrationPhase = (now = new Date(), config = {}) => {
+    const current = now instanceof Date ? now : new Date(now);
+    const phases = config.phases || {};
+    const waveOne = phases["registration-one"] || {};
+    const waveTwo = phases["registration-two"] || {};
+    const waveOneStart = new Date(waveOne.start);
+    const waveOneEnd = new Date(waveOne.end);
+    const waveTwoStart = new Date(waveTwo.start);
+    const waveTwoEnd = new Date(waveTwo.end);
+    const waveOneState = getPhaseWindowState(waveOneStart, waveOneEnd, current);
+    const waveTwoState = getPhaseWindowState(waveTwoStart, waveTwoEnd, current);
+
+    // End timestamps are inclusive. The next state starts immediately after them.
+    if (waveOneState === "upcoming") {
+      return {
+        key: "BEFORE_WAVE_1",
+        kicker: "Menuju",
+        title: "Registrasi Gelombang I",
+        countdownTarget: waveOne.start,
+        countdownLabel: "Registrasi Gelombang I",
+        showCountdown: true,
+      };
+    }
+
+    if (waveOneState === "active") {
+      return {
+        key: "WAVE_1_OPEN",
+        kicker: "Registrasi Gelombang I",
+        title: "Berakhir dalam",
+        countdownTarget: waveOne.end,
+        countdownLabel: "Registrasi Gelombang I — berakhir dalam",
+        showCountdown: true,
+      };
+    }
+
+    if (waveTwoState === "upcoming") {
+      return {
+        key: "BEFORE_WAVE_2",
+        kicker: "Menuju",
+        title: "Registrasi Gelombang II",
+        countdownTarget: waveTwo.start,
+        countdownLabel: "Registrasi Gelombang II",
+        showCountdown: true,
+      };
+    }
+
+    if (waveTwoState === "active") {
+      return {
+        key: "WAVE_2_OPEN",
+        kicker: "Registrasi Gelombang II",
+        title: "Berakhir dalam",
+        countdownTarget: waveTwo.end,
+        countdownLabel: "Registrasi Gelombang II — berakhir dalam",
+        showCountdown: true,
+      };
+    }
+
+    return {
+      key: "REGISTRATION_CLOSED",
+      kicker: "Registrasi",
+      title: "LMNas 37 telah ditutup",
+      countdownTarget: null,
+      countdownLabel: "Registrasi LMNas 37 telah ditutup",
+      showCountdown: false,
+    };
+  };
+
   const formatPhaseStatus = (start, end, now = new Date()) => {
-    if (now < start) {
-      return { key: "upcoming", label: "Akan datang" };
-    }
+    const key = getPhaseWindowState(start, end, now);
+    const labels = {
+      upcoming: "Akan datang",
+      active: "Sedang berlangsung",
+      complete: "Sudah selesai",
+    };
 
-    if (now <= end) {
-      return { key: "active", label: "Sedang berlangsung" };
-    }
-
-    return { key: "complete", label: "Sudah selesai" };
+    return { key, label: labels[key] };
   };
 
   const formatPhaseDateRange = (start, end) => {
@@ -482,7 +554,12 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
     };
   };
 
-  return { formatCountdown, formatPhaseDateRange, formatPhaseStatus };
+  return {
+    formatCountdown,
+    formatPhaseDateRange,
+    formatPhaseStatus,
+    resolveRegistrationPhase,
+  };
 });
 
       /* Inlined from script.js. */
@@ -501,14 +578,6 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
       link.href = config.registration.url;
     }
   });
-
-  const countdownDisplay = document.querySelector("[data-countdown-target]");
-  const countdownTitle = document.getElementById("countdown-title");
-  if (countdownDisplay && countdownTitle && config.countdown?.target) {
-    countdownDisplay.dataset.countdownTarget = config.countdown.target;
-    countdownDisplay.dataset.countdownLabel = config.countdown.label;
-    countdownTitle.textContent = config.countdown.label;
-  }
 
   document.querySelectorAll("[data-phase-key]").forEach((phase) => {
     const dates = config.phases?.[phase.dataset.phaseKey];
@@ -607,19 +676,19 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   "use strict";
 
   const display = document.querySelector("[data-countdown-target]");
+  const config = window.LMNAS_SITE_CONFIG;
   const countdown = window.LmnasCountdown;
 
-  if (!display || !countdown) {
+  if (!display || !countdown || !config || typeof countdown.resolveRegistrationPhase !== "function") {
     return;
   }
 
-  const target = new Date(display.dataset.countdownTarget);
-  const countdownLabel = display.dataset.countdownLabel || "Registrasi Gelombang I";
-
-  if (Number.isNaN(target.getTime())) {
-    return;
-  }
-
+  const countdownKicker = typeof document.querySelector === "function"
+    ? document.querySelector(".countdown-copy .section-kicker")
+    : null;
+  const countdownTitle = typeof document.getElementById === "function"
+    ? document.getElementById("countdown-title")
+    : null;
   let timerId;
   const countdownParts = ["days", "hours", "minutes", "seconds"].map((part) => (
     typeof display.querySelector === "function"
@@ -628,24 +697,58 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   ));
   const hasStructuredDisplay = countdownParts.every(Boolean);
   const updateCountdown = () => {
-    const state = countdown.formatCountdown(target);
-    if (hasStructuredDisplay) {
-      state.value.split(":").forEach((value, index) => {
-        countdownParts[index].textContent = value;
-      });
-    } else {
-      display.textContent = state.value;
-    }
-    display.setAttribute("aria-label", `${countdownLabel}: ${state.label}`);
+    const now = new Date();
+    const phase = countdown.resolveRegistrationPhase(now, config);
 
-    if (state.complete && timerId) {
+    if (countdownKicker) {
+      countdownKicker.textContent = phase.kicker;
+    }
+    if (countdownTitle) {
+      countdownTitle.textContent = phase.title;
+    }
+
+    display.dataset.countdownLabel = phase.countdownLabel;
+    if (!phase.showCountdown || !phase.countdownTarget) {
+      delete display.dataset.countdownTarget;
+      if (display.style) {
+        display.style.visibility = "hidden";
+      }
+      display.setAttribute("aria-hidden", "true");
+      display.removeAttribute?.("role");
+      display.setAttribute("aria-label", phase.countdownLabel);
+    } else {
+      const target = new Date(phase.countdownTarget);
+      if (Number.isNaN(target.getTime())) {
+        return phase.key;
+      }
+
+      display.dataset.countdownTarget = phase.countdownTarget;
+      if (display.style) {
+        display.style.visibility = "";
+      }
+      display.removeAttribute?.("aria-hidden");
+      display.setAttribute("role", "timer");
+      const state = countdown.formatCountdown(target, now);
+      if (hasStructuredDisplay) {
+        state.value.split(":").forEach((value, index) => {
+          countdownParts[index].textContent = value;
+        });
+      } else {
+        display.textContent = state.value;
+      }
+      display.setAttribute("aria-label", `${phase.countdownLabel}: ${state.label}`);
+    }
+
+    if (phase.key === "REGISTRATION_CLOSED" && timerId) {
       window.clearInterval(timerId);
     }
+
+    return phase.key;
   };
 
-  updateCountdown();
+  const initialState = updateCountdown();
 
-  if (Date.now() < target.getTime()) {
+  if (initialState !== "REGISTRATION_CLOSED") {
     timerId = window.setInterval(updateCountdown, 1000);
   }
 })();

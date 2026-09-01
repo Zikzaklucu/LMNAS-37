@@ -14,14 +14,6 @@
     }
   });
 
-  const countdownDisplay = document.querySelector("[data-countdown-target]");
-  const countdownTitle = document.getElementById("countdown-title");
-  if (countdownDisplay && countdownTitle && config.countdown?.target) {
-    countdownDisplay.dataset.countdownTarget = config.countdown.target;
-    countdownDisplay.dataset.countdownLabel = config.countdown.label;
-    countdownTitle.textContent = config.countdown.label;
-  }
-
   document.querySelectorAll("[data-phase-key]").forEach((phase) => {
     const dates = config.phases?.[phase.dataset.phaseKey];
     if (dates?.start && dates?.end) {
@@ -118,20 +110,20 @@
 (() => {
   "use strict";
 
+  const config = window.LMNAS_SITE_CONFIG;
   const display = document.querySelector("[data-countdown-target]");
   const countdown = window.LmnasCountdown;
 
-  if (!display || !countdown) {
+  if (!display || !countdown || !config || typeof countdown.resolveRegistrationPhase !== "function") {
     return;
   }
 
-  const target = new Date(display.dataset.countdownTarget);
-  const countdownLabel = display.dataset.countdownLabel || "Registrasi Gelombang I";
-
-  if (Number.isNaN(target.getTime())) {
-    return;
-  }
-
+  const countdownKicker = typeof document.querySelector === "function"
+    ? document.querySelector(".countdown-copy .section-kicker")
+    : null;
+  const countdownTitle = typeof document.getElementById === "function"
+    ? document.getElementById("countdown-title")
+    : null;
   let timerId;
   const countdownParts = ["days", "hours", "minutes", "seconds"].map((part) => (
     typeof display.querySelector === "function"
@@ -140,24 +132,58 @@
   ));
   const hasStructuredDisplay = countdownParts.every(Boolean);
   const updateCountdown = () => {
-    const state = countdown.formatCountdown(target);
-    if (hasStructuredDisplay) {
-      state.value.split(":").forEach((value, index) => {
-        countdownParts[index].textContent = value;
-      });
-    } else {
-      display.textContent = state.value;
-    }
-    display.setAttribute("aria-label", `${countdownLabel}: ${state.label}`);
+    const now = new Date();
+    const phase = countdown.resolveRegistrationPhase(now, config);
 
-    if (state.complete && timerId) {
+    if (countdownKicker) {
+      countdownKicker.textContent = phase.kicker;
+    }
+    if (countdownTitle) {
+      countdownTitle.textContent = phase.title;
+    }
+
+    display.dataset.countdownLabel = phase.countdownLabel;
+    if (!phase.showCountdown || !phase.countdownTarget) {
+      delete display.dataset.countdownTarget;
+      if (display.style) {
+        display.style.visibility = "hidden";
+      }
+      display.setAttribute("aria-hidden", "true");
+      display.removeAttribute?.("role");
+      display.setAttribute("aria-label", phase.countdownLabel);
+    } else {
+      const target = new Date(phase.countdownTarget);
+      if (Number.isNaN(target.getTime())) {
+        return phase.key;
+      }
+
+      display.dataset.countdownTarget = phase.countdownTarget;
+      if (display.style) {
+        display.style.visibility = "";
+      }
+      display.removeAttribute?.("aria-hidden");
+      display.setAttribute("role", "timer");
+      const state = countdown.formatCountdown(target, now);
+      if (hasStructuredDisplay) {
+        state.value.split(":").forEach((value, index) => {
+          countdownParts[index].textContent = value;
+        });
+      } else {
+        display.textContent = state.value;
+      }
+      display.setAttribute("aria-label", `${phase.countdownLabel}: ${state.label}`);
+    }
+
+    if (phase.key === "REGISTRATION_CLOSED" && timerId) {
       window.clearInterval(timerId);
     }
+
+    return phase.key;
   };
 
-  updateCountdown();
+  const initialState = updateCountdown();
 
-  if (Date.now() < target.getTime()) {
+  if (initialState !== "REGISTRATION_CLOSED") {
     timerId = window.setInterval(updateCountdown, 1000);
   }
 })();

@@ -55,7 +55,7 @@ test("the guide uses the same compact navigation as the main page", () => {
   assert.match(guideNavigation, /href="https:\/\/pendaftaran\.lmnas-ugm\.com"[^>]*>Daftar/);
   assert.match(guideNavigation, /<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>/);
   assert.match(guideNavigation, /href="https:\/\/wa\.me\/6285113291516"[^>]*>SMP Contact Person/);
-  assert.match(guideNavigation, /href="https:\/\/wa\.me\/6285173085643"[^>]*>SMA Contact Person/);
+  assert.match(guideNavigation, /href="https:\/\/wa\.me\/6285173085634"[^>]*>SMA Contact Person/);
   assert.match(css, /--green: #3e5626;/);
   assert.match(css, /\.nav-contact-menu \{[\s\S]*?background: var\(--green\);[\s\S]*?\}/);
   assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.site-header\[data-nav-ready\] \.nav-toggle \{[\s\S]*?background: var\(--green\);[\s\S]*?\.site-header > nav \{[\s\S]*?background: var\(--green\);/);
