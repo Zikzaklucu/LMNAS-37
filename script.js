@@ -1,6 +1,39 @@
 (() => {
   "use strict";
 
+  const initTimelineReveal = () => {
+    const section = document.querySelector(".timeline-section");
+    const items = section
+      ? [section.querySelector(".timeline-board"), ...section.querySelectorAll(".timeline-entry")].filter(Boolean)
+      : [];
+
+    if (!section || !items.length || !("IntersectionObserver" in window)) {
+      return;
+    }
+
+    items.forEach((item) => item.classList.add("timeline-reveal-item"));
+    document.documentElement.classList.add("timeline-motion-ready");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.22, rootMargin: "0px 0px -8%" });
+
+    items.forEach((item) => observer.observe(item));
+  };
+
+  initTimelineReveal();
+})();
+
+(() => {
+  "use strict";
+
   const config = window.LMNAS_SITE_CONFIG;
   const countdown = window.LmnasCountdown;
 
@@ -209,7 +242,7 @@
   const next = root.querySelector("[data-carousel-next]");
   const dots = [...root.querySelectorAll("[data-carousel-dot]")];
   const status = root.querySelector("[data-carousel-status]");
-  const frame = "Assets/figma/portrait-frame.png";
+  const frame = "Assets/figma/portrait-frame.png?v=2";
   const testimonials = [
     {
       name: "Janssen Samuel Halim",

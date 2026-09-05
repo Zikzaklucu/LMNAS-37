@@ -84,6 +84,26 @@ test("the testimonial card uses the original Home3 cream, green, and black treat
   assert.doesNotMatch(nameRule, /-webkit-text-fill-color:\s*transparent/);
 });
 
+test("testimonial pagination uses the inverted green color roles", () => {
+  const figmaStates = css.slice(css.indexOf("/* Figma testimonial states"));
+  const dotRule = figmaStates.match(/\.testimonial-dots button::after \{([\s\S]*?)\n\}/)?.[1] || "";
+  const activeDotRule = figmaStates.match(/\.testimonial-dots button\[aria-current="true"\]::after \{([\s\S]*?)\n\}/)?.[1] || "";
+
+  assert.match(dotRule, /border-color:\s*var\(--green\)/);
+  assert.match(activeDotRule, /background:\s*var\(--green\)/);
+  assert.match(activeDotRule, /box-shadow:\s*0 0 0 4px var\(--cream\), 0 0 0 7px var\(--green\)/);
+  assert.doesNotMatch(dotRule, /#fadd9b/);
+  assert.doesNotMatch(activeDotRule, /#fadd9b/);
+});
+
+test("the testimonial card uses a restrained downward shadow without a perimeter halo", () => {
+  const figmaStates = css.slice(css.indexOf("/* Figma testimonial states"));
+  const cardRule = figmaStates.match(/\.testimonial-copy \{([\s\S]*?)\n\}/)?.[1] || "";
+
+  assert.match(cardRule, /box-shadow:\s*0 8px 14px rgba\(45,38,20,\.16\);/);
+  assert.doesNotMatch(cardRule, /0 -20px 20px|filter:\s*drop-shadow/);
+});
+
 test("narrow testimonial controls preserve touch targets without flex shrink", () => {
   assert.match(
     css,
@@ -98,7 +118,7 @@ test("the carousel uses the Figma testimonial color, type, and motion treatment"
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
-test("desktop navigation uses the exported Figma arrow pair beside the media frame", () => {
+test("desktop navigation uses the exported Figma arrow pair beside the full composition", () => {
   const arrowAsset = path.join(root, "Assets", "figma", "testimonial-arrow-figma.svg");
   assert.equal(fs.existsSync(arrowAsset), true);
   const arrowSvg = fs.readFileSync(arrowAsset, "utf8");
@@ -106,11 +126,21 @@ test("desktop navigation uses the exported Figma arrow pair beside the media fra
   assert.match(arrowSvg, /fill="#3E5526"/);
   assert.match(arrowSvg, /fill="#EFC072"/);
   assert.match(css, /background-image: url\("Assets\/figma\/testimonial-arrow-figma\.svg"\)/);
-  assert.match(css, /position: absolute;[\s\S]*?top: 287px;/);
+  assert.match(css, /\.testimonial-controls \{[\s\S]*?width: calc\(100% \+ 160px\);[\s\S]*?grid-template-rows: minmax\(0, 1fr\) 44px;[\s\S]*?gap: 4px 24px;/);
   assert.doesNotMatch(css, /top: 661px/);
-  assert.match(css, /left: calc\(50% - 555\.5px\)/);
-  assert.match(css, /right: calc\(50% - 555\.5px\)/);
   assert.match(css, /\.testimonial-arrow \{[\s\S]*?width: 52px;[\s\S]*?height: 52px;[\s\S]*?background-size: 931\.81px 52px;/);
+});
+
+test("desktop testimonials use a balanced title, portrait grid, and reading card", () => {
+  assert.match(css, /\.testimonial-section \.section-title \{[\s\S]*?font-size: clamp\(66px, 5\.1vw, 74px\);/);
+  assert.match(css, /\.testimonial-card \{[\s\S]*?grid-template-columns: minmax\(0, 34%\) minmax\(0, 62%\);[\s\S]*?column-gap: 4%;/);
+  assert.match(css, /\.testimonial-carousel \{[\s\S]*?--testimonial-copy-gap: 16px;[\s\S]*?--testimonial-frame-offset: calc\(/);
+  assert.match(css, /\.testimonial-frame \{[\s\S]*?width: min\(382px, 100%\);[\s\S]*?height: auto;[\s\S]*?aspect-ratio: 604 \/ 626;[\s\S]*?margin: var\(--testimonial-frame-offset\) auto 0;/);
+  assert.match(css, /\.testimonial-name h3 \{[\s\S]*?font-size: clamp\(38px, 3\.2vw, 46px\);/);
+  assert.match(css, /\.testimonial-award \{[\s\S]*?font-size: clamp\(22px, 1\.8vw, 28px\);/);
+  assert.match(css, /\.testimonial-copy \{[\s\S]*?margin: var\(--testimonial-copy-gap\) 0 0;[\s\S]*?padding: 18px 24px;[\s\S]*?font-size: clamp\(18px, 1\.25vw, 20px\);[\s\S]*?line-height: 1\.42;/);
+  assert.match(css, /\.testimonial-section > \.section-inner \{[\s\S]*?row-gap: 24px;/);
+  assert.match(css, /\.testimonial-controls \{[\s\S]*?top: var\(--testimonial-frame-offset\);[\s\S]*?grid-template-rows: minmax\(0, 1fr\) 44px;[\s\S]*?gap: 4px 24px;/);
 });
 
 test("only incoming testimonial content receives a direction-aware stagger", () => {

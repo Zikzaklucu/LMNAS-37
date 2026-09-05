@@ -577,18 +577,6 @@ a {
   object-fit: contain;
 }
 
-.footer-logo--standard { top: 28.86%; left: 3.19%; width: 17.15%; height: 14.25%; }
-.footer-logo--bsm { top: 26.87%; left: 20%; width: 13.06%; height: 14.07%; }
-.footer-logo--mic { top: 26.9%; left: 34.07%; width: 9.05%; height: 13.57%; }
-.footer-logo--taman-batik { top: 47.99%; left: 2.43%; width: 12.38%; height: 10.39%; }
-.footer-logo--raden { top: 48.15%; left: 15.83%; width: 14.03%; height: 10.28%; }
-.footer-logo--wisma { top: 48.8%; left: 31.52%; width: 3.95%; height: 10.25%; }
-.footer-logo--imperial { top: 43.46%; left: 37.01%; width: 6.18%; height: 16.05%; }
-.footer-logo--jogja-tv { top: 26.69%; left: 58.19%; width: 32.29%; height: 9.74%; }
-.footer-logo--ikut-event { top: 41.37%; left: 56.05%; width: 8.45%; height: 21.96%; }
-.footer-logo--ikahimatika { top: 39.68%; left: 63.89%; width: 10.76%; height: 27.95%; }
-.footer-logo--kotaperak { top: 42.02%; left: 74.03%; width: 17.22%; height: 17.85%; }
-
 .footer-socials {
   position: absolute;
   top: 76.1%;
@@ -689,6 +677,176 @@ a {
   bottom: 0;
   width: 25%;
   height: 45%;
+}
+
+@media (min-width: 1333px) {
+  .footer-stage {
+    aspect-ratio: 2914 / 800;
+  }
+
+  .footer-socials {
+    top: 74.5%;
+  }
+}
+
+@media (min-width: 1333px) {
+  .footer-socials {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(2, 44px);
+    column-gap: clamp(8px, 1.25vw, 18px);
+    row-gap: 4px;
+    align-items: center;
+    aspect-ratio: auto;
+  }
+
+  .footer-social {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 44px;
+    justify-content: center;
+  }
+
+  .footer-social--facebook {
+    inset: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 44px;
+  }
+
+  .footer-social--instagram {
+    inset: auto;
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    height: 44px;
+  }
+
+  .footer-social--youtube {
+    inset: auto;
+    grid-column: 3;
+    grid-row: 1;
+    width: 100%;
+    height: 44px;
+  }
+
+  .footer-social--x {
+    inset: auto;
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    width: 100%;
+    height: 44px;
+  }
+
+  .footer-social--tiktok {
+    inset: auto;
+    grid-column: 2 / span 2;
+    grid-row: 2;
+    width: 100%;
+    height: 44px;
+  }
+
+}
+
+@media (min-width: 1333px) {
+  .footer-partner-group {
+    position: absolute;
+    inset: auto;
+    top: 0;
+    right: auto;
+    bottom: 0;
+    left: auto;
+    width: 50%;
+  }
+
+  .footer-partner-group--mitra {
+    left: 0;
+  }
+
+  .footer-partner-group--media {
+    right: 0;
+  }
+
+  .footer-heading {
+    width: 100%;
+  }
+
+  .footer-heading--partner {
+    left: 0;
+  }
+
+  .footer-heading--media {
+    right: 0;
+  }
+
+  .footer-heading {
+    font-size: clamp(34px, 2.7vw, 42px);
+    line-height: 1.35;
+  }
+
+  .footer-logo-list {
+    position: absolute;
+    top: 23.5%;
+    right: 8%;
+    bottom: 28.5%;
+    left: 8%;
+    display: grid;
+    align-items: stretch;
+    justify-items: stretch;
+    gap: 6px 10px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-partner-group--mitra .footer-logo-list {
+    right: 12%;
+  }
+
+  .footer-partner-group--media .footer-logo-list {
+    left: 12%;
+  }
+
+  .footer-partner-group--mitra .footer-logo-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+  }
+
+  .footer-partner-group--media .footer-logo-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .footer-logo {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .footer-partner-group--mitra .footer-logo--mic img {
+    transform: scale(1.08);
+  }
+
+  .footer-partner-group--mitra .footer-logo--wisma img,
+  .footer-partner-group--mitra .footer-logo--imperial img {
+    transform: scale(1.1);
+  }
+
+  .footer-partner-group--mitra .footer-logo--manulife img {
+    transform: scale(.86);
+  }
+
+  .footer-partner-group--media .footer-logo--jogja-tv img {
+    transform: scale(.82);
+  }
+
+  .footer-partner-group--media .footer-logo--kotaperak img {
+    transform: scale(.78);
+  }
 }
 
 @media (max-width: 1332px) {
@@ -1031,16 +1189,16 @@ a {
   }
 
   .guide-footer {
-    padding: 10px 8px 8px;
+    padding: 8px 6px 6px;
     background: #f3d275;
   }
 
   .footer-stage {
     display: flex;
-    min-height: 760px;
+    min-height: 0;
     aspect-ratio: auto;
     flex-direction: column;
-    padding: 30px 18px 24px;
+    padding: 14px 18px 10px;
     overflow: hidden;
     border-radius: 24px;
     background: #3e5626 url("https://zikzaklucu.github.io/LMNAS-37/Assets/figma/footer-panel.png") center / cover no-repeat;
@@ -1055,13 +1213,13 @@ a {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 410px;
+    min-height: 0;
   }
 
   .footer-partners::after {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 10px;
+    bottom: 22px;
     left: 50%;
     width: 3px;
     background: #fcdd6c;
@@ -1080,7 +1238,7 @@ a {
     position: static;
     display: block;
     width: auto;
-    margin: 8px 0 10px;
+    margin: 2px 0 4px;
     padding-block: .08em .18em;
     overflow: visible;
     font-size: clamp(27px, 8.6vw, 40px);
@@ -1092,27 +1250,27 @@ a {
     display: grid;
     align-content: start;
     justify-items: center;
-    gap: 5px;
+    gap: 2px;
   }
 
   .footer-logo {
     position: relative;
     inset: auto;
     width: 100%;
-    height: 42px;
+    height: 32px;
   }
 
   .footer-logo--bsm,
   .footer-logo--wisma,
-  .footer-logo--imperial {
-    height: 46px;
+  .footer-logo--imperial,
+  .footer-logo--takaful,
+  .footer-logo--manulife {
+    height: 34px;
   }
 
   .footer-logo--jogja-tv,
-  .footer-logo--ikut-event,
-  .footer-logo--ikahimatika,
   .footer-logo--kotaperak {
-    height: 62px;
+    height: 50px;
   }
 
   .footer-socials {
@@ -1122,7 +1280,7 @@ a {
     display: grid;
     width: 100%;
     aspect-ratio: auto;
-    gap: 5px;
+    gap: 2px;
     margin-top: auto;
   }
 
@@ -1135,7 +1293,7 @@ a {
     inset: auto;
     display: flex;
     width: 100%;
-    height: 48px;
+    height: 44px;
     align-items: center;
     gap: 12px;
     color: #fcdc6c;
@@ -1193,16 +1351,16 @@ a {
 
 @media (min-width: 641px) and (max-width: 1332px) {
   .guide-footer {
-    padding: 10px 8px 8px;
+    padding: 8px 6px 6px;
     background: #f3d275;
   }
 
   .footer-stage {
     display: flex;
-    min-height: 760px;
+    min-height: 0;
     aspect-ratio: auto;
     flex-direction: column;
-    padding: 30px 28px 24px;
+    padding: 14px 28px 10px;
     overflow: hidden;
     border-radius: 24px;
     background: #3e5626 url("https://zikzaklucu.github.io/LMNAS-37/Assets/figma/footer-panel.png") center / cover no-repeat;
@@ -1217,13 +1375,13 @@ a {
     position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 410px;
+    min-height: 0;
   }
 
   .footer-partners::after {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 10px;
+    bottom: 22px;
     left: 50%;
     width: 3px;
     background: #fcdd6c;
@@ -1242,7 +1400,7 @@ a {
     position: static;
     display: block;
     width: auto;
-    margin: 8px 0 10px;
+    margin: 2px 0 4px;
     padding-block: .08em .18em;
     overflow: visible;
     font-size: 40px;
@@ -1254,27 +1412,27 @@ a {
     display: grid;
     align-content: start;
     justify-items: center;
-    gap: 5px;
+    gap: 2px;
   }
 
   .footer-logo {
     position: relative;
     inset: auto;
     width: 100%;
-    height: 42px;
+    height: 32px;
   }
 
   .footer-logo--bsm,
   .footer-logo--wisma,
-  .footer-logo--imperial {
-    height: 46px;
+  .footer-logo--imperial,
+  .footer-logo--takaful,
+  .footer-logo--manulife {
+    height: 34px;
   }
 
   .footer-logo--jogja-tv,
-  .footer-logo--ikut-event,
-  .footer-logo--ikahimatika,
   .footer-logo--kotaperak {
-    height: 62px;
+    height: 50px;
   }
 
   .footer-socials {
@@ -1284,7 +1442,7 @@ a {
     display: grid;
     width: 100%;
     aspect-ratio: auto;
-    gap: 5px;
+    gap: 2px;
     margin-top: auto;
   }
 
@@ -1297,7 +1455,7 @@ a {
     inset: auto;
     display: flex;
     width: 100%;
-    height: 48px;
+    height: 44px;
     align-items: center;
     gap: 12px;
     color: #fcdc6c;

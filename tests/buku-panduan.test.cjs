@@ -84,6 +84,7 @@ test("the guide shell contains the Figma title and filled partner footer", () =>
   assert.match(html, />Media Partner<\/h2>/);
   assert.match(html, />Mitra<\/h2>/);
   assert.equal((html.match(/class="footer-logo footer-logo--/g) || []).length, 11);
+  assert.doesNotMatch(html, /footer-logo--ikut-event|footer-logo--ikahimatika|alt="Ikut Event"|alt="Ikahimatika"/);
   assert.match(html, /class="footer-socials"/);
 });
 

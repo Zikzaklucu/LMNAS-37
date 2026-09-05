@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css?v=115" />
+    <link rel="stylesheet" href="style.css?v=142" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
@@ -98,8 +98,8 @@
       </section>
 
       <section class="timeline-section" id="peta-waktu" aria-labelledby="timeline-title">
-        <img class="timeline-monkey" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/timeline-monkey.svg?v=2" width="187" height="281" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="timeline-inner">
+          <img class="timeline-monkey" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/timeline-monkey-figma.svg?v=4" width="187" height="292" alt="" aria-hidden="true" loading="lazy" decoding="async" />
           <div class="timeline-board">
             <h2 id="timeline-title">Linimasa</h2>
             <p>LMNas 37</p>
@@ -130,8 +130,10 @@
         <div class="section-inner">
           <h2 class="section-title" id="hadiah">Kenapa Layak Diikuti?</h2>
           <div class="cream-card prize-card">
-            <p class="prize-heading prize-heading--total">Total Hadiah</p>
-            <p class="prize-amount">Rp38.000.000,00</p>
+            <div class="prize-primary">
+              <p class="prize-heading prize-heading--total">Total Hadiah</p>
+              <p class="prize-amount">Rp38.000.000,00</p>
+            </div>
             <p class="prize-extras">+ Medali, Sertifikat, dan Piala Bergilir</p>
             <p class="prize-promo-line">dan dapatkan<br />promo pendaftaran</p>
             <div class="prize-benefits">
@@ -200,6 +202,11 @@
           <p class="registration-kicker">Tunggu Apa Lagi?</p>
           <h2 class="registration-title" id="registration-title">Daftar Sekarang!</h2>
           <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>Daftar</a>
+        </div>
+      </section>
+
+      <section class="book-section" id="buku-soal" aria-labelledby="book-promo-title">
+        <div class="section-inner">
           <div class="book-promo" aria-labelledby="book-promo-title">
             <div class="book-promo-copy">
               <h3 id="book-promo-title">
@@ -260,14 +267,14 @@
               <li class="footer-logo footer-logo--raden"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/raden-ht.png" alt="Raden HT" loading="lazy" decoding="async" /></li>
               <li class="footer-logo footer-logo--wisma"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/wisma-kagama.png" alt="Wisma Kagama" loading="lazy" decoding="async" /></li>
               <li class="footer-logo footer-logo--imperial"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/imperial-digital-printing-figma.png" alt="Imperial Digital Printing" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--takaful"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/takaful-umum-figma.png" alt="Takaful Umum" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--manulife"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/manulife-figma.png" alt="Manulife" loading="lazy" decoding="async" /></li>
             </ul>
           </section>
           <section class="footer-partner-group footer-partner-group--media">
             <h2 class="footer-heading footer-heading--media">Media Partner</h2>
             <ul class="footer-logo-list" aria-label="Media partner LMNAS 37">
               <li class="footer-logo footer-logo--jogja-tv"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/partners/jogja-tv.png" alt="Jogja TV" loading="lazy" decoding="async" /></li>
-              <li class="footer-logo footer-logo--ikut-event"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/partners/ikut-event-figma.png" alt="Ikut Event" loading="lazy" decoding="async" /></li>
-              <li class="footer-logo footer-logo--ikahimatika"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/partners/ikahimatika-56586a.png" alt="Ikahimatika" loading="lazy" decoding="async" /></li>
               <li class="footer-logo footer-logo--kotaperak"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/partners/kotaperak-figma.png" alt="Kotaperak 94.6 FM" loading="lazy" decoding="async" /></li>
             </ul>
           </section>
@@ -566,6 +573,39 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
 (() => {
   "use strict";
 
+  const initTimelineReveal = () => {
+    const section = document.querySelector(".timeline-section");
+    const items = section
+      ? [section.querySelector(".timeline-board"), ...section.querySelectorAll(".timeline-entry")].filter(Boolean)
+      : [];
+
+    if (!section || !items.length || !("IntersectionObserver" in window)) {
+      return;
+    }
+
+    items.forEach((item) => item.classList.add("timeline-reveal-item"));
+    document.documentElement.classList.add("timeline-motion-ready");
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.22, rootMargin: "0px 0px -8%" });
+
+    items.forEach((item) => observer.observe(item));
+  };
+
+  initTimelineReveal();
+})();
+
+(() => {
+  "use strict";
+
   const config = window.LMNAS_SITE_CONFIG;
   const countdown = window.LmnasCountdown;
 
@@ -774,7 +814,7 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   const next = root.querySelector("[data-carousel-next]");
   const dots = [...root.querySelectorAll("[data-carousel-dot]")];
   const status = root.querySelector("[data-carousel-status]");
-  const frame = "https://zikzaklucu.github.io/LMNAS-37/Assets/figma/portrait-frame.png";
+  const frame = "https://zikzaklucu.github.io/LMNAS-37/Assets/figma/portrait-frame.png?v=2";
   const testimonials = [
     {
       name: "Janssen Samuel Halim",

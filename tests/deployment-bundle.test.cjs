@@ -38,7 +38,7 @@ test("the deploy bundle mirrors the canonical shared stylesheet", () => {
 test("the deployed home page includes the approved hero flowers and registration video", () => {
   const deployed = read("LMNas_Deployed/index.html");
 
-  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=115" \/>/);
+  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=142" \/>/);
   assert.match(deployed, /<p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada<\/p>/);
   assert.match(
     deployed,
@@ -55,9 +55,44 @@ test("the deployed home page includes the approved hero flowers and registration
   assert.doesNotMatch(deployed, /registration-video\.png/);
 });
 
+test("the deployed home page keeps registration and book content in sibling slides", () => {
+  const deployed = read("LMNas_Deployed/index.html");
+  const registrationStart = deployed.indexOf('<section class="registration-section" id="pendaftaran"');
+  const bookStart = deployed.indexOf('<section class="book-section" id="buku-soal"');
+  const contactStart = deployed.indexOf('<section class="contact-section" id="kontak"');
+  const registration = deployed.slice(registrationStart, bookStart);
+  const book = deployed.slice(bookStart, contactStart);
+
+  assert.ok(registrationStart >= 0);
+  assert.ok(bookStart > registrationStart);
+  assert.ok(contactStart > bookStart);
+  assert.match(registration, /id="pendaftaran"[\s\S]*data-registration-link/);
+  assert.doesNotMatch(registration, /book-promo|book-covers/);
+  assert.match(book, /class="book-promo"[\s\S]*class="book-covers"/);
+  assert.equal((book.match(/class="book-store-link/g) || []).length, 4);
+});
+
+test("all deployed footers expose only the approved media partners", () => {
+  for (const relativePath of [
+    "LMNas_Deployed/index.html",
+    "LMNas_Deployed/faq/index.html",
+    "LMNas_Deployed/peraturan/index.html",
+    "LMNas_Deployed/buku-panduan/index.html",
+  ]) {
+    const deployed = read(relativePath);
+    const mediaStart = deployed.indexOf("footer-partner-group--media");
+    const mediaEnd = deployed.indexOf('class="footer-socials"', mediaStart);
+    const media = deployed.slice(mediaStart, mediaEnd);
+
+    assert.equal((media.match(/class="footer-logo footer-logo--/g) || []).length, 2);
+    assert.match(media, /alt="Jogja TV"[\s\S]*alt="Kotaperak 94\.6 FM"/);
+    assert.doesNotMatch(media, /Ikut Event|Ikahimatika/);
+  }
+});
+
 test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => {
-  assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=4" \/>/);
-  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=6" \/>/);
+  assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=20" \/>/);
+  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=22" \/>/);
 });
 
 test("the WordPress deploy bundle uses the confirmed WordPress route contract", () => {
@@ -110,4 +145,13 @@ test("the deployed home page inlines the complete registration state machine", (
   assert.match(deployed, /countdown\.resolveRegistrationPhase\(now, config\)/);
   assert.match(deployed, /countdown-copy--active/);
   assert.match(deployed, /display\.style\.visibility = "hidden"/);
+});
+
+test("the deployed home page inlines the progressive Linimasa reveal", () => {
+  const deployed = read("LMNas_Deployed/index.html");
+
+  assert.match(deployed, /const initTimelineReveal = \(\) =>/);
+  assert.match(deployed, /classList\.add\("timeline-motion-ready"\)/);
+  assert.match(deployed, /classList\.add\("is-visible"\)/);
+  assert.match(deployed, /observer\.unobserve\(entry\.target\)/);
 });

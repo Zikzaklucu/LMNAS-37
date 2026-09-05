@@ -8,6 +8,8 @@ const vm = require("node:vm");
 
 const html = fs.readFileSync(path.join(__dirname, "..", "index.html"), "utf8");
 const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
+const homepageScript = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
+const monkeyAsset = fs.readFileSync(path.join(__dirname, "..", "Assets", "figma", "timeline-monkey-figma.svg"), "utf8");
 const navigationScript = fs.readFileSync(path.join(__dirname, "..", "navigation.js"), "utf8");
 
 test("all Daftar CTA buttons use the registration website", () => {
@@ -49,11 +51,17 @@ test("the hero flowers stay vertically centered beside the registration CTA", ()
     hero,
     /<div class="hero-cta">\s*<img class="hero-flowers"[^>]*>\s*<a class="figma-button"[^>]*>Daftar<\/a>\s*<\/div>/,
   );
-  assert.match(css, /\.hero-cta \{[^}]*position: relative;[^}]*margin-top: 34px;/);
+  assert.match(css, /\.hero-copy \{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\);[^}]*width: min\(100%, 900px\);[^}]*margin-inline: auto;[^}]*padding-top: 190px;/);
+  assert.match(css, /\.hero-cta \{[^}]*position: relative;[^}]*margin-top: 22px;/);
   assert.match(
     css,
     /\.hero-cta \.hero-flowers \{[^}]*top: 50%;[^}]*left: 50%;[^}]*transform: translate\(-50%, -50%\);/,
   );
+});
+
+test("the desktop hero shift leaves the responsive hero position unchanged", () => {
+  assert.match(css, /\.hero-copy \{[^}]*padding-top: 190px;/);
+  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.hero-copy \{ padding-top: 102px; \}/);
 });
 
 test("the skip link targets the main content landmark", () => {
@@ -67,6 +75,11 @@ test("published content does not contain placeholder lorem ipsum", () => {
 
 test("the visible countdown heading matches its registration target", () => {
   assert.match(html, /<h2 id="countdown-title">Registrasi Gelombang I<\/h2>/);
+});
+
+test("the countdown vine keeps its authored dimensions against WordPress image rules", () => {
+  assert.match(css, /\.countdown-art \{[^}]*width: 1498px;[^}]*max-width: none;/);
+  assert.match(css, /\.countdown-section \.countdown-art \{[^}]*max-width: none;[^}]*height: auto;/);
 });
 
 test("the countdown kicker preserves the approved sentence case", () => {
@@ -188,8 +201,149 @@ test("long countdown and tablet timeline have responsive containment rules", () 
   assert.match(css, /\.countdown-copy--active h2 \{[^}]*order: 1;/s);
   assert.match(css, /\.countdown-copy--active \.section-kicker \{[^}]*order: 2;/s);
   assert.match(css, /\.countdown-copy--active \.countdown-value \{[^}]*order: 3;/s);
-  assert.match(css, /@media \(min-width: 561px\) and \(max-width: 1200px\) \{[^}]*\.timeline-list \.timeline-entry div \{ width: calc\(100% - 57px\); \}/s);
+  assert.match(css, /@media \(min-width: 561px\) and \(max-width: 1200px\) \{[\s\S]*?\.timeline-list \.timeline-entry \{ top: auto; \}[\s\S]*?\.timeline-list \.timeline-entry--right > div,\s*\.timeline-list \.timeline-entry--left > div \{[^}]*width: 100%;[^}]*padding: 14px 18px 16px;/s);
   assert.match(css, /@media \(min-width: 561px\) and \(max-width: 640px\) \{[^}]*\.timeline-board h2 \{[^}]*left: 50%;[^}]*width: calc\(100% - 32px\);[^}]*transform: translateX\(-50%\);/s);
+});
+
+test("flow and registration sections use content-safe desktop viewport sizing", () => {
+  assert.match(css, /#main-content \.flow-section \{ height: auto; min-height: calc\(100svh - 64px\);/);
+  assert.match(css, /#main-content \.registration-section \{ height: auto; min-height: 100svh;/);
+  assert.doesNotMatch(css, /#main-content \.flow-section \{[^}]*height: 100vh/);
+  assert.doesNotMatch(css, /#main-content \.registration-section \{[^}]*height: 100vh/);
+});
+
+test("flow viewport sizing follows the existing responsive header heights", () => {
+  assert.match(css, /@media \(max-width: 1332px\) \{[\s\S]*?#main-content \.flow-section \{ min-height: calc\(100svh - 56px\); \}/s);
+  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?#main-content \.flow-section \{ height: auto; min-height: calc\(100svh - 56px\);/s);
+  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?#main-content \.flow-section \{ min-height: 460px;/s);
+});
+
+test("desktop Linimasa uses a compact four-row normal-flow layout", () => {
+  const marker = "/* One-viewport desktop timeline composition. */";
+  const desktopTimeline = css.slice(css.indexOf(marker), css.indexOf(".footer {", css.indexOf(marker)));
+
+  assert.match(desktopTimeline, /\.timeline-list \{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\);/s);
+  assert.match(desktopTimeline, /\.timeline-entry \{[^}]*position: relative;[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\) 64px minmax\(0, 1fr\);/s);
+  assert.doesNotMatch(desktopTimeline, /grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)|\.timeline-entry:nth-child\(4\) \{[^}]*grid-row: 2;/s);
+  assert.doesNotMatch(desktopTimeline, /height: 1410px|height: 1380px|top: 719px/);
+});
+
+test("desktop Linimasa uses balanced slide spacing and bounded event measures", () => {
+  const marker = "/* One-viewport desktop timeline composition. */";
+  const desktopTimeline = css.slice(css.indexOf(marker), css.indexOf(".footer {", css.indexOf(marker)));
+
+  assert.match(desktopTimeline, /\.timeline-section \{[^}]*display: grid;[^}]*align-content: center;[^}]*padding: 32px 0;/s);
+  assert.match(desktopTimeline, /\.timeline-board \{[^}]*width: min\(520px, calc\(100% - 40px\)\);[^}]*height: 190px;[^}]*border-width: 8px;/s);
+  assert.match(desktopTimeline, /\.timeline-inner \{[^}]*row-gap: clamp\(18px, 2\.8vh, 24px\);/s);
+  assert.match(desktopTimeline, /\.timeline-list \{[^}]*row-gap: 14px;/s);
+  assert.match(desktopTimeline, /@media \(min-width: 1201px\) and \(max-height: 800px\) \{[\s\S]*?\.timeline-list \{[^}]*row-gap: 10px;[\s\S]*?\.timeline-inner \{[^}]*row-gap: 16px;/s);
+  assert.match(desktopTimeline, /\.timeline-list::before \{[^}]*top: 18px;[^}]*bottom: 18px;[^}]*border-left: 4px dashed var\(--green\);/s);
+  assert.match(desktopTimeline, /\.timeline-entry--right \{[^}]*padding: 0;[^}]*text-align: left;/s);
+  assert.match(desktopTimeline, /\.timeline-entry--left \{[^}]*padding: 0;[^}]*text-align: right;/s);
+  assert.match(desktopTimeline, /\.timeline-list \.timeline-entry > div \{[^}]*width: 100%;[^}]*min-width: 0;[^}]*padding: 14px 20px 16px;[^}]*text-align: inherit;/s);
+  assert.match(desktopTimeline, /\.timeline-monkey \{[^}]*top: 80px;[^}]*right: calc\(50% \+ 250px\);[^}]*left: auto;[^}]*width: 112px;/s);
+});
+
+test("Linimasa event cards use a clear, contained visual hierarchy", () => {
+  assert.match(css, /\.timeline-entry > div \{[^}]*border: 3px solid rgba\(62, 86, 38, \.72\);[^}]*border-radius: 16px;[^}]*background: rgba\(250, 220, 154, \.94\);[^}]*box-shadow: 0 6px 0 rgba\(62, 86, 38, \.12\), 0 14px 24px rgba\(38, 61, 30, \.14\);/s);
+  assert.match(css, /@media \(min-width: 1201px\) \{[\s\S]*?\.timeline-list \.timeline-entry > div \{[^}]*padding: 14px 20px 16px;[^}]*text-align: inherit;[\s\S]*?\.timeline-entry h3 \{[^}]*font-size: clamp\(28px, 2\.25vw, 32px\);[^}]*line-height: 1\.15;[^}]*text-wrap: balance;/s);
+  assert.match(css, /@media \(min-width: 1201px\) \{[\s\S]*?\.timeline-status \{[^}]*width: fit-content;[^}]*min-width: 160px;[^}]*height: 24px;[^}]*padding: 0 16px;[^}]*line-height: 24px;/s);
+  assert.match(css, /@media \(min-width: 561px\) and \(max-width: 1200px\) \{[\s\S]*?\.timeline-list \.timeline-entry--right > div,\s*\.timeline-list \.timeline-entry--left > div \{[^}]*width: 100%;[^}]*padding: 14px 18px 16px;/s);
+  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.timeline-list \{[^}]*row-gap: 18px;[\s\S]*?\.timeline-list \.timeline-entry--right > div, \.timeline-list \.timeline-entry--left > div \{[^}]*width: 100%;[^}]*padding: 16px 18px 18px;/s);
+});
+
+test("the Linimasa reveal is progressive and motion-safe", () => {
+  assert.match(homepageScript, /const initTimelineReveal = \(\) =>/);
+  assert.match(homepageScript, /document\.documentElement\.classList\.add\("timeline-motion-ready"\)/);
+  assert.match(homepageScript, /entry\.target\.classList\.add\("is-visible"\)/);
+  assert.match(homepageScript, /observer\.unobserve\(entry\.target\)/);
+  assert.match(css, /\.timeline-motion-ready \.timeline-reveal-item \{[^}]*opacity: 0;[^}]*transform: translate3d\(var\(--timeline-reveal-x, 0\), 22px, 0\);[^}]*transition:/s);
+  assert.match(css, /\.timeline-motion-ready \.timeline-reveal-item\.is-visible \{[^}]*opacity: 1;[^}]*transform: none;/s);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?\.timeline-motion-ready \.timeline-reveal-item \{[^}]*opacity: 1;[^}]*transform: none;/s);
+});
+
+test("desktop Prize uses balanced hierarchy and an integrated benefit grid", () => {
+  const marker = "/* One-viewport desktop prize composition. */";
+  const desktopPrize = css.slice(css.indexOf(marker), css.indexOf(".footer {", css.indexOf(marker)));
+
+  assert.match(desktopPrize, /\.prize-section \{[^}]*display: grid;[^}]*padding: 32px 0;[^}]*align-content: center;/s);
+  assert.match(desktopPrize, /\.prize-section \.section-inner \{[^}]*width: min\(1260px, calc\(100% - 80px\)\);[^}]*row-gap: 22px;/s);
+  assert.match(desktopPrize, /\.prize-section \.section-title \{[^}]*font-size: clamp\(64px, 5\.1vw, 74px\);/s);
+  assert.match(desktopPrize, /\.prize-card \{[^}]*display: flex;[^}]*flex-direction: column;[^}]*width: min\(980px, 65vw\);[^}]*height: auto;/s);
+  assert.match(desktopPrize, /\.prize-primary \{[^}]*display: flex;[^}]*flex-direction: column;[^}]*align-items: center;/s);
+  assert.match(desktopPrize, /\.prize-heading--total \{[^}]*justify-self: auto;[^}]*text-align: center;/s);
+  assert.match(desktopPrize, /\.prize-amount \{[^}]*justify-self: auto;[^}]*text-align: center;[^}]*white-space: nowrap;/s);
+  assert.match(desktopPrize, /\.prize-promo-line \{[^}]*margin: 2px 0;[^}]*font-size: clamp\(34px, 2\.6vw, 40px\);[^}]*line-height: 1\.08;[^}]*white-space: normal;[^}]*text-align: center;/s);
+  assert.match(desktopPrize, /\.prize-benefits \{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\);[^}]*width: min\(820px, 100%\);[^}]*margin: 0 auto;/s);
+  assert.match(desktopPrize, /\.prize-benefit \{[^}]*grid-template-columns: 48px minmax\(0, 1fr\);[^}]*align-items: start;/s);
+  assert.match(desktopPrize, /\.prize-benefits small \{[^}]*margin: 2px 0 0 66px;[^}]*padding-top: 8px;[^}]*text-align: left;/s);
+  assert.match(desktopPrize, /\.prize-section \.timeline-tree \{[^}]*top: 20px;[^}]*right: -255px;[^}]*width: 500px;/s);
+  assert.match(desktopPrize, /@media \(min-width: 1201px\) and \(max-height: 800px\)[\s\S]*?\.prize-card \{[^}]*padding: 24px 48px 28px;/s);
+  assert.match(desktopPrize, /@media \(min-width: 1201px\) and \(max-width: 1332px\)[\s\S]*?\.prize-section \.timeline-tree \{[^}]*right: -300px;/s);
+  assert.doesNotMatch(desktopPrize, /\.prize-card \{[^}]*position: absolute|\.prize-section \.section-title \{[^}]*position: absolute/s);
+});
+
+test("desktop Prize keeps the primary row explicit and the timeline connector contained", () => {
+  const marker = "/* One-viewport desktop prize composition. */";
+  const desktopPrize = css.slice(css.indexOf(marker), css.indexOf(".footer {", css.indexOf(marker)));
+
+  assert.match(html, /<div class="prize-primary">\s*<p class="prize-heading prize-heading--total">Total Hadiah<\/p>\s*<p class="prize-amount">Rp38\.000\.000,00<\/p>\s*<\/div>/s);
+  assert.match(css, /\.timeline-list::before \{[^}]*top: 18px;[^}]*bottom: 18px;/s);
+  assert.match(desktopPrize, /\.prize-section \.section-title \{[^}]*font-size: clamp\(64px, 5\.1vw, 74px\);/s);
+  assert.match(desktopPrize, /\.prize-primary \{[^}]*display: flex;[^}]*flex-direction: column;[^}]*gap: 2px;/s);
+  assert.match(desktopPrize, /\.prize-promo-line \{[^}]*font-size: clamp\(34px, 2\.6vw, 40px\);/s);
+  assert.match(desktopPrize, /\.prize-benefits small \{[^}]*padding-top: 8px;[^}]*padding-bottom: 0;/s);
+  assert.match(desktopPrize, /\.prize-section \.timeline-tree \{[^}]*right: -255px;[^}]*width: 500px;/s);
+});
+
+test("desktop testimonials use a two-column active-slide composition", () => {
+  const marker = "/* One-viewport desktop testimonial composition. */";
+  const desktopTestimonials = css.slice(css.indexOf(marker));
+
+  assert.match(desktopTestimonials, /\.testimonial-section \{[^}]*height: auto;[^}]*min-height: calc\(100svh - 64px\);/s);
+  assert.match(desktopTestimonials, /\.testimonial-card \{[^}]*display: grid;[^}]*grid-template-columns:/s);
+  assert.match(desktopTestimonials, /\.testimonial-copy \{[^}]*font-size: clamp\(18px, 1\.25vw, 20px\);[^}]*line-height: 1\.42;/s);
+  assert.match(desktopTestimonials, /\.testimonial-frame \{[^}]*width: min\(382px, 100%\);[^}]*height: auto;[^}]*aspect-ratio: 604 \/ 626;[^}]*margin: var\(--testimonial-frame-offset\) auto 0;/);
+  assert.match(desktopTestimonials, /grid-template-columns: minmax\(0, 34%\) minmax\(0, 62%\);/);
+  assert.match(desktopTestimonials, /\.testimonial-controls \{[^}]*width: calc\(100% \+ 160px\);[^}]*grid-template-rows: minmax\(0, 1fr\) 44px;[^}]*gap: 4px 24px;[^}]*pointer-events: none;/s);
+});
+
+test("registration and book promotion are separate semantic homepage slides", () => {
+  const registrationStart = html.indexOf('<section class="registration-section" id="pendaftaran"');
+  const bookStart = html.indexOf('<section class="book-section" id="buku-soal"');
+  const contactStart = html.indexOf('<section class="contact-section" id="kontak"');
+  const registration = html.slice(registrationStart, bookStart);
+  const book = html.slice(bookStart, contactStart);
+
+  assert.ok(registrationStart >= 0);
+  assert.ok(bookStart > registrationStart);
+  assert.ok(contactStart > bookStart);
+  assert.match(registration, /registration-title/);
+  assert.doesNotMatch(registration, /book-promo|book-covers/);
+  assert.match(book, /class="book-promo"/);
+  assert.equal((book.match(/class="book-store-link/g) || []).length, 4);
+  assert.match(book, /class="book-covers"/);
+});
+
+test("desktop book promotion uses a normal-flow viewport slide", () => {
+  const marker = "/* One-viewport desktop book composition. */";
+  const desktopBook = css.slice(css.indexOf(marker));
+
+  assert.match(desktopBook, /#main-content \.book-section \{[^}]*height: auto;[^}]*min-height: calc\(100svh - 64px\);/s);
+  assert.match(desktopBook, /#main-content \.book-section \.book-promo \{[^}]*position: static;[^}]*transform: none;/s);
+  assert.match(desktopBook, /\.book-section \.book-covers \{[^}]*margin-top: 0;/s);
+  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?#main-content \.book-section \{[^}]*padding: 80px 0 100px;/s);
+  assert.match(css, /#main-content \.book-section \.book-promo,[\s\S]*#main-content \.book-section \.book-covers \{[^}]*margin-top: 0;/s);
+});
+
+test("desktop flow uses a compact complete video composition", () => {
+  const marker = "/* One-viewport desktop flow composition. */";
+  const desktopFlow = css.slice(css.indexOf(marker));
+
+  assert.match(desktopFlow, /#main-content \.flow-section \{[^}]*min-height: calc\(100svh - 64px\);[^}]*padding: 36px 0 0;/s);
+  assert.match(desktopFlow, /\.flow-section \.video-card \{[^}]*width: min\(1014px, calc\(100% - 80px\)\);[^}]*height: auto;[^}]*aspect-ratio: 1014 \/ 570;/s);
+  assert.match(desktopFlow, /@media \(min-width: 1201px\) and \(max-height: 800px\) \{[\s\S]*?\.flow-section \.video-card \{[^}]*width: min\(900px, calc\(100% - 80px\)\);/s);
+  assert.match(desktopFlow, /\.flow-section \.flow-details-link \{[^}]*margin-top: 8px;/s);
 });
 
 test("the About LMNas copy uses the approved historical and education wording", () => {
@@ -221,15 +375,17 @@ test("timeline dates use Montserrat while event headings and badges stay unchang
   assert.match(css, /\.timeline-status \{[^}]*width: 176px;[^}]*height: 27px;[^}]*background: #8a5a17;/);
 });
 
-test("the timeline monkey uses a clean vector edge and stays anchored across intermediate widths", () => {
+test("the timeline monkey uses the original Figma artwork and stays anchored across intermediate widths", () => {
   const timeline = html.match(/<section class="timeline-section"[\s\S]*?<\/section>/)?.[0] || "";
   const board = html.match(/<div class="timeline-board">([\s\S]*?)<\/div>/)?.[1] || "";
 
-  assert.match(timeline, /<img class="timeline-monkey"[^>]+timeline-monkey\.svg\?v=2" width="187" height="281"/);
-  assert.doesNotMatch(timeline, /timeline-monkey-figma\.svg/);
+  assert.match(timeline, /<div class="timeline-inner">\s*<img class="timeline-monkey"[^>]+timeline-monkey-figma\.svg\?v=4" width="187" height="292"/);
   assert.doesNotMatch(board, /timeline-monkey/);
-  assert.match(css, /\.timeline-monkey \{[^}]*top: 186px;[^}]*left: calc\(50% - 488\.7px\);[^}]*width: 187px;[^}]*height: auto;[^}]*filter: drop-shadow\(0 4px 6\.35px rgba\(0,0,0,\.71\)\);/);
-  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.timeline-monkey \{[^}]*top: calc\(11\.48vw \+ 48\.18px\);[^}]*left: calc\(31\.78vw - 249\.51px\);[^}]*width: clamp\(110px, calc\(20\.26vw - 56\.13px\), 187px\);[^}]*height: auto;/);
+  assert.doesNotMatch(monkeyAsset, /<filter\b|filter=|<clipPath\b|clip-path=|fill="black"/);
+  assert.match(css, /\.timeline-monkey \{[^}]*top: 80px;[^}]*right: calc\(50% \+ 290px\);[^}]*left: auto;[^}]*width: clamp\(110px, calc\(20\.26vw - 56\.13px\), 187px\);[^}]*height: auto;[^}]*pointer-events: none;/);
+  assert.match(css, /@media \(min-width: 1201px\) \{[\s\S]*?\.timeline-monkey \{[^}]*top: 80px;[^}]*right: calc\(50% \+ 250px\);[^}]*left: auto;[^}]*width: 112px;[^}]*height: auto;/);
+  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.timeline-monkey \{[^}]*top: 80px;[^}]*right: calc\(50% \+ 290px\);[^}]*left: auto;[^}]*width: min\(clamp\(110px, calc\(20\.26vw - 56\.13px\), 187px\), calc\(\(100% - 600px\) \/ 2\)\);[^}]*height: auto;/);
+  assert.match(css, /\.timeline-board \{[^}]*position: relative;[^}]*z-index: 2;/);
   assert.match(css, /@media \(max-width: 820px\) \{\s*\.timeline-monkey \{ display: none; \}\s*\}/);
 });
 
@@ -266,10 +422,12 @@ test("the prize total flows into the two-line promotion and benefits", () => {
   assert.doesNotMatch(html, /Beserta/);
   assert.doesNotMatch(html, /class="prize-promo-title"/);
   assert.match(css, /\.prize-amount, \.prize-promo-line \{[^}]*font-family: "Rumble Brave", Georgia, serif;[^}]*font-size: 90px;[^}]*font-weight: 500;[^}]*line-height: \.95;/);
-  assert.match(css, /\.prize-promo-line \{[^}]*top: 326px;[^}]*padding-inline: 40px;[^}]*letter-spacing: -\.025em;[^}]*text-align: center;[^}]*white-space: nowrap;/);
+  const marker = "/* One-viewport desktop prize composition. */";
+  const desktopPrize = css.slice(css.indexOf(marker), css.indexOf("@media (max-width: 1332px)", css.indexOf(marker)));
+  assert.match(desktopPrize, /\.prize-promo-line \{[^}]*width: 100%;[^}]*padding-inline: 0;[^}]*white-space: normal;[^}]*text-align: center;/s);
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.prize-promo-line \{[^}]*padding-inline: 28px;[^}]*white-space: nowrap;/);
   assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.prize-promo-line \{[^}]*padding-inline: 16px;[^}]*white-space: nowrap;/);
-  assert.match(css, /\.prize-benefits \{[^}]*top: 520px;/);
+  assert.match(desktopPrize, /\.prize-benefits \{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\);/s);
 });
 
 test("the mobile prize heading keeps its centering transform anchored at 50 percent", () => {
@@ -287,10 +445,13 @@ test("tablet hero and prize geometry remain inside their clipping sections", () 
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.prize-section \{ height: 1280px;/);
 });
 
-test("the desktop prize card leaves room below the footnotes", () => {
-  assert.match(css, /\.prize-section \{ height: 1637px;/);
-  assert.match(css, /\.prize-card \{[^}]*height: 900px;/);
-  assert.match(css, /\.prize-benefits small \{[^}]*padding-bottom: 18px;/);
+test("the desktop prize slide leaves room below the footnotes", () => {
+  const marker = "/* One-viewport desktop prize composition. */";
+  const desktopPrize = css.slice(css.indexOf(marker), css.indexOf("@media (max-width: 1332px)", css.indexOf(marker)));
+  assert.match(desktopPrize, /\.prize-section \{[^}]*height: auto;[^}]*min-height: calc\(100svh - 64px\);/s);
+  assert.match(desktopPrize, /\.prize-card \{[^}]*display: flex;[^}]*width: min\(980px, 65vw\);[^}]*height: auto;/s);
+  assert.match(desktopPrize, /\.prize-benefits small \{[^}]*padding-bottom: 0;/s);
+  assert.doesNotMatch(desktopPrize, /height: 900px/);
 });
 
 test("the Kata Mereka section uses the Figma portrait and card geometry", () => {
@@ -336,19 +497,42 @@ test("the footer fills the updated Home3 Figma partner regions", () => {
     "Raden HT",
     "Wisma Kagama",
     "Imperial Digital Printing",
+    "Takaful Umum",
+    "Manulife",
     "Jogja TV",
-    "Ikut Event",
-    "Ikahimatika",
     "Kotaperak 94.6 FM",
   ]);
   assert.match(css, /\.footer \{[^}]*background: #f3d275;[^}]*overflow: hidden;/);
   assert.match(css, /\.footer-stage \{[^}]*aspect-ratio: 2914 \/ 1125;/);
+  assert.match(css, /@media \(min-width: 1333px\) \{\s*\.footer-stage \{ aspect-ratio: 2914 \/ 800; \}\s*\.footer-socials \{ top: 74\.5%; \}\s*\}/);
   assert.match(css, /\.footer-visual \{[^}]*object-fit: fill;/);
+  assert.match(css, /\.contact-section \{ height: 490px;/);
+  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.contact-section \{ height: 410px;/);
+  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.contact-section \{ height: 385px;/);
   assert.match(css, /\.footer-heading--media \{ right: 0; \}/);
   assert.match(css, /\.footer-heading--partner \{ left: 0; \}/);
-  assert.match(css, /\.footer-logo--standard \{ top: 28\.86%; left: 3\.19%; width: 17\.15%; height: 14\.25%; \}/);
-  assert.match(css, /\.footer-logo--jogja-tv \{ top: 26\.69%; left: 58\.19%; width: 32\.29%; height: 9\.74%; \}/);
-  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.footer-partners \{[^}]*grid-template-columns: 1fr 1fr;[^}]*min-height: 410px;/);
+
+  assert.match(css, /@media \(min-width: 1333px\) \{[\s\S]*?\.footer-socials \{ display: grid; grid-template-columns: repeat\(3, minmax\(0, 1fr\)\); grid-template-rows: repeat\(2, 44px\); column-gap: clamp\(8px, 1\.25vw, 18px\); row-gap: 4px; align-items: center; aspect-ratio: auto; \}/);
+  assert.match(css, /@media \(min-width: 1333px\) \{[\s\S]*?\.footer-social--facebook \{ inset: auto; grid-column: 1; grid-row: 1; width: 100%; height: 44px; \}/);
+  assert.match(css, /@media \(min-width: 1333px\) \{[\s\S]*?\.footer-social--x \{ inset: auto; grid-column: 1 \/ span 2; grid-row: 2; width: 100%; height: 44px; \}/);
+  assert.match(css, /@media \(min-width: 1333px\) \{[\s\S]*?\.footer-social--tiktok \{ inset: auto; grid-column: 2 \/ span 2; grid-row: 2; width: 100%; height: 44px; \}/);
+
+  assert.match(css, /@media \(min-width: 1333px\) \{\s*\.footer-partner-group \{ position: absolute; inset: auto; top: 0; right: auto; bottom: 0; left: auto; width: 50%; \}/);
+  assert.match(css, /@media \(min-width: 1333px\) \{[\s\S]*?\.footer-partner-group--mitra \{ left: 0; \}\s*\.footer-partner-group--media \{ right: 0; \}/);
+  assert.match(css, /@media \(min-width: 1333px\) \{[\s\S]*?\.footer-heading \{ font-size: clamp\(34px, 2\.7vw, 42px\); line-height: 1\.35; \}/);
+  assert.match(css, /@media \(min-width: 1333px\) \{[\s\S]*?\.footer-logo-list \{ position: absolute; top: 23\.5%; right: 8%; bottom: 28\.5%; left: 8%; display: grid; align-items: stretch; justify-items: stretch; gap: 6px 10px; margin: 0; padding: 0; \}/);
+  assert.match(css, /\.footer-partner-group--mitra \.footer-logo-list \{ right: 12%; \}/);
+  assert.match(css, /\.footer-partner-group--media \.footer-logo-list \{ left: 12%; \}/);
+  assert.match(css, /\.footer-partner-group--mitra \.footer-logo-list \{ grid-template-columns: repeat\(3, minmax\(0, 1fr\)\); grid-template-rows: repeat\(3, minmax\(0, 1fr\)\); \}/);
+  assert.match(css, /\.footer-partner-group--media \.footer-logo-list \{ grid-template-columns: repeat\(2, minmax\(0, 1fr\)\); grid-template-rows: minmax\(0, 1fr\); \}/);
+  assert.match(css, /@media \(min-width: 1333px\) \{[\s\S]*?\.footer-logo \{ position: relative; inset: auto; width: 100%; height: 100%; min-width: 0; min-height: 0; \}/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.footer-partners::after \{[^}]*bottom: 22px;/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.footer-partners \{[^}]*grid-template-columns: 1fr 1fr;[^}]*min-height: 0;/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.footer-stage \{[^}]*min-height: 0;[^}]*padding: 14px 18px 10px;/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.footer-logo-list \{[^}]*gap: 2px;/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.footer-logo \{[^}]*height: 32px;[^}]*\}/);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.footer-socials \{[^}]*gap: 2px;/);
+  assert.match(css, /@media \(min-width: 641px\) and \(max-width: 1332px\) \{[\s\S]*?\.footer-stage \{[^}]*min-height: 0;[^}]*padding: 14px 28px 10px;/);
   assert.match(css, /@media \(min-width: 641px\) and \(max-width: 1332px\) \{[\s\S]*?\.footer-socials \{[^}]*display: grid;[^}]*width: 100%;[^}]*margin-top: auto;/);
 });
 
@@ -517,6 +701,8 @@ test("first-load decorative and partner assets use right-sized files", () => {
     ["Assets/sponsors/raden-ht.png", 500 * 1024],
     ["Assets/sponsors/wisma-kagama.png", 250 * 1024],
     ["Assets/sponsors/imperial-digital-printing-figma.png", 250 * 1024],
+    ["Assets/sponsors/takaful-umum-figma.png", 250 * 1024],
+    ["Assets/sponsors/manulife-figma.png", 250 * 1024],
     ["Assets/partners/jogja-tv.png", 250 * 1024],
     ["Assets/partners/ikut-event-figma.png", 250 * 1024],
     ["Assets/partners/ikahimatika-56586a.png", 250 * 1024],
@@ -651,10 +837,11 @@ test("the updated footer keeps Mitra and Media Partner as separate semantic grou
   const mitra = footer.slice(footer.indexOf('footer-partner-group--mitra'), footer.indexOf('footer-partner-group--media'));
   const media = footer.slice(footer.indexOf('footer-partner-group--media'), footer.indexOf('class="footer-socials"'));
 
-  assert.equal((mitra.match(/class="footer-logo footer-logo--/g) || []).length, 7);
-  assert.equal((media.match(/class="footer-logo footer-logo--/g) || []).length, 4);
-  assert.match(mitra, /Standard[\s\S]*BSM Rental[\s\S]*MIC Hotel[\s\S]*Taman Batik Terang Bulan[\s\S]*Raden HT[\s\S]*Wisma Kagama[\s\S]*Imperial Digital Printing/);
-  assert.match(media, /Jogja TV[\s\S]*Ikut Event[\s\S]*Ikahimatika[\s\S]*Kotaperak 94\.6 FM/);
+  assert.equal((mitra.match(/class="footer-logo footer-logo--/g) || []).length, 9);
+  assert.equal((media.match(/class="footer-logo footer-logo--/g) || []).length, 2);
+  assert.match(mitra, /Standard[\s\S]*BSM Rental[\s\S]*MIC Hotel[\s\S]*Taman Batik Terang Bulan[\s\S]*Raden HT[\s\S]*Wisma Kagama[\s\S]*Imperial Digital Printing[\s\S]*Takaful Umum[\s\S]*Manulife/);
+  assert.match(media, /Jogja TV[\s\S]*Kotaperak 94\.6 FM/);
+  assert.doesNotMatch(media, /Ikut Event|Ikahimatika/);
   assert.doesNotMatch(mitra, /Jogja TV|Ikut Event|Ikahimatika|Kotaperak/);
   assert.doesNotMatch(media, /Standard|BSM Rental|MIC Hotel|Taman Batik|Raden HT|Wisma Kagama|Imperial/);
 });
