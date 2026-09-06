@@ -63,9 +63,9 @@ test("all testimonial body copy uses one shared responsive typography rule", () 
   assert.doesNotMatch(script, /quoteSize/);
   assert.doesNotMatch(script, /testimonial-quote-size/);
   assert.match(css, /\.testimonial-copy \{[^}]*font-family: var\(--body\);[^}]*font-size: 27px;[^}]*font-weight: 500;[^}]*letter-spacing: \.05em;[^}]*line-height: 1\.2;/);
-  assert.match(css, /\.testimonial-copy \{[^}]*padding: 28px 132px;/);
+  assert.match(css, /\.testimonial-copy \{[^}]*padding: 28px 36px;/);
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.testimonial-copy \{[^}]*font-size: clamp\(18px, 2\.2vw, 27px\);/);
-  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.testimonial-copy \{[^}]*font-size: 16px;[^}]*line-height: 1\.48;[^}]*text-align: left;/);
+  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.testimonial-copy \{[^}]*font-size: 14px;[^}]*line-height: 1\.35;[^}]*text-align: left;/);
   assert.doesNotMatch(css, /\.testimonial-slide:nth-child\(\d+\)[^}]*testimonial-copy/);
   assert.doesNotMatch(css, /\.testimonial-card blockquote/);
 });
@@ -75,7 +75,7 @@ test("the testimonial card uses the original Home3 cream, green, and black treat
   const cardRule = figmaStates.match(/\.testimonial-copy \{([\s\S]*?)\n\}/)?.[1] || "";
   const nameRule = figmaStates.match(/\.testimonial-name h3 \{([\s\S]*?)\n\}/)?.[1] || "";
   const awardRule = figmaStates.match(/\.testimonial-award \{([\s\S]*?)\n\}/)?.[1] || "";
-  assert.match(cardRule, /border:\s*10px solid var\(--green\)/);
+  assert.match(cardRule, /border:\s*5px solid var\(--green\)/);
   assert.match(cardRule, /color:\s*#000/);
   assert.match(cardRule, /background:\s*var\(--cream\)/);
   assert.doesNotMatch(cardRule, /#384f20/);
@@ -112,8 +112,8 @@ test("narrow testimonial controls preserve touch targets without flex shrink", (
 });
 
 test("the carousel uses the Figma testimonial color, type, and motion treatment", () => {
-  assert.match(css, /--testimonial-track-ease:\s*cubic-bezier\(\.65, 0, \.35, 1\)/);
-  assert.match(css, /--testimonial-track-duration:\s*520ms/);
+  assert.match(css, /--testimonial-track-ease:\s*cubic-bezier\(\.4, 0, \.2, 1\)/);
+  assert.match(css, /--testimonial-track-duration:\s*620ms/);
   assert.match(css, /transition:\s*transform var\(--testimonial-track-duration\) var\(--testimonial-track-ease\)/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
@@ -134,13 +134,13 @@ test("desktop navigation uses the exported Figma arrow pair beside the full comp
 test("desktop testimonials use a balanced title, portrait grid, and reading card", () => {
   assert.match(css, /\.testimonial-section \.section-title \{[\s\S]*?font-size: clamp\(66px, 5\.1vw, 74px\);/);
   assert.match(css, /\.testimonial-card \{[\s\S]*?grid-template-columns: minmax\(0, 34%\) minmax\(0, 62%\);[\s\S]*?column-gap: 4%;/);
-  assert.match(css, /\.testimonial-carousel \{[\s\S]*?--testimonial-copy-gap: 16px;[\s\S]*?--testimonial-frame-offset: calc\(/);
-  assert.match(css, /\.testimonial-frame \{[\s\S]*?width: min\(382px, 100%\);[\s\S]*?height: auto;[\s\S]*?aspect-ratio: 604 \/ 626;[\s\S]*?margin: var\(--testimonial-frame-offset\) auto 0;/);
+  assert.match(css, /\.testimonial-carousel \{[\s\S]*?--testimonial-copy-gap: 16px;/);
+  assert.match(css, /\.testimonial-frame \{[\s\S]*?width: min\(382px, 100%\);[\s\S]*?height: auto;[\s\S]*?aspect-ratio: 604 \/ 626;[\s\S]*?margin: 0 auto;/);
   assert.match(css, /\.testimonial-name h3 \{[\s\S]*?font-size: clamp\(38px, 3\.2vw, 46px\);/);
   assert.match(css, /\.testimonial-award \{[\s\S]*?font-size: clamp\(22px, 1\.8vw, 28px\);/);
-  assert.match(css, /\.testimonial-copy \{[\s\S]*?margin: var\(--testimonial-copy-gap\) 0 0;[\s\S]*?padding: 18px 24px;[\s\S]*?font-size: clamp\(18px, 1\.25vw, 20px\);[\s\S]*?line-height: 1\.42;/);
-  assert.match(css, /\.testimonial-section > \.section-inner \{[\s\S]*?row-gap: 24px;/);
-  assert.match(css, /\.testimonial-controls \{[\s\S]*?top: var\(--testimonial-frame-offset\);[\s\S]*?grid-template-rows: minmax\(0, 1fr\) 44px;[\s\S]*?gap: 4px 24px;/);
+  assert.match(css, /\.testimonial-copy \{[\s\S]*?margin: var\(--testimonial-copy-gap\) 0 0;[\s\S]*?padding: 24px 28px;[\s\S]*?font-size: clamp\(18px, 1\.25vw, 20px\);[\s\S]*?line-height: 1\.55;/);
+  assert.match(css, /\.testimonial-section > \.section-inner \{[\s\S]*?row-gap: 36px;/);
+  assert.match(css, /\.testimonial-controls \{[\s\S]*?top: 0;[\s\S]*?grid-template-rows: minmax\(0, 1fr\) 44px;[\s\S]*?gap: 4px 24px;/);
 });
 
 test("only incoming testimonial content receives a direction-aware stagger", () => {
@@ -172,9 +172,9 @@ test("testimonial height follows the active slide instead of clipping at a fixed
   assert.doesNotMatch(css, /\.testimonial-copy \{[^}]*min-height: 514px;/);
   assert.match(css, /\.testimonial-viewport \{ width: 100%; overflow-x: clip; overflow-y: visible;/);
   assert.match(script, /const syncHeight = \(\) =>/);
-  assert.match(script, /viewport\.style\.height = ""/);
-  assert.match(script, /track\.style\.height = ""/);
-  assert.match(script, /const height = activeSlide\.scrollHeight/);
+  assert.doesNotMatch(script, /viewport\.style\.height = ""/);
+  assert.match(script, /const height = activeSlide\.querySelector\("\.testimonial-card"\)\.offsetHeight/);
+  assert.match(css, /transition: height var\(--testimonial-track-duration\) var\(--testimonial-track-ease\)/);
   assert.match(script, /viewport\.style\.height = `\$\{height\}px`/);
   assert.match(script, /track\.style\.height = `\$\{height\}px`/);
   assert.match(script, /new ResizeObserver\(syncHeight\)/);

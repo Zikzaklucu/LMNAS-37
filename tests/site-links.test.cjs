@@ -302,8 +302,8 @@ test("desktop testimonials use a two-column active-slide composition", () => {
 
   assert.match(desktopTestimonials, /\.testimonial-section \{[^}]*height: auto;[^}]*min-height: calc\(100svh - 64px\);/s);
   assert.match(desktopTestimonials, /\.testimonial-card \{[^}]*display: grid;[^}]*grid-template-columns:/s);
-  assert.match(desktopTestimonials, /\.testimonial-copy \{[^}]*font-size: clamp\(18px, 1\.25vw, 20px\);[^}]*line-height: 1\.42;/s);
-  assert.match(desktopTestimonials, /\.testimonial-frame \{[^}]*width: min\(382px, 100%\);[^}]*height: auto;[^}]*aspect-ratio: 604 \/ 626;[^}]*margin: var\(--testimonial-frame-offset\) auto 0;/);
+  assert.match(desktopTestimonials, /\.testimonial-copy \{[^}]*font-size: clamp\(18px, 1\.25vw, 20px\);[^}]*line-height: 1\.55;/s);
+  assert.match(desktopTestimonials, /\.testimonial-frame \{[^}]*width: min\(382px, 100%\);[^}]*height: auto;[^}]*aspect-ratio: 604 \/ 626;[^}]*margin: 0 auto;/);
   assert.match(desktopTestimonials, /grid-template-columns: minmax\(0, 34%\) minmax\(0, 62%\);/);
   assert.match(desktopTestimonials, /\.testimonial-controls \{[^}]*width: calc\(100% \+ 160px\);[^}]*grid-template-rows: minmax\(0, 1fr\) 44px;[^}]*gap: 4px 24px;[^}]*pointer-events: none;/s);
 });
@@ -741,7 +741,7 @@ test("the Hadiah anchor belongs to the visible prize heading", () => {
 test("mobile testimonial copy stays readable and the contact panel names its purpose", () => {
   assert.match(
     css,
-    /@media \(max-width: 560px\) \{[\s\S]*?\.testimonial-copy \{[^}]*font-size: 16px;[^}]*line-height: 1\.48;[^}]*text-align: left;/,
+    /@media \(max-width: 560px\) \{[\s\S]*?\.testimonial-copy \{[^}]*font-size: 14px;[^}]*line-height: 1\.35;[^}]*text-align: left;/,
   );
   assert.match(html, /Anda dapat menghubungi contact person di bawah ini:/);
   assert.match(html, /<em>Flavia<\/em>/);

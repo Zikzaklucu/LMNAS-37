@@ -53,11 +53,11 @@ test("all three supplied camera examples are optimized and explained", () => {
   }
 });
 
-test("the content card preserves the LMNAS visual system and reflows on mobile", () => {
+test("the content card preserves the LMNAS visual system and keeps camera examples in one column", () => {
   assert.match(css, /\.rules-card \{[^}]*border: 14px solid var\(--green\);[^}]*background: var\(--cream\);/s);
   assert.match(css, /\.rules-section h2 \{[^}]*font-family: var\(--display\);/s);
-  assert.match(css, /\.camera-examples \{[^}]*grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);/s);
-  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.camera-examples \{[^}]*grid-template-columns: 1fr;/);
+  assert.match(css, /\.camera-examples \{[^}]*grid-template-columns: minmax\(0, 1fr\);/s);
+  assert.match(css, /@media \(max-width: 640px\) \{[\s\S]*?\.camera-example \{[^}]*width: 100%;/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
 

@@ -281,20 +281,22 @@
     slide.style.setProperty("--testimonial-name-size", `${item.nameSize}px`);
     slide.innerHTML = `<figure class="testimonial-card">
       <div class="testimonial-frame">
-        <img class="testimonial-photo" src="${item.photo}" alt="Potret ${item.name}" loading="${index ? "lazy" : "eager"}" decoding="async" />
-        <img class="testimonial-border" src="${frame}" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        <img class="testimonial-photo" src="${item.photo}" alt="Potret ${item.name}" loading="eager" decoding="async" draggable="false" />
+        <img class="testimonial-border" src="${frame}" alt="" aria-hidden="true" loading="eager" decoding="async" draggable="false" />
       </div>
       <figcaption>
-        <div class="testimonial-name"><h3>${item.name}</h3></div>
-        <p class="testimonial-award">${item.placement}</p>
+        <div class="testimonial-identity">
+          <div class="testimonial-name"><h3>${item.name}</h3></div>
+          <p class="testimonial-award">${item.placement}</p>
+        </div>
         <blockquote class="testimonial-copy">${item.quote}</blockquote>
       </figcaption>
     </figure>`;
   });
 
-  const BUTTON_DURATION = 520;
-  const LONG_JUMP_DURATION = 620;
-  const TRACK_EASE = "cubic-bezier(.65, 0, .35, 1)";
+  const BUTTON_DURATION = 620;
+  const LONG_JUMP_DURATION = 780;
+  const TRACK_EASE = "cubic-bezier(.4, 0, .2, 1)";
   const TOUCH_SETTLE_EASE = "cubic-bezier(.22, 1, .36, 1)";
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let activeIndex = 0;
@@ -316,12 +318,48 @@
     slides.forEach((slide) => slide.classList.remove("testimonial-slide--entering"));
   };
 
+  const fitMobilePortrait = (slide) => {
+    if (!window.matchMedia("(max-width: 560px)").matches) return;
+    const section = root.closest(".testimonial-section");
+    const heading = section.querySelector(".section-title");
+    const controls = root.querySelector(".testimonial-controls");
+    const card = slide.querySelector(".testimonial-card");
+    const portrait = slide.querySelector(".testimonial-frame");
+    const sectionStyle = getComputedStyle(section);
+    const budget = parseFloat(sectionStyle.minHeight)
+      - parseFloat(sectionStyle.paddingTop) - parseFloat(sectionStyle.paddingBottom)
+      - heading.offsetHeight - parseFloat(getComputedStyle(heading).marginBottom)
+      - controls.offsetHeight - parseFloat(getComputedStyle(controls).marginTop);
+
+    // Allocate the actual free space to artwork, not to empty section padding.
+    // Test the full-width identity layout before choosing the compact fallback.
+    slide.classList.add("testimonial-slide--portrait-stack");
+    slide.style.setProperty("--mobile-portrait-width", "100px");
+    const contentHeight = card.offsetHeight - portrait.offsetHeight;
+    const portraitWidth = Math.floor(Math.min(card.clientWidth, (budget - contentHeight - 2) * 604 / 626));
+    if (portraitWidth >= 150) {
+      slide.style.setProperty("--mobile-portrait-width", `${portraitWidth}px`);
+      return;
+    }
+
+    slide.classList.remove("testimonial-slide--portrait-stack");
+    // Width affects name wrapping, so measure each candidate rather than scale text.
+    let bestWidth = 100;
+    const maximumWidth = Math.min(148, card.clientWidth * .42);
+    for (let width = 104; width <= maximumWidth; width += 4) {
+      slide.style.setProperty("--mobile-portrait-width", `${width}px`);
+      if (card.offsetHeight > budget - 2) break;
+      bestWidth = width;
+    }
+    slide.style.setProperty("--mobile-portrait-width", `${bestWidth}px`);
+  };
+
   const syncHeight = () => {
     const activeSlide = slides[activeIndex];
     if (!activeSlide) return;
-    viewport.style.height = "";
-    track.style.height = "";
-    const height = activeSlide.scrollHeight;
+    fitMobilePortrait(activeSlide);
+    // Measure intrinsic content without resetting the animated viewport height.
+    const height = activeSlide.querySelector(".testimonial-card").offsetHeight;
     viewport.style.height = `${height}px`;
     track.style.height = `${height}px`;
   };
@@ -373,6 +411,7 @@
     root.style.setProperty("--testimonial-track-duration", `${duration}ms`);
     root.style.setProperty("--testimonial-track-ease", easing);
     track.style.transition = animate ? "" : "none";
+    viewport.style.transition = animate ? "" : "none";
     activeIndex = destinationIndex;
     syncHeight();
     track.style.transform = `translate3d(${-activeIndex * 100}%, 0, 0)`;
