@@ -1,0 +1,56 @@
+[
+  {
+    "edition": 34,
+    "level": "smp",
+    "file": "Assets/covers/lmnas-34-smp.webp",
+    "source": "/Users/user/Downloads/Buku/SMP Depan.png",
+    "width": 600,
+    "height": 850,
+    "bytes": 28204
+  },
+  {
+    "edition": 34,
+    "level": "sma",
+    "file": "Assets/covers/lmnas-34-sma.webp",
+    "source": "/Users/user/Downloads/Buku/SMA Depan.png",
+    "width": 600,
+    "height": 850,
+    "bytes": 34722
+  },
+  {
+    "edition": 35,
+    "level": "smp",
+    "file": "Assets/covers/lmnas-35-smp.webp",
+    "source": "/Users/user/Downloads/Cover Soal dan Pembahasan/SMP sampul.png",
+    "width": 600,
+    "height": 850,
+    "bytes": 45580
+  },
+  {
+    "edition": 35,
+    "level": "sma",
+    "file": "Assets/covers/lmnas-35-sma.webp",
+    "source": "/Users/user/Downloads/Cover Soal dan Pembahasan/SMA sampul 1.png",
+    "width": 600,
+    "height": 850,
+    "bytes": 45840
+  },
+  {
+    "edition": 36,
+    "level": "smp",
+    "file": "Assets/covers/lmnas-36-smp.webp",
+    "source": "/Users/user/Downloads/COVER BUKU/Cover SMP 2.png",
+    "width": 600,
+    "height": 850,
+    "bytes": 74208
+  },
+  {
+    "edition": 36,
+    "level": "sma",
+    "file": "Assets/covers/lmnas-36-sma.webp",
+    "source": "/Users/user/Downloads/COVER BUKU/Cover SMA 2.png",
+    "width": 600,
+    "height": 850,
+    "bytes": 89826
+  }
+]

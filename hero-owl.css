@@ -1,0 +1,91 @@
+/* Approved Figma 4913:101: one perched-owl composite, flow-safe at every size. */
+.hero[data-hero-owl] {
+  --owl-width: clamp(300px, 48vw, 440px);
+  --owl-crop: 0.18;
+  --hero-header-height: 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: center;
+  align-items: center;
+  gap: 24px;
+  height: auto;
+  min-height: calc(100svh - var(--hero-header-height));
+  padding: 88px 0 56px;
+  overflow-x: clip;
+  overflow-y: visible;
+  clip-path: inset(0);
+}
+.hero[data-hero-owl] .hero-copy {
+  width: min(900px, 100%);
+  min-width: 0;
+  padding-top: 0;
+  margin-inline: auto;
+}
+.hero[data-hero-owl] .hero-owl-stage {
+  position: relative;
+  z-index: 3;
+  justify-self: end;
+  width: calc(var(--owl-width) * (1 - var(--owl-crop)));
+  aspect-ratio: 638.78 / 606;
+  pointer-events: none;
+}
+.hero[data-hero-owl] .hero-mascot {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: auto;
+  bottom: auto;
+  width: var(--owl-width);
+  height: auto;
+  max-width: none;
+  opacity: 1;
+  transform: none;
+  animation: none;
+  filter: none;
+  pointer-events: none;
+}
+/* This export already includes the supporting branch. Do not duplicate it. */
+.hero[data-hero-owl] .hero-canopy .hero-branch-right { display: none; }
+@media (min-width: 1201px) {
+  .hero[data-hero-owl] {
+    --owl-width: clamp(480px, 40vw, 660px);
+    --owl-crop: 0.28;
+    align-content: center;
+    /* Center the whole copy stack in the space above the 44px divider. */
+    padding: 112px 0 156px;
+    min-height: max(780px, calc(100svh - var(--hero-header-height)));
+  }
+  .hero[data-hero-owl] .hero-owl-stage {
+    aspect-ratio: 560.88 / 606;
+    position: absolute;
+    right: 0;
+    bottom: 56px;
+  }
+  .hero[data-hero-owl] .hero-art {
+    left: -112px;
+    transform-origin: 112px 50.2%;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+/* Preserve the complete tree silhouette beside the narrower reading opening. */
+@media (min-width: 1201px) and (max-width: 1332px) {
+  .hero[data-hero-owl] .hero-art { transform: scale(.9); }
+}
+@media (min-width: 1333px) and (max-width: 1439px) {
+  .hero[data-hero-owl] .hero-art { transform: scale(1.1); }
+}
+@media (min-width: 1333px) {
+  .hero[data-hero-owl] { --hero-header-height: 64px; }
+}
+@media (max-width: 560px) {
+  .hero[data-hero-owl] {
+    --owl-width: clamp(280px, 86vw, 360px);
+    gap: 24px;
+    padding-block: 64px 56px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero[data-hero-owl] .hero-mascot { animation: none; transform: none; }
+}

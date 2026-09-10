@@ -26,7 +26,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css?v=146" />
+    <link rel="stylesheet" href="style.css?v=174" />
+    <link rel="stylesheet" href="hero-leaves.css?v=3" />
+    <link rel="stylesheet" href="hero-owl.css?v=5" />
+    <link rel="stylesheet" href="sponsor-tiers.css?v=1" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
@@ -44,6 +47,14 @@
         <a href="https://pendaftaran.lmnas-ugm.com">Daftar</a>
         <a href="https://lmnas.fmipa.ugm.ac.id/bukupanduanlmnas37/">Buku Panduan</a>
         <a href="https://drive.google.com/drive/folders/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus</a>
+        <details class="nav-papers">
+          <summary>Soal Tahun Lalu</summary>
+          <div class="nav-papers-menu">
+            <a href="https://zikzaklucu.github.io/LMNAS-37/soal/36/index.html">LMNas 36</a>
+            <a href="https://zikzaklucu.github.io/LMNAS-37/soal/35/index.html">LMNas 35</a>
+            <a href="https://zikzaklucu.github.io/LMNAS-37/soal/34/index.html">LMNas 34</a>
+          </div>
+        </details>
         <a href="https://lmnas.fmipa.ugm.ac.id/peraturan-lmnas-37/">Peraturan</a>
         <a href="https://lmnas.fmipa.ugm.ac.id/faq-lmnas-37/">FAQ</a>
         <div class="nav-contact">
@@ -57,18 +68,41 @@
     </header>
 
     <main id="main-content">
-      <section class="hero" id="home" aria-labelledby="hero-title">
-        <img class="hero-art" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-expedition.svg" alt="" aria-hidden="true" />
-        <img class="hero-mascot" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/expedition-mascot.png" alt="" aria-hidden="true" />
+      <section class="hero" id="home" aria-labelledby="hero-title" data-hero-owl>
+        <div class="hero-leaves" aria-hidden="true">
+          <span class="hero-leaf"></span><span class="hero-leaf"></span><span class="hero-leaf"></span>
+          <span class="hero-leaf"></span><span class="hero-leaf"></span><span class="hero-leaf"></span>
+          <span class="hero-leaf"></span><span class="hero-leaf"></span><span class="hero-leaf"></span>
+          <span class="hero-leaf"></span><span class="hero-leaf"></span><span class="hero-leaf"></span>
+        </div>
+
+        <img class="hero-art" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-expedition-updated.svg" alt="" aria-hidden="true" />
+        <div class="hero-canopy" aria-hidden="true">
+          <img class="hero-canopy-figma hero-canopy-figma--left" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-canopy-figma.svg" width="1440" height="358" alt="" />
+          <img class="hero-canopy-figma hero-canopy-figma--right" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-canopy-figma.svg" width="1440" height="358" alt="" />
+          <img class="hero-branch-right" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-branch-right.svg" alt="" />
+          <img class="hero-canopy-right" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-canopy-right.svg" alt="" />
+          <img class="hero-canopy-left" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-canopy-left.svg" alt="" />
+          <img class="hero-vine-left" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-vine-left.svg" alt="" />
+          <img class="hero-vine-inner-left" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-vine-inner-left.svg" alt="" />
+          <img class="hero-vine-inner-right" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-vine-inner-right.svg" alt="" />
+          <img class="hero-vine-right" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-vine-right.svg" alt="" />
+          <img class="hero-canopy-edge" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-canopy-edge.svg" alt="" />
+          <img class="hero-flower-left" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-flower-left.svg" alt="" />
+          <img class="hero-flower-right" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-flower-right.svg" alt="" />
+        </div>
         <img class="hero-wood-divider" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-wood-divider.png?v=2" alt="" aria-hidden="true" />
         <div class="hero-copy">
+          <p class="hero-welcome">Selamat Datang</p>
           <h1 id="hero-title">LMNAS 37</h1>
-          <p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada</p>
-          <p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br />to Broader Thinking and Limitless Potential”</p>
+          <p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br /> to Broader Thinking and Limitless Potential”</p>
           <div class="hero-cta">
             <img class="hero-flowers" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-flowers.svg" alt="" aria-hidden="true" />
-            <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>Daftar</a>
+            <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>DAFTAR SEKARANG</a>
           </div>
+        </div>
+        <div class="hero-owl-stage" aria-hidden="true">
+          <img class="hero-mascot" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-owl-perched.png" width="779" height="606" alt="" aria-hidden="true" decoding="async" />
         </div>
       </section>
 
@@ -268,7 +302,7 @@
               <li class="footer-logo footer-logo--wisma"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/wisma-kagama.png" alt="Wisma Kagama" loading="lazy" decoding="async" /></li>
               <li class="footer-logo footer-logo--imperial"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/imperial-digital-printing-figma.png" alt="Imperial Digital Printing" loading="lazy" decoding="async" /></li>
               <li class="footer-logo footer-logo--takaful"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/takaful-umum-figma.png" alt="Takaful Umum" loading="lazy" decoding="async" /></li>
-              <li class="footer-logo footer-logo--manulife"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/manulife-figma.png" alt="Manulife" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--fumalife"><img src="https://zikzaklucu.github.io/LMNAS-37/Assets/sponsors/manulife-figma.png" alt="Fumalife" loading="lazy" decoding="async" /></li>
             </ul>
           </section>
           <section class="footer-partner-group footer-partner-group--media">
@@ -1079,6 +1113,45 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
 
   root.classList.add("testimonial-carousel--ready");
   update(0, { animate: false, entry: false, force: true });
+})();
+    </script>
+    <script>
+(() => {
+  "use strict";
+
+  const hoverQuery = window.matchMedia("(hover: hover) and (pointer: fine) and (min-width: 641px)");
+  document.querySelectorAll(".nav-papers").forEach((archive) => {
+    const summary = archive.querySelector("summary");
+    const header = archive.closest(".site-header");
+    const close = () => { archive.open = false; };
+
+    // Change the native open state, not merely visual visibility.
+    archive.addEventListener("pointerenter", (event) => {
+      if (hoverQuery.matches && event.pointerType === "mouse") archive.open = true;
+    });
+    archive.addEventListener("pointerleave", () => {
+      if (hoverQuery.matches && !archive.contains(document.activeElement)) close();
+    });
+    archive.addEventListener("focusout", (event) => {
+      if (!archive.contains(event.relatedTarget) && !archive.matches(":hover")) close();
+    });
+    document.addEventListener("click", (event) => {
+      if (!archive.contains(event.target)) close();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && archive.open) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        close();
+        summary.focus();
+      }
+    }, { capture: true });
+    archive.addEventListener("click", (event) => {
+      if (event.target.closest("a")) close();
+    });
+    header?.querySelector(".nav-toggle")?.addEventListener("click", close);
+    hoverQuery.addEventListener("change", close);
+  });
 })();
     </script>
   </body>

@@ -26,8 +26,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css?v=146" />
+    <link rel="stylesheet" href="style.css?v=174" />
+    <link rel="stylesheet" href="hero-leaves.css?v=3" />
+    <link rel="stylesheet" href="hero-owl.css?v=5" />
+    <link rel="stylesheet" href="sponsor-tiers.css?v=1" />
     <script src="navigation.js?v=4" defer></script>
+    <script src="archive-navigation.js?v=1" defer></script>
     <script src="site-config.js?v=1" defer></script>
     <script src="countdown.js?v=5" defer></script>
     <script src="script.js?v=14" defer></script>
@@ -48,6 +52,14 @@
         <a href="https://pendaftaran.lmnas-ugm.com">Daftar</a>
         <a href="buku-panduan/">Buku Panduan</a>
         <a href="https://drive.google.com/drive/folders/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus</a>
+        <details class="nav-papers">
+          <summary>Soal Tahun Lalu</summary>
+          <div class="nav-papers-menu">
+            <a href="soal/36/index.html">LMNas 36</a>
+            <a href="soal/35/index.html">LMNas 35</a>
+            <a href="soal/34/index.html">LMNas 34</a>
+          </div>
+        </details>
         <a href="peraturan/">Peraturan</a>
         <a href="faq/">FAQ</a>
         <div class="nav-contact">
@@ -61,18 +73,41 @@
     </header>
 
     <main id="main-content">
-      <section class="hero" id="home" aria-labelledby="hero-title">
-        <img class="hero-art" src="Assets/figma/hero-expedition.svg" alt="" aria-hidden="true" />
-        <img class="hero-mascot" src="Assets/figma/expedition-mascot.png" alt="" aria-hidden="true" />
+      <section class="hero" id="home" aria-labelledby="hero-title" data-hero-owl>
+        <div class="hero-leaves" aria-hidden="true">
+          <span class="hero-leaf"></span><span class="hero-leaf"></span><span class="hero-leaf"></span>
+          <span class="hero-leaf"></span><span class="hero-leaf"></span><span class="hero-leaf"></span>
+          <span class="hero-leaf"></span><span class="hero-leaf"></span><span class="hero-leaf"></span>
+          <span class="hero-leaf"></span><span class="hero-leaf"></span><span class="hero-leaf"></span>
+        </div>
+
+        <img class="hero-art" src="Assets/figma/hero-expedition-updated.svg" alt="" aria-hidden="true" />
+        <div class="hero-canopy" aria-hidden="true">
+          <img class="hero-canopy-figma hero-canopy-figma--left" src="Assets/figma/hero-canopy-figma.svg" width="1440" height="358" alt="" />
+          <img class="hero-canopy-figma hero-canopy-figma--right" src="Assets/figma/hero-canopy-figma.svg" width="1440" height="358" alt="" />
+          <img class="hero-branch-right" src="Assets/figma/hero-branch-right.svg" alt="" />
+          <img class="hero-canopy-right" src="Assets/figma/hero-canopy-right.svg" alt="" />
+          <img class="hero-canopy-left" src="Assets/figma/hero-canopy-left.svg" alt="" />
+          <img class="hero-vine-left" src="Assets/figma/hero-vine-left.svg" alt="" />
+          <img class="hero-vine-inner-left" src="Assets/figma/hero-vine-inner-left.svg" alt="" />
+          <img class="hero-vine-inner-right" src="Assets/figma/hero-vine-inner-right.svg" alt="" />
+          <img class="hero-vine-right" src="Assets/figma/hero-vine-right.svg" alt="" />
+          <img class="hero-canopy-edge" src="Assets/figma/hero-canopy-edge.svg" alt="" />
+          <img class="hero-flower-left" src="Assets/figma/hero-flower-left.svg" alt="" />
+          <img class="hero-flower-right" src="Assets/figma/hero-flower-right.svg" alt="" />
+        </div>
         <img class="hero-wood-divider" src="Assets/figma/hero-wood-divider.png?v=2" alt="" aria-hidden="true" />
         <div class="hero-copy">
+          <p class="hero-welcome">Selamat Datang di laman</p>
           <h1 id="hero-title">LMNAS 37</h1>
-          <p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada</p>
-          <p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br />to Broader Thinking and Limitless Potential”</p>
+          <p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br /> to Broader Thinking and Limitless Potential”</p>
           <div class="hero-cta">
             <img class="hero-flowers" src="Assets/figma/hero-flowers.svg" alt="" aria-hidden="true" />
-            <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>Daftar</a>
+            <a class="figma-button" href="https://pendaftaran.lmnas-ugm.com" data-registration-link>DAFTAR SEKARANG</a>
           </div>
+        </div>
+        <div class="hero-owl-stage" aria-hidden="true">
+          <img class="hero-mascot" src="Assets/figma/hero-owl-perched.png" width="779" height="606" alt="" aria-hidden="true" decoding="async" />
         </div>
       </section>
 
@@ -244,6 +279,7 @@
         </div>
       </section>
 
+
       <section class="contact-section" id="kontak" aria-labelledby="contact-title">
         <img class="contact-tree" src="Assets/figma/contact-tree.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="section-inner contact-inner">
@@ -272,7 +308,7 @@
               <li class="footer-logo footer-logo--wisma"><img src="Assets/sponsors/wisma-kagama.png" alt="Wisma Kagama" loading="lazy" decoding="async" /></li>
               <li class="footer-logo footer-logo--imperial"><img src="Assets/sponsors/imperial-digital-printing-figma.png" alt="Imperial Digital Printing" loading="lazy" decoding="async" /></li>
               <li class="footer-logo footer-logo--takaful"><img src="Assets/sponsors/takaful-umum-figma.png" alt="Takaful Umum" loading="lazy" decoding="async" /></li>
-              <li class="footer-logo footer-logo--manulife"><img src="Assets/sponsors/manulife-figma.png" alt="Manulife" loading="lazy" decoding="async" /></li>
+              <li class="footer-logo footer-logo--fumalife"><img src="Assets/sponsors/manulife-figma.png" alt="Fumalife" loading="lazy" decoding="async" /></li>
             </ul>
           </section>
           <section class="footer-partner-group footer-partner-group--media">

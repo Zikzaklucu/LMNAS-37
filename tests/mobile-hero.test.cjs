@@ -9,7 +9,7 @@ const css = fs.readFileSync(path.join(__dirname, "..", "style.css"), "utf8");
 test("mobile hero centers its intrinsic content and reserves artwork space", () => {
   assert.match(css, /\.hero \{ display: grid; align-items: center; height: auto; min-height: max\(560px, calc\(100svh - 56px\)\); padding-block: 48px 104px;/);
   assert.match(css, /\.hero-copy \{ padding-top: 0; \}/);
-  assert.match(css, /\.hero-cta \.hero-flowers \{ width: min\(360px, calc\(100vw - 24px\)\);/);
+  assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.hero-cta \.hero-flowers \{ display: none; \}/);
   assert.match(css, /\.hero-copy \.hero-subhead \{[^}]*font-size: 14px;[^}]*line-height: 1\.45;/);
 });
 

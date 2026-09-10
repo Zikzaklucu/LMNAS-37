@@ -143,8 +143,8 @@ test("the accordion preserves state through repeated open and close toggles", ()
 });
 
 test("the FAQ navbar matches the approved main-page destinations", () => {
-  assert.deepEqual(navLabels(mainHtml), ["Home", "Daftar", "Buku Panduan", "Silabus", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
-  assert.deepEqual(navLabels(html), ["Home", "Daftar", "Buku Panduan", "Silabus", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
+  assert.deepEqual(navLabels(mainHtml), ["Home", "Daftar", "Buku Panduan", "Silabus", "LMNas 36", "LMNas 35", "LMNas 34", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
+  assert.deepEqual(navLabels(html), ["Home", "Daftar", "Buku Panduan", "Silabus", "LMNas 36", "LMNas 35", "LMNas 34", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
   assert.match(html, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
   assert.match(html, /<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>/);
   assert.match(html, /<a href="https:\/\/wa\.me\/6285113291516" target="_blank" rel="noopener noreferrer">SMP Contact Person<\/a>/);

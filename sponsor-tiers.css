@@ -1,0 +1,62 @@
+/* Sponsor hierarchy: fitting boxes preserve each logo's intrinsic proportions. */
+.footer-partner-group--mitra .footer-logo-list {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  grid-template-rows: auto;
+  justify-content: center;
+  align-content: start;
+  justify-items: center;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+}
+.footer-partner-group--mitra .footer-logo {
+  position: relative;
+  inset: auto;
+  width: 120px;
+  height: 60px;
+  min-width: 0;
+}
+.footer-partner-group--mitra .footer-logo--bsm {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 180px;
+  height: 90px;
+}
+.footer-partner-group--mitra .footer-logo--fumalife {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  width: 320px;
+  height: 120px;
+  max-width: 100%;
+}
+.footer-partner-group--mitra .footer-logo img { transform: none; object-fit: contain; }
+
+@media (min-width: 1333px) {
+  .footer-stage { min-height: 600px; }
+  .footer-partner-group--mitra .footer-logo-list { position: absolute; top: 100px; right: 8%; left: 8%; bottom: auto; }
+  .footer-heading { top: 28px; }
+  .footer-partner-group--media .footer-logo-list { top: 100px; bottom: auto; height: 190px; }
+  .footer-socials { top: auto; bottom: 28px; }
+}
+
+@media (min-width: 641px) and (max-width: 1332px) {
+  .footer-partner-group--mitra .footer-logo-list { grid-template-columns: repeat(2, 120px); }
+  .footer-partner-group { padding-inline: 10px; }
+  .footer-socials { margin-top: 24px; }
+}
+
+@media (max-width: 640px) {
+  /* Stack groups so the enlarged wordmark fits comfortably on phones. */
+  .footer-partners { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .footer-partners::after { display: none; }
+  .footer-partner-group { padding-inline: 0; }
+  .footer-partner-group--mitra .footer-logo-list { grid-template-columns: repeat(3, 80px); gap: 12px 8px; }
+  .footer-partner-group--mitra .footer-logo { width: 80px; height: 40px; }
+  .footer-partner-group--mitra .footer-logo--bsm { width: 120px; height: 60px; }
+  .footer-partner-group--mitra .footer-logo--fumalife { width: 220px; height: 80px; }
+  .footer-partner-group--media .footer-logo-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .footer-socials { margin-top: 24px; }
+}

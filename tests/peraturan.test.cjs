@@ -35,6 +35,14 @@ test("the supplied website and objection email are actionable", () => {
   assert.match(html, /href="mailto:sanggahanlmnas@gmail\.com">sanggahanlmnas@gmail\.com<\/a>/);
 });
 
+test("rule 8 uses an unnumbered circular sublist", () => {
+  const ruleEight = html.match(/Selama pengerjaan soal berlangsung, peserta dilarang:[\s\S]*?<\/ul>/)?.[0];
+  assert.ok(ruleEight);
+  assert.match(ruleEight, /<ul class="rules-sublist">/);
+  assert.doesNotMatch(ruleEight, /<ol\b|rules-sublist--ordered/);
+  assert.equal((ruleEight.match(/<li>/g) || []).length, 5);
+});
+
 test("all three supplied camera examples are optimized and explained", () => {
   const images = [
     "camera-position-correct.webp",

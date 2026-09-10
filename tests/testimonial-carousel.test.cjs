@@ -181,3 +181,17 @@ test("testimonial height follows the active slide instead of clipping at a fixed
   assert.match(script, /document\.fonts\?\.ready\.then\(syncHeight\)/);
   assert.match(script, /window\.addEventListener\("resize", syncHeight/);
 });
+
+test("mobile Kata Mereka keeps the identity row compact and visually paired with the portrait", () => {
+  const mobile = css.slice(css.indexOf("/* Balanced phone composition"));
+
+  assert.match(css, /@media \(max-width: 640px\) \{\s*:root \{ --mobile-header-height: 56px; scroll-padding-top: var\(--mobile-header-height\); \}\s*html \{ scroll-snap-type: y mandatory; \}\s*#main-content > section, \.footer \{ scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: 0; \}\s*\.site-header \{ height: var\(--mobile-header-height\);/);
+  assert.match(css, /Mobile section snaps use the shared root navbar inset[\s\S]*#main-content > \.flow-section,[\s\S]*#main-content > \.registration-section,[\s\S]*#main-content > \.contact-section \{ scroll-margin-top: 0; \}/);
+  assert.match(mobile, /\.testimonial-section \{[^}]*align-content: start;[^}]*height: auto;[^}]*min-height: 0;[^}]*padding: 20px 0 50px;[^}]*scroll-margin-top: 0;/);
+  assert.match(mobile, /\.testimonial-section \{[^}]*--testimonial-mobile-portrait-width: clamp\(144px, 44vw, 164px\);[^}]*--testimonial-mobile-identity-height: clamp\(149px, 45\.6vw, 170px\);/);
+  assert.match(mobile, /\.testimonial-frame \{[^}]*width: var\(--testimonial-mobile-portrait-width\);[^}]*aspect-ratio: 604 \/ 626;/);
+  assert.match(mobile, /\.testimonial-identity \{[^}]*min-height: var\(--testimonial-mobile-identity-height\);[^}]*padding-left: calc\(var\(--testimonial-mobile-portrait-width\) \+ 12px\);[^}]*transform: translateY\(2px\);/);
+  assert.match(mobile, /\.testimonial-copy \{[^}]*margin-top: 6px;/);
+  assert.match(mobile, /\.testimonial-controls \{ margin-top: 10px; \}/);
+  assert.match(script, /<div class="testimonial-identity">/);
+});

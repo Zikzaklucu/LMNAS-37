@@ -38,11 +38,11 @@ test("the deploy bundle mirrors the canonical shared stylesheet", () => {
 test("the deployed home page includes the approved hero flowers and registration video", () => {
   const deployed = read("LMNas_Deployed/index.html");
 
-  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=146" \/>/);
-  assert.match(deployed, /<p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada<\/p>/);
+  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=174" \/>/);
+  assert.match(deployed, /<p class="hero-welcome">Selamat Datang<\/p>/);
   assert.match(
     deployed,
-    /<div class="hero-cta">\s*<img class="hero-flowers" src="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/Assets\/figma\/hero-flowers\.svg"[^>]*>\s*<a class="figma-button"[^>]*>Daftar<\/a>\s*<\/div>/,
+    /<div class="hero-cta">\s*<img class="hero-flowers" src="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/Assets\/figma\/hero-flowers\.svg"[^>]*>\s*<a class="figma-button"[^>]*>DAFTAR SEKARANG<\/a>\s*<\/div>/,
   );
   assert.match(
     deployed,
@@ -91,8 +91,8 @@ test("all deployed footers expose only the approved media partners", () => {
 });
 
 test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => {
-  assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=24" \/>/);
-  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=26" \/>/);
+  assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=34" \/>/);
+  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=36" \/>/);
 });
 
 test("the WordPress deploy bundle uses the confirmed WordPress route contract", () => {

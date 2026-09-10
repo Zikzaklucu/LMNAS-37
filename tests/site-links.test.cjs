@@ -13,7 +13,7 @@ const monkeyAsset = fs.readFileSync(path.join(__dirname, "..", "Assets", "figma"
 const navigationScript = fs.readFileSync(path.join(__dirname, "..", "navigation.js"), "utf8");
 
 test("all Daftar CTA buttons use the registration website", () => {
-  const hrefs = [...html.matchAll(/<a class="figma-button" href="([^"]+)"[^>]*>Daftar<\/a>/g)]
+  const hrefs = [...html.matchAll(/<a class="figma-button" href="([^"]+)"[^>]*>(?:Daftar|DAFTAR SEKARANG)<\/a>/g)]
     .map((match) => match[1]);
 
   assert.equal(hrefs.length, 2);
@@ -30,18 +30,18 @@ test("the registration CTA preserves the approved mixed-case copy", () => {
   assert.doesNotMatch(css, /\.registration-kicker[^}]*text-transform:\s*uppercase/);
 });
 
-test("the hero leads with LMNAS 37, then the formal event name and theme", () => {
+test("the updated Figma hero welcomes visitors before the title and theme", () => {
   const hero = html.slice(html.indexOf('<section class="hero"'), html.indexOf('<section class="countdown-section"'));
   const titleIndex = hero.indexOf('<h1 id="hero-title">LMNAS 37</h1>');
-  const eventNameIndex = hero.indexOf('<p class="hero-event-name">Lomba Matematika Nasional ke-37 Universitas Gadjah Mada</p>');
-  const themeIndex = hero.indexOf('<p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br />to Broader Thinking and Limitless Potential”</p>');
+  const welcomeIndex = hero.indexOf('<p class="hero-welcome">Selamat Datang</p>');
+  const themeIndex = hero.indexOf('<p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br /> to Broader Thinking and Limitless Potential”</p>');
 
   assert.ok(titleIndex >= 0);
-  assert.ok(titleIndex < eventNameIndex);
-  assert.ok(eventNameIndex < themeIndex);
-  assert.doesNotMatch(hero, /Selamat Datang/i);
-  assert.match(css, /\.hero-event-name \{[^}]*font-family: "Rumble Brave", Georgia, serif;[^}]*font-size: 32px;[^}]*line-height: 1\.15;/);
-  assert.match(css, /\.hero-copy \.hero-subhead \{[^}]*font-family: var\(--body\);[^}]*font-size: 20px;/);
+  assert.ok(welcomeIndex >= 0 && welcomeIndex < titleIndex);
+  assert.ok(titleIndex < themeIndex);
+  assert.doesNotMatch(hero, /hero-event-name/);
+  assert.match(css, /\.hero-welcome \{[^}]*font-family: var\(--display\);[^}]*font-size: 40px;/);
+  assert.match(css, /\.hero-copy \.hero-subhead \{[^}]*font-family: var\(--body\);[^}]*font-size: 22px;/);
 });
 
 test("the hero flowers stay vertically centered beside the registration CTA", () => {
@@ -49,18 +49,31 @@ test("the hero flowers stay vertically centered beside the registration CTA", ()
 
   assert.match(
     hero,
-    /<div class="hero-cta">\s*<img class="hero-flowers"[^>]*>\s*<a class="figma-button"[^>]*>Daftar<\/a>\s*<\/div>/,
+    /<div class="hero-cta">\s*<img class="hero-flowers"[^>]*>\s*<a class="figma-button"[^>]*>(?:Daftar|DAFTAR SEKARANG)<\/a>\s*<\/div>/,
   );
-  assert.match(css, /\.hero-copy \{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\);[^}]*width: min\(100%, 900px\);[^}]*margin-inline: auto;[^}]*padding-top: 190px;/);
-  assert.match(css, /\.hero-cta \{[^}]*position: relative;[^}]*margin-top: 22px;/);
+  assert.match(css, /\.hero-copy \{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\);[^}]*width: min\(100%, 900px\);[^}]*margin-inline: auto;[^}]*padding-top: 57px;/);
+  assert.match(css, /\.hero-cta \{[^}]*position: relative;[^}]*margin-top: 45px;/);
+  assert.match(css, /@media \(min-width: 1201px\) \{[\s\S]*?\.hero-cta \{ margin-top: 25px; \}/);
   assert.match(
     css,
-    /\.hero-cta \.hero-flowers \{[^}]*top: 50%;[^}]*left: 50%;[^}]*transform: translate\(-50%, -50%\);/,
+    /\.hero-cta::before, \.hero-cta::after \{[^}]*top: 50%;[^}]*transform: translateY\(-50%\);/,
   );
 });
 
-test("the desktop hero shift leaves the responsive hero position unchanged", () => {
-  assert.match(css, /\.hero-copy \{[^}]*padding-top: 190px;/);
+test("the desktop hero fills the header-aware viewport while responsive positioning stays unchanged", () => {
+  assert.match(css, /\.hero-copy \{[^}]*padding-top: 57px;/);
+  assert.match(css, /@media \(min-width: 1201px\) \{[\s\S]*?\.hero \{ height: auto; min-height: max\(626px, calc\(100svh - 64px\)\); \}/);
+  assert.match(css, /\.hero-art \{[\s\S]*?bottom: -524px;[\s\S]*?left: calc\(50% - 832px\);[\s\S]*?mask-image: linear-gradient\(to right, transparent calc\(832px - 50vw\), #000 calc\(844px - 50vw\)\);[\s\S]*?\}/);
+  assert.match(css, /\.hero-canopy \{ top: 0; left: 0; width: 100%; height: 358px; transform: none; \}/);
+  assert.match(css, /\.hero-canopy \.hero-canopy-figma \{ display: block; top: 0; width: 1440px; height: auto; \}/);
+  assert.match(css, /\.hero-canopy-figma--left \{ left: 0; clip-path: inset\(0 720px 0 0\); \}/);
+  assert.match(css, /\.hero-canopy-figma--right \{ right: 0; left: auto; clip-path: inset\(0 0 0 720px\); \}/);
+  assert.match(css, /@media \(min-width: 1201px\) and \(max-width: 1332px\) \{[\s\S]*?min-height: max\(626px, calc\(100svh - 56px\)\)/);
+  assert.match(css, /\.hero-copy \{ padding-top: clamp\(57px, calc\(50svh - 312px\), 138px\); \}/);
+  assert.match(css, /\.hero-welcome \{ margin-bottom: 12px; \}/);
+  assert.match(css, /\.hero-mascot \{ position: absolute; z-index: 3; right: calc\(50% - 705\.9px\); top: 84px; width: 272\.9px;/);
+  assert.match(css, /\.hero-mascot \{ top: auto; right: calc\(50% - 624\.9px\); bottom: -151px; width: 340px; \}/);
+  assert.match(css, /\.hero-wood-divider \{ height: 44px; \}/);
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.hero-copy \{ padding-top: 102px; \}/);
 });
 
@@ -105,7 +118,7 @@ test("the countdown exposes four paired lowercase unit labels", () => {
 test("the navigation exposes the approved pages and both contact-person routes", () => {
   const desktopNavigation = html.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
 
-  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 8);
+  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 11);
   assert.match(desktopNavigation, /<a href="#home">Home<\/a>/);
   assert.match(desktopNavigation, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
   assert.match(desktopNavigation, /<a href="buku-panduan\/">Buku Panduan<\/a>/);
@@ -212,10 +225,18 @@ test("flow and registration sections use content-safe desktop viewport sizing", 
   assert.doesNotMatch(css, /#main-content \.registration-section \{[^}]*height: 100vh/);
 });
 
+test("mobile registration CTA sizes to its content instead of a forced viewport height", () => {
+  assert.match(
+    css,
+    /@media \(max-width: 560px\) \{[\s\S]*?#main-content \.registration-section \{ height: auto; min-height: 0; padding: 90px 0 110px; \}/s,
+  );
+  assert.doesNotMatch(css, /#main-content \.registration-section \{ min-height: 1010px;/);
+});
+
 test("flow viewport sizing follows the existing responsive header heights", () => {
   assert.match(css, /@media \(max-width: 1332px\) \{[\s\S]*?#main-content \.flow-section \{ min-height: calc\(100svh - 56px\); \}/s);
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?#main-content \.flow-section \{ height: auto; min-height: calc\(100svh - 56px\);/s);
-  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?#main-content \.flow-section \{ min-height: 460px;/s);
+  assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?#main-content \.flow-section \{ min-height: 460px; padding: 28px 0 62px;/s);
 });
 
 test("desktop Linimasa uses a compact four-row normal-flow layout", () => {
@@ -440,7 +461,7 @@ test("the mobile prize heading keeps its centering transform anchored at 50 perc
 test("tablet hero and prize geometry remain inside their clipping sections", () => {
   assert.match(
     css,
-    /@media \(max-width: 1200px\) \{[\s\S]*?\.hero-copy \.hero-subhead \{[^}]*width: min\(620px, calc\(100vw - 40px\)\);[^}]*max-width: none;/,
+    /@media \(max-width: 1200px\) \{[\s\S]*?\.hero-copy \.hero-subhead \{[^}]*width: min\(580px, calc\(100vw - 48px\)\);[^}]*max-width: none;/,
   );
   assert.match(css, /@media \(max-width: 1200px\) \{[\s\S]*?\.prize-section \{ height: 1280px;/);
 });
@@ -498,7 +519,7 @@ test("the footer fills the updated Home3 Figma partner regions", () => {
     "Wisma Kagama",
     "Imperial Digital Printing",
     "Takaful Umum",
-    "Manulife",
+    "Fumalife",
     "Jogja TV",
     "Kotaperak 94.6 FM",
   ]);
@@ -839,7 +860,7 @@ test("the updated footer keeps Mitra and Media Partner as separate semantic grou
 
   assert.equal((mitra.match(/class="footer-logo footer-logo--/g) || []).length, 9);
   assert.equal((media.match(/class="footer-logo footer-logo--/g) || []).length, 2);
-  assert.match(mitra, /Standard[\s\S]*BSM Rental[\s\S]*MIC Hotel[\s\S]*Taman Batik Terang Bulan[\s\S]*Raden HT[\s\S]*Wisma Kagama[\s\S]*Imperial Digital Printing[\s\S]*Takaful Umum[\s\S]*Manulife/);
+  assert.match(mitra, /Standard[\s\S]*BSM Rental[\s\S]*MIC Hotel[\s\S]*Taman Batik Terang Bulan[\s\S]*Raden HT[\s\S]*Wisma Kagama[\s\S]*Imperial Digital Printing[\s\S]*Takaful Umum[\s\S]*Fumalife/);
   assert.match(media, /Jogja TV[\s\S]*Kotaperak 94\.6 FM/);
   assert.doesNotMatch(media, /Ikut Event|Ikahimatika/);
   assert.doesNotMatch(mitra, /Jogja TV|Ikut Event|Ikahimatika|Kotaperak/);
