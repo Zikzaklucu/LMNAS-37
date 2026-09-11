@@ -9,11 +9,11 @@ test("falling leaves are hero-only and decorative without a visible pause contro
   for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
     const html = read(file);
     const hero = html.slice(html.indexOf('<section class="hero"'), html.indexOf('<section class="countdown-section"'));
-    assert.equal((hero.match(/class="hero-leaf"/g) || []).length, 12);
+    assert.equal((hero.match(/class="hero-leaf"/g) || []).length, 18);
     assert.equal((html.match(/class="hero-leaves"/g) || []).length, 1);
     assert.match(hero, /class="hero-leaves" aria-hidden="true"/);
     assert.doesNotMatch(hero, /hero-leaves-toggle|Jeda animasi daun/);
-    assert.match(html, /href="hero-leaves.css\?v=3"/);
+    assert.match(html, /href="hero-leaves.css\?v=5"/);
   }
 });
 
@@ -25,10 +25,15 @@ test("leaf CSS is mirrored, clipped, pointer-transparent and motion-safe", () =>
   assert.match(css, /@media \(prefers-reduced-motion: no-preference\)/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\) \{\s*\.hero-leaf, \.hero-leaf::before \{ animation: none;/);
   const paths = [...css.matchAll(/--x: (\d+)%; --duration: ([\d.]+)s;/g)];
-  assert.equal(paths.length, 12);
+  assert.equal(paths.length, 18);
   assert.equal(paths.filter((match) => +match[1] > 30 && +match[1] < 70).length, 2);
-  assert.equal(new Set(paths.map((match) => match[2])).size, 12);
-  assert.equal((css.match(/--delay: -[\d.]+s;/g) || []).length, 12);
+  assert.equal(new Set(paths.map((match) => match[2])).size, 18);
+  assert.deepEqual(paths.map((match) => match[2]), [
+    "21.7", "25.3", "19.9", "23.6", "28.1", "20.8",
+    "26.4", "22.9", "24.7", "30.2", "18.8", "27.5",
+    "22.4", "24.1", "26.9", "21.2", "29.4", "23.1",
+  ]);
+  assert.equal((css.match(/--delay: -[\d.]+s;/g) || []).length, 18);
   assert.match(css, /nth-child\(n\) \{ --sway-scale: \.4;/);
   assert.doesNotMatch(css.slice(css.indexOf("@media (max-width: 1200px)")), /--x:/);
 });

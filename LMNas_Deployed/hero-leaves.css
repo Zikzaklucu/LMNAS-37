@@ -1,9 +1,8 @@
-/* Decorative canopy drift: isolated from hero layout and interaction. */
+/* Sixteen edge-weighted paths and two quieter central paths, with independent timing. */
 .hero-leaves { display: none; position: absolute; z-index: 1; inset: 0; overflow: hidden; pointer-events: none; }
 .hero-leaf { position: absolute; top: -36px; left: var(--x); width: 22px; height: 100%; opacity: 0; animation: hero-leaf-fall var(--duration) linear var(--delay) infinite; }
 .hero-leaf::before { display: block; width: 100%; height: 12px; border-radius: 0 85% 0 85%; background: linear-gradient(30deg, #657039 46%, #9a9254 49%, #56642e 54%); content: ""; animation: hero-leaf-turn var(--turn, 6s) ease-in-out var(--delay) infinite alternate; }
 .hero-leaf { --alpha: .55; --sway-scale: 1; }
-/* Ten edge-weighted paths and two quieter central paths, with independent timing. */
 .hero-leaf:nth-child(1) { --x: 6%; --duration: 21.7s; --delay: -1.4s; --drift: 31px; --turn: 5.3s; }
 .hero-leaf:nth-child(2) { --x: 84%; --duration: 25.3s; --delay: -4.9s; --drift: 19px; --turn: 7.1s; width: 17px; }
 .hero-leaf:nth-child(3) { --x: 17%; --duration: 19.9s; --delay: -6.3s; --drift: -28px; --turn: 6.4s; width: 20px; }
@@ -16,6 +15,12 @@
 .hero-leaf:nth-child(10) { --x: 59%; --duration: 30.2s; --delay: -25.1s; --drift: -46px; --turn: 10.1s; --alpha: .24; width: 17px; }
 .hero-leaf:nth-child(11) { --x: 3%; --duration: 18.8s; --delay: -17.1s; --drift: 27px; --turn: 5.6s; width: 17px; }
 .hero-leaf:nth-child(12) { --x: 95%; --duration: 27.5s; --delay: -26.2s; --drift: -34px; --turn: 7.4s; width: 19px; }
+.hero-leaf:nth-child(13) { --x: 9%; --duration: 22.4s; --delay: -2.6s; --drift: -22px; --turn: 6.2s; width: 19px; }
+.hero-leaf:nth-child(14) { --x: 79%; --duration: 24.1s; --delay: -5.8s; --drift: 26px; --turn: 7.8s; width: 18px; }
+.hero-leaf:nth-child(15) { --x: 28%; --duration: 26.9s; --delay: -9.7s; --drift: 34px; --turn: 8.9s; --alpha: .32; width: 15px; }
+.hero-leaf:nth-child(16) { --x: 71%; --duration: 21.2s; --delay: -13.5s; --drift: -32px; --turn: 5.9s; --alpha: .32; width: 15px; }
+.hero-leaf:nth-child(17) { --x: 14%; --duration: 29.4s; --delay: -18.3s; --drift: 18px; --turn: 9.8s; width: 16px; }
+.hero-leaf:nth-child(18) { --x: 86%; --duration: 23.1s; --delay: -22.4s; --drift: -24px; --turn: 7.2s; width: 17px; }
 .hero-leaf:nth-child(even)::before { background: linear-gradient(30deg, #8b703e 46%, #ad9053 49%, #796235 54%); }
 
 @keyframes hero-leaf-fall {
