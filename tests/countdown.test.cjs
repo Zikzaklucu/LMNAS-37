@@ -329,6 +329,22 @@ test("loads the countdown initializer from a versioned script URL", () => {
   assert.match(html, /src="script\.js\?v=\d+"/);
 });
 
+test("adds breathing room between the active registration title and kicker", () => {
+  const stylesheets = [
+    path.join(__dirname, "..", "style.css"),
+    path.join(__dirname, "..", "LMNas_Deployed", "style.css"),
+  ];
+
+  for (const stylesheet of stylesheets) {
+    const css = fs.readFileSync(stylesheet, "utf8");
+    const selector = ".countdown-copy--active .section-kicker {";
+    const ruleStart = css.indexOf(selector);
+    const activeKicker = css.slice(ruleStart, css.indexOf("}", ruleStart) + 1);
+
+    assert.ok(activeKicker.includes("margin-top: clamp(14px, 1.5vw, 24px);"));
+  }
+});
+
 test("the runtime timer label keeps the Registrasi Gelombang I target", () => {
   const script = fs.readFileSync(path.join(__dirname, "..", "script.js"), "utf8");
   const attributes = new Map();

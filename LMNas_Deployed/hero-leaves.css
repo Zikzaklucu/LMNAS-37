@@ -43,6 +43,9 @@
   .hero-leaf:nth-child(n) { --sway-scale: .4; width: 14px; }
   .hero-leaf:nth-child(even) { width: 12px; }
 }
+@media (max-width: 640px) {
+  .hero-leaf:nth-child(n + 13) { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .hero-leaf, .hero-leaf::before { animation: none; }
 }

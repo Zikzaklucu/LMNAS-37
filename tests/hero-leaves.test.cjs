@@ -13,7 +13,7 @@ test("falling leaves are hero-only and decorative without a visible pause contro
     assert.equal((html.match(/class="hero-leaves"/g) || []).length, 1);
     assert.match(hero, /class="hero-leaves" aria-hidden="true"/);
     assert.doesNotMatch(hero, /hero-leaves-toggle|Jeda animasi daun/);
-    assert.match(html, /href="hero-leaves.css\?v=5"/);
+    assert.match(html, /href="hero-leaves.css\?v=6"/);
   }
 });
 
@@ -36,4 +36,9 @@ test("leaf CSS is mirrored, clipped, pointer-transparent and motion-safe", () =>
   assert.equal((css.match(/--delay: -[\d.]+s;/g) || []).length, 18);
   assert.match(css, /nth-child\(n\) \{ --sway-scale: \.4;/);
   assert.doesNotMatch(css.slice(css.indexOf("@media (max-width: 1200px)")), /--x:/);
+});
+
+test("mobile reduces the decorative leaf count without changing desktop coverage", () => {
+  const css = read("hero-leaves.css");
+  assert.match(css, /@media \(max-width: 640px\) \{\s*\.hero-leaf:nth-child\(n \+ 13\) \{ display: none; \}/);
 });

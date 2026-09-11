@@ -228,7 +228,7 @@ test("flow and registration sections use content-safe desktop viewport sizing", 
 test("mobile registration CTA sizes to its content instead of a forced viewport height", () => {
   assert.match(
     css,
-    /@media \(max-width: 560px\) \{[\s\S]*?#main-content \.registration-section \{ height: auto; min-height: 0; padding: 90px 0 110px; \}/s,
+    /@media \(max-width: 560px\) \{[\s\S]*?#main-content \.registration-section \{ height: auto; min-height: 0; padding: 40px 0 40px; \}/s,
   );
   assert.doesNotMatch(css, /#main-content \.registration-section \{ min-height: 1010px;/);
 });
@@ -851,6 +851,24 @@ test("the registration-flow panel embeds the supplied YouTube video accessibly",
   assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.flow-section \.section-title \{[^}]*margin-bottom: 40px;/);
   assert.match(css, /@media \(max-width: 560px\) \{[\s\S]*?\.flow-heading-art \{[^}]*top: 58px;/);
   assert.doesNotMatch(css, /\.video-card__(?:content|eyebrow|copy|action)/);
+});
+
+test("the flow raccoon sits above the video without lifting the foliage layer", () => {
+  const deployedHtml = fs.readFileSync(path.join(__dirname, "..", "LMNas_Deployed", "index.html"), "utf8");
+  const deployedCss = fs.readFileSync(path.join(__dirname, "..", "LMNas_Deployed", "style.css"), "utf8");
+
+  for (const [page, styles, assetSource] of [
+    [html, css, "Assets/figma/flow-heading-foliage.svg"],
+    [deployedHtml, deployedCss, "https://zikzaklucu.github.io/LMNAS-37/Assets/figma/flow-heading-foliage.svg"],
+  ]) {
+    const flow = page.slice(page.indexOf('<section class="flow-section"'), page.indexOf('<section class="registration-section"'));
+    assert.match(flow, new RegExp(`<img class="flow-raccoon" src="${assetSource.replaceAll(".", "\\.")}"`));
+    assert.match(styles, /\.flow-raccoon \{[^}]*z-index: 3;[^}]*top: 84px;[^}]*width: 1083px;[^}]*clip-path: inset\(14\.2% 42\.3% 57\.4% 42\.3%\);/s);
+    assert.match(styles, /\.flow-heading-art \{[^}]*z-index: 0;/s);
+    assert.match(styles, /\.flow-heading-art \{[^}]*clip-path: polygon\(0 0, 42\.3% 0, 42\.3% 42\.6%, 57\.7% 42\.6%, 57\.7% 0, 100% 0, 100% 100%, 0 100%\);/s);
+    assert.match(styles, /@media \(max-width: 1200px\) \{[\s\S]*?\.flow-raccoon \{[^}]*top: 80px;/s);
+    assert.match(styles, /@media \(max-width: 560px\) \{[\s\S]*?\.flow-raccoon \{[^}]*top: 110px;[^}]*width: 560px;/s);
+  }
 });
 
 test("the updated footer keeps Mitra and Media Partner as separate semantic groups", () => {
