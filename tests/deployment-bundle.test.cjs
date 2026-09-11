@@ -91,8 +91,28 @@ test("all deployed footers expose only the approved media partners", () => {
 });
 
 test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => {
-  assert.match(read("LMNas_Deployed/faq/index.html"), /<link rel="stylesheet" href="style\.css\?v=34" \/>/);
-  assert.match(read("LMNas_Deployed/peraturan/index.html"), /<link rel="stylesheet" href="style\.css\?v=36" \/>/);
+  const expectedVersions = {
+    "LMNas_Deployed/soal/34/index.html": 5,
+    "LMNas_Deployed/soal/35/index.html": 5,
+    "LMNas_Deployed/soal/36/index.html": 5,
+    "LMNas_Deployed/faq/index.html": 35,
+    "LMNas_Deployed/peraturan/index.html": 37,
+    "LMNas_Deployed/buku-panduan/index.html": 39,
+  };
+
+  for (const [relativePath, version] of Object.entries(expectedVersions)) {
+    assert.match(read(relativePath), new RegExp(`<link rel="stylesheet" href="style\\.css\\?v=${version}" />`));
+  }
+
+  const deployedStylesheets = [
+    "LMNas_Deployed/style.css",
+    ...Object.keys(expectedVersions).map((relativePath) => relativePath.replace(/\/index\.html$/, "/style.css")),
+  ];
+  for (const relativePath of deployedStylesheets) {
+    const stylesheet = read(relativePath);
+    assert.match(stylesheet, /\.nav-papers\[open\] > \.nav-papers-menu,\s*\.nav-contact-menu:not\(\[hidden\]\) \{ animation: nav-menu-enter 220ms ease-out; \}/);
+    assert.match(stylesheet, /@keyframes nav-menu-enter/);
+  }
 });
 
 test("the WordPress deploy bundle uses the confirmed WordPress route contract", () => {

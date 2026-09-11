@@ -91,6 +91,21 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-papers:not([open]) > .nav-papers-menu { display: none; }
 .site-header .nav-papers-menu a { min-height: 44px; padding: 8px 14px; font-size: 16px; white-space: nowrap; }
 .site-header .nav-papers-menu a:hover { background: rgba(253,220,96,.12); }
+.nav-papers[open] summary::after { transform: rotate(225deg); }
+@media (prefers-reduced-motion: no-preference) {
+  .nav-papers summary, .nav-contact-toggle { transition: color 180ms ease; }
+  .nav-papers summary::after { transition: transform 180ms ease; }
+  .nav-papers[open] > .nav-papers-menu,
+  .nav-contact-menu:not([hidden]) { animation: nav-menu-enter 220ms ease-out; }
+  .site-header .nav-papers-menu a, .site-header .nav-contact-menu a { transition: color 160ms ease, background-color 160ms ease; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-contact-toggle::after { transition: none; }
+}
+@keyframes nav-menu-enter {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 html:has(.paper-page) { scroll-snap-type: none; }
 .paper-page { width: min(900px, calc(100% - 40px)); min-height: calc(100svh - 64px); margin-inline: auto; padding: clamp(32px, 6vw, 72px) 0 64px; }
 .paper-breadcrumb { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 14px; }
