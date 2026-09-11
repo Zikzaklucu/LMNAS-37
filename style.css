@@ -187,7 +187,7 @@ h1, h2, h3, p { overflow: visible; }
   .hero-canopy-figma--left { left: 0; clip-path: inset(0 720px 0 0); }
   .hero-canopy-figma--right { right: 0; left: auto; clip-path: inset(0 0 0 720px); }
   .hero-copy { padding-top: clamp(57px, calc(50svh - 312px), 138px); }
-  .hero-welcome { margin-bottom: 12px; }
+  .hero-welcome { margin-bottom: 12px; padding-bottom: 16px; }
   .hero-cta { margin-top: 25px; }
   .hero-mascot { top: auto; right: calc(50% - 624.9px); bottom: -151px; width: 340px; }
   .hero-wood-divider { height: 44px; }

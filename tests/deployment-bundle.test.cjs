@@ -38,8 +38,8 @@ test("the deploy bundle mirrors the canonical shared stylesheet", () => {
 test("the deployed home page includes the approved hero flowers and registration video", () => {
   const deployed = read("LMNas_Deployed/index.html");
 
-  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=174" \/>/);
-  assert.match(deployed, /<p class="hero-welcome">Selamat Datang<\/p>/);
+  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=175" \/>/);
+  assert.match(deployed, /<p class="hero-welcome">Selamat Datang di laman<\/p>/);
   assert.match(
     deployed,
     /<div class="hero-cta">\s*<img class="hero-flowers" src="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/Assets\/figma\/hero-flowers\.svg"[^>]*>\s*<a class="figma-button"[^>]*>DAFTAR SEKARANG<\/a>\s*<\/div>/,

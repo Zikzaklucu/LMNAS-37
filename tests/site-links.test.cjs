@@ -33,7 +33,7 @@ test("the registration CTA preserves the approved mixed-case copy", () => {
 test("the updated Figma hero welcomes visitors before the title and theme", () => {
   const hero = html.slice(html.indexOf('<section class="hero"'), html.indexOf('<section class="countdown-section"'));
   const titleIndex = hero.indexOf('<h1 id="hero-title">LMNAS 37</h1>');
-  const welcomeIndex = hero.indexOf('<p class="hero-welcome">Selamat Datang</p>');
+  const welcomeIndex = hero.indexOf('<p class="hero-welcome">Selamat Datang di laman</p>');
   const themeIndex = hero.indexOf('<p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br /> to Broader Thinking and Limitless Potential”</p>');
 
   assert.ok(titleIndex >= 0);
@@ -70,7 +70,7 @@ test("the desktop hero fills the header-aware viewport while responsive position
   assert.match(css, /\.hero-canopy-figma--right \{ right: 0; left: auto; clip-path: inset\(0 0 0 720px\); \}/);
   assert.match(css, /@media \(min-width: 1201px\) and \(max-width: 1332px\) \{[\s\S]*?min-height: max\(626px, calc\(100svh - 56px\)\)/);
   assert.match(css, /\.hero-copy \{ padding-top: clamp\(57px, calc\(50svh - 312px\), 138px\); \}/);
-  assert.match(css, /\.hero-welcome \{ margin-bottom: 12px; \}/);
+  assert.match(css, /\.hero-welcome \{ margin-bottom: 12px; padding-bottom: 16px; \}/);
   assert.match(css, /\.hero-mascot \{ position: absolute; z-index: 3; right: calc\(50% - 705\.9px\); top: 84px; width: 272\.9px;/);
   assert.match(css, /\.hero-mascot \{ top: auto; right: calc\(50% - 624\.9px\); bottom: -151px; width: 340px; \}/);
   assert.match(css, /\.hero-wood-divider \{ height: 44px; \}/);
