@@ -13,7 +13,11 @@ test("falling leaves are hero-only and decorative without a visible pause contro
     assert.equal((html.match(/class="hero-leaves"/g) || []).length, 1);
     assert.match(hero, /class="hero-leaves" aria-hidden="true"/);
     assert.doesNotMatch(hero, /hero-leaves-toggle|Jeda animasi daun/);
-    assert.match(html, /href="hero-leaves.css\?v=6"/);
+    if (file === "index.html") assert.match(html, /href="hero-leaves.css\?v=6"/);
+    else {
+      assert.doesNotMatch(html, /href="hero-leaves.css/);
+      assert.ok(read("LMNas_Deployed/style.css").includes(read("hero-leaves.css")));
+    }
   }
 });
 
