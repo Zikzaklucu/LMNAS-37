@@ -41,7 +41,7 @@ test("the deploy bundle mirrors the canonical shared stylesheet", () => {
 test("the deployed home page includes the approved hero flowers and registration video", () => {
   const deployed = read("LMNas_Deployed/index.html");
 
-  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=178" \/>/);
+  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=180" \/>/);
   assert.match(deployed, /<p class="hero-welcome">Selamat Datang di laman<\/p>/);
   assert.match(
     deployed,
@@ -98,8 +98,8 @@ test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => 
     "LMNas_Deployed/soal/34/index.html": 5,
     "LMNas_Deployed/soal/35/index.html": 5,
     "LMNas_Deployed/soal/36/index.html": 5,
-    "LMNas_Deployed/faq/index.html": 36,
-    "LMNas_Deployed/peraturan/index.html": 38,
+    "LMNas_Deployed/faq/index.html": 37,
+    "LMNas_Deployed/peraturan/index.html": 39,
     "LMNas_Deployed/buku-panduan/index.html": 39,
   };
 

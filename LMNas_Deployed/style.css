@@ -227,7 +227,9 @@ h1, h2, h3, p { overflow: visible; }
   .hero-copy { padding-top: clamp(57px, calc(50svh - 308px), 138px); }
 }
 
-.countdown-section { height: 647px; overflow-x: clip; overflow-y: visible; }
+/* The countdown vines overlap the hero divider; UGM section margins must not separate them. */
+#main-content > .hero { margin-bottom: 0; }
+.countdown-section { height: auto; min-height: 647px; padding-bottom: 24px; overflow-x: clip; overflow-y: visible; }
 .countdown-scene { position: absolute; z-index: -2; top: -536px; left: 8px; width: 1152.09px; max-width: none; pointer-events: none; }
 .countdown-art { position: absolute; z-index: -1; top: -24px; left: 50%; width: 1498px; max-width: none; transform: translateX(-50%); }
 .countdown-section .countdown-art { max-width: none; height: auto; }
@@ -841,7 +843,7 @@ h1, h2, h3, p { overflow: visible; }
   .hero-cta .figma-button { width: 260px; min-height: 58px; gap: 16px; font-size: 14px; }
   .hero-cta { margin-top: 24px; }
   .figma-button { width: 176px; height: 48px; border-radius: 6px; font-size: 25px; }
-  .countdown-section { height: 500px; }
+  .countdown-section { min-height: 500px; }
   .countdown-scene { top: -470px; left: 50%; width: 1000px; transform: translateX(-57%); }
   .countdown-art { width: 1000px; }
   .countdown-copy { padding-top: 70px; }
@@ -1194,7 +1196,7 @@ h1, h2, h3, p { overflow: visible; }
   .hero-copy .hero-subhead { width: min(340px, calc(100% - 48px)); margin-top: 22px; font-size: 14px; line-height: 1.45; text-wrap: balance; }
   .hero-cta { margin-top: 28px; }
   .hero-cta .figma-button { min-height: 56px; }
-  .countdown-section { height: 430px; }
+  .countdown-section { min-height: 430px; }
   .countdown-scene { top: -360px; width: 760px; transform: translateX(-57%); }
   .countdown-art { top: -12px; width: 430px; }
   .countdown-copy { width: 100%; min-width: 0; grid-template-columns: minmax(0, 1fr); padding-top: 55px; }
