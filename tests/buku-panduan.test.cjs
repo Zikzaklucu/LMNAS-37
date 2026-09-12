@@ -111,7 +111,7 @@ test("the guide footer reuses the main-page footer composition exactly", () => {
   };
 
   assert.equal(footerMarkup(guideHtml), footerMarkup(mainHtml));
-  assert.deepEqual(declarations(guideCss, ".guide-footer"), declarations(mainCss, ".footer"));
+  assert.deepEqual(declarations(guideCss, ".footer"), declarations(mainCss, ".footer"));
 
   for (const selector of [
     ".footer-stage",

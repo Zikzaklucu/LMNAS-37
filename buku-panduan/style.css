@@ -510,7 +510,7 @@ a {
   letter-spacing: 0.05em;
 }
 
-.guide-footer {
+.footer {
   position: relative;
   overflow: hidden;
   background: #f3d275;
@@ -1194,7 +1194,7 @@ a {
     text-align: center;
   }
 
-  .guide-footer {
+  .footer {
     padding: 8px 6px 6px;
     background: #f3d275;
   }
@@ -1356,7 +1356,7 @@ a {
 }
 
 @media (min-width: 641px) and (max-width: 1332px) {
-  .guide-footer {
+  .footer {
     padding: 8px 6px 6px;
     background: #f3d275;
   }
