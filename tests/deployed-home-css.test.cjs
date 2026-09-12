@@ -9,7 +9,7 @@ test("deployed homepage loads one complete local stylesheet in original cascade 
   const html = read("LMNas_Deployed/index.html");
   const css = read("LMNas_Deployed/style.css");
   const links = [...html.matchAll(/<link[^>]+href="([^"]+\.css(?:\?[^"]*)?)"[^>]*>/g)].map(match => match[1]);
-  assert.deepEqual(links, ["style.css?v=177"]);
+  assert.deepEqual(links, ["style.css?v=178"]);
   let previous = -1;
   for (const file of ["hero-leaves.css", "hero-owl.css", "sponsor-tiers.css"]) {
     const marker = `/* Bundled from ${file} — preserve cascade order. */`;

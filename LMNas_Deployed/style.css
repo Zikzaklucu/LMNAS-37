@@ -41,6 +41,12 @@ body {
   overflow-x: hidden;
 }
 img { display: block; max-width: 100%; }
+/* UGM's canvas embeds have grid rows without an outer gutter container.
+   Reset only the wrappers hosting this microsite, not other WordPress rows. */
+body > .tpb-row:has(#main-content),
+.tpb-html > .row:has(> .widget-html > #main-content) { margin-inline: 0; }
+body > .tpb-row:has(#main-content) > .tpb-html,
+.widget-html:has(> #main-content) { padding-inline: 0; }
 a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 4px solid var(--green-dark); outline-offset: 4px; }
@@ -221,7 +227,7 @@ h1, h2, h3, p { overflow: visible; }
   .hero-copy { padding-top: clamp(57px, calc(50svh - 308px), 138px); }
 }
 
-.countdown-section { height: 647px; }
+.countdown-section { height: 647px; overflow-x: clip; overflow-y: visible; }
 .countdown-scene { position: absolute; z-index: -2; top: -536px; left: 8px; width: 1152.09px; max-width: none; pointer-events: none; }
 .countdown-art { position: absolute; z-index: -1; top: -24px; left: 50%; width: 1498px; max-width: none; transform: translateX(-50%); }
 .countdown-section .countdown-art { max-width: none; height: auto; }
@@ -348,7 +354,7 @@ h1, h2, h3, p { overflow: visible; }
 .registration-section .section-inner { z-index: 2; }
 .registration-kicker { margin: 0; color: var(--green); font-family: "Rumble Brave", Georgia, serif; font-size: 64px; letter-spacing: .05em; line-height: 81px; }
 .registration-title { width: 1140px; max-width: 100%; height: 170px; margin: 10px auto 46px; color: var(--green); font-family: var(--display); font-size: 120px; font-weight: 400; letter-spacing: .2em; line-height: 170px; white-space: nowrap; }
-.book-section { position: relative; isolation: isolate; text-align: center; }
+.book-section { position: relative; isolation: isolate; overflow-x: clip; overflow-y: visible; text-align: center; }
 .book-section > .section-inner { z-index: 2; }
 .book-section .book-promo { margin-top: 0; }
 .book-promo { position: relative; left: 50%; display: grid; width: 1264px; max-width: none; min-height: 510px; grid-template-columns: 733px 531px; align-items: start; margin: 131px auto 0; text-align: left; transform: translateX(-50%); }
