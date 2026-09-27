@@ -2014,3 +2014,20 @@ h1, h2, h3, p { overflow: visible; }
   .footer-partner-group--media .footer-logo-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-socials { margin-top: 24px; }
 }
+
+/* Homepage-only registration extension; retain the existing event artwork. */
+.registration-extension-note {
+  max-width: calc(100% - 32px);
+  margin: 16px auto;
+  color: var(--green);
+  font-family: var(--body);
+  font-size: clamp(14px, 1.6vw, 20px);
+  line-height: 1.5;
+  text-align: center;
+}
+.countdown-copy .registration-extension-note { order: 1; }
+.timeline-entry[data-phase-key="registration-extended"] h3,
+.timeline-entry[data-phase-key="finals"] h3 { white-space: normal; }
+.hero:has(.registration-extension-note) { height: auto; padding-bottom: 64px; }
+.hero-copy .registration-extension-note { margin-bottom: 0; }
+.registration-section .registration-extension-note { margin-bottom: 24px; }

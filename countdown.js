@@ -101,6 +101,22 @@
       };
     }
 
+    const extended = phases["registration-extended"];
+    if (extended) {
+      const state = getPhaseWindowState(new Date(extended.start), new Date(extended.end), current);
+      if (state === "upcoming" || state === "active") {
+        const active = state === "active";
+        return {
+          key: active ? "EXTENDED_REGISTRATION_OPEN" : "BEFORE_EXTENDED_REGISTRATION",
+          kicker: active ? "Berakhir dalam" : "Menuju",
+          title: "Perpanjangan Pendaftaran",
+          countdownTarget: active ? extended.end : extended.start,
+          countdownLabel: active ? "Perpanjangan Pendaftaran — berakhir dalam" : "Perpanjangan Pendaftaran",
+          showCountdown: true,
+        };
+      }
+    }
+
     return {
       key: "REGISTRATION_CLOSED",
       kicker: "Registrasi",

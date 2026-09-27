@@ -147,7 +147,7 @@ test("resolves every registration phase and its countdown presentation", () => {
       },
     ],
     [
-      "2026-09-27T00:00:00+07:00",
+      "2026-10-11T00:00:00+07:00",
       {
         key: "REGISTRATION_CLOSED",
         kicker: "Registrasi",
@@ -166,6 +166,24 @@ test("resolves every registration phase and its countdown presentation", () => {
       timestamp,
     );
   }
+});
+
+test("extended registration runs from 27 September through 10 October WIB", () => {
+  const context = { window: {} };
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname, "..", "site-config.js"), "utf8"), context);
+  const config = context.window.LMNAS_SITE_CONFIG;
+  for (const timestamp of ["2026-09-27T00:00:00+07:00", "2026-10-01T12:00:00+07:00", "2026-10-10T23:59:59+07:00"]) {
+    assert.deepEqual(countdown.resolveRegistrationPhase(new Date(timestamp), config), {
+      key: "EXTENDED_REGISTRATION_OPEN",
+      kicker: "Berakhir dalam",
+      title: "Perpanjangan Pendaftaran",
+      countdownTarget: "2026-10-10T23:59:59+07:00",
+      countdownLabel: "Perpanjangan Pendaftaran — berakhir dalam",
+      showCountdown: true,
+    });
+  }
+  assert.equal(countdown.resolveRegistrationPhase(new Date("2026-09-26T23:59:59.001+07:00"), config).key, "BEFORE_EXTENDED_REGISTRATION");
+  assert.equal(countdown.resolveRegistrationPhase(new Date("2026-10-10T23:59:59.001+07:00"), config).key, "REGISTRATION_CLOSED");
 });
 
 test("resolves registration boundaries by the explicit WIB offset", () => {
@@ -193,7 +211,8 @@ test("renders the resolved registration state into the homepage countdown", () =
     ["2026-09-05T12:00:00+07:00", "Berakhir dalam", "Registrasi Gelombang I", "2026-09-12T23:59:59+07:00", true],
     ["2026-09-12T23:59:59.001+07:00", "Menuju", "Registrasi Gelombang II", "2026-09-13T00:00:00+07:00", true],
     ["2026-09-13T00:00:00+07:00", "Berakhir dalam", "Registrasi Gelombang II", "2026-09-26T23:59:59+07:00", true],
-    ["2026-09-27T00:00:00+07:00", "Registrasi", "LMNas 37 telah ditutup", null, false],
+    ["2026-09-27T00:00:00+07:00", "Berakhir dalam", "Perpanjangan Pendaftaran", "2026-10-10T23:59:59+07:00", true],
+    ["2026-10-11T00:00:00+07:00", "Registrasi", "LMNas 37 telah ditutup", null, false],
   ];
 
   for (const [timestamp, expectedKicker, expectedTitle, expectedTarget, visible] of cases) {

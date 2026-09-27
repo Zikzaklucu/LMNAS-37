@@ -170,7 +170,7 @@
   const updateCountdown = () => {
     const now = new Date();
     const phase = countdown.resolveRegistrationPhase(now, config);
-    const isActiveRegistration = phase.key === "WAVE_1_OPEN" || phase.key === "WAVE_2_OPEN";
+    const isActiveRegistration = phase.key === "WAVE_1_OPEN" || phase.key === "WAVE_2_OPEN" || phase.key === "EXTENDED_REGISTRATION_OPEN";
 
     if (countdownCopy?.classList) {
       countdownCopy.classList.toggle("countdown-copy--active", isActiveRegistration);

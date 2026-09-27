@@ -8,6 +8,10 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
       start: "2026-09-13T00:00:00+07:00",
       end: "2026-09-26T23:59:59+07:00",
     }),
+    "registration-extended": Object.freeze({
+      start: "2026-09-27T00:00:00+07:00",
+      end: "2026-10-10T23:59:59+07:00",
+    }),
     preliminary: Object.freeze({
       start: "2026-10-24T00:00:00+07:00",
       end: "2026-10-24T23:59:59+07:00",

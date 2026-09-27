@@ -87,7 +87,7 @@ test("published content does not contain placeholder lorem ipsum", () => {
 });
 
 test("the visible countdown heading matches its registration target", () => {
-  assert.match(html, /<h2 id="countdown-title">Registrasi Gelombang I<\/h2>/);
+  assert.match(html, /<h2 id="countdown-title">Perpanjangan Pendaftaran<\/h2>/);
 });
 
 test("the countdown vine keeps its authored dimensions against WordPress image rules", () => {
@@ -96,7 +96,7 @@ test("the countdown vine keeps its authored dimensions against WordPress image r
 });
 
 test("the countdown kicker preserves the approved sentence case", () => {
-  assert.match(html, /<p class="section-kicker">Menuju<\/p>/);
+  assert.match(html, /<p class="section-kicker">Berakhir dalam<\/p>/);
   assert.doesNotMatch(html, /<p class="section-kicker">MENUJU<\/p>/);
   assert.doesNotMatch(css, /\.countdown-copy \.section-kicker \{[^}]*text-transform:\s*uppercase/);
 });
@@ -388,6 +388,7 @@ test("timeline dates use Montserrat while event headings and badges stay unchang
   assert.deepEqual([...timeline.matchAll(/<time datetime="[^"]+">([^<]+)<\/time>/g)].map(([, date]) => date), [
     "1–12 September 2026",
     "13–26 September 2026",
+    "27 September–10 Oktober 2026",
     "24 Oktober 2026",
     "14–15 November 2026",
   ]);
@@ -791,13 +792,14 @@ test("published dates and registration links are hydrated from the site configur
   assert.deepEqual(Object.keys(config.phases), [
     "registration-one",
     "registration-two",
+    "registration-extended",
     "preliminary",
     "finals",
   ]);
-  assert.match(html, /<script src="site-config\.js\?v=1" defer><\/script>/);
+  assert.match(html, /<script src="site-config\.js\?v=2" defer><\/script>/);
   assert.equal((html.match(/data-registration-link/g) || []).length, 2);
-  assert.equal((html.match(/data-phase-key=/g) || []).length, 4);
-  assert.match(html, /data-countdown-target="2026-09-01T12:00:00\+07:00"/);
+  assert.equal((html.match(/data-phase-key=/g) || []).length, 5);
+  assert.match(html, /data-countdown-target="2026-10-10T23:59:59\+07:00"/);
   assert.match(html, /data-phase-key="registration-one" data-phase-start="2026-09-01T12:00:00\+07:00"/);
   assert.match(script, /const config = window\.LMNAS_SITE_CONFIG/);
   assert.match(script, /document\.querySelectorAll\("\[data-registration-link\]"\)/);
