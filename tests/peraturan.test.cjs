@@ -35,6 +35,18 @@ test("the supplied website and objection email are actionable", () => {
   assert.match(html, /href="mailto:sanggahanlmnas@gmail\.com">sanggahanlmnas@gmail\.com<\/a>/);
 });
 
+test("rule 12 links the revised objection format in source and deployment bundle", () => {
+  for (const relativePath of ["peraturan/index.html", "LMNas_Deployed/peraturan/index.html"]) {
+    const source = fs.readFileSync(path.join(projectRoot, relativePath), "utf8");
+    const rule = source.match(/<li class="rule-item">Peserta dapat mengajukan sanggahan[\s\S]*?<\/li>/)?.[0];
+    assert.ok(rule, relativePath);
+    assert.match(rule, /format sanggahan yang dapat diakses di <a href="https:\/\/bit\.ly\/SanggahanPenyisihanLMNas37" target="_blank" rel="noopener noreferrer">https:\/\/bit\.ly\/SanggahanPenyisihanLMNas37<\/a>\./);
+    assert.doesNotMatch(rule, /yang tersedia di situs web LMNas UGM/);
+    assert.match(rule, /paling lambat 12 jam setelah pengumuman hasil Babak Penyisihan/);
+    assert.match(rule, /href="mailto:sanggahanlmnas@gmail\.com"/);
+  }
+});
+
 test("rule 8 uses an unnumbered circular sublist", () => {
   const ruleEight = html.match(/Selama pengerjaan soal berlangsung, peserta dilarang:[\s\S]*?<\/ul>/)?.[0];
   assert.ok(ruleEight);
