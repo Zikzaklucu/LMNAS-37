@@ -2031,3 +2031,18 @@ h1, h2, h3, p { overflow: visible; }
 .hero:has(.registration-extension-note) { height: auto; padding-bottom: 64px; }
 .hero-copy .registration-extension-note { margin-bottom: 0; }
 .registration-section .registration-extension-note { margin-bottom: 24px; }
+
+/* The closed-registration message is content, not a one-line registration CTA. */
+#main-content .registration-section {
+  min-height: 0;
+  padding: clamp(40px, 5vw, 72px) 0;
+}
+#main-content .registration-title {
+  width: min(900px, 100%);
+  height: auto;
+  margin: 0 auto;
+  font-size: clamp(32px, 5vw, 72px);
+  letter-spacing: .035em;
+  line-height: 1.15;
+  white-space: normal;
+}
