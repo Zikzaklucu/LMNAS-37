@@ -12,11 +12,12 @@ test("perched owl is one decorative composite after the live hero copy", () => {
   assert.match(section, /data-hero-owl/);
   assert.equal((section.match(/class="hero-mascot"/g) || []).length, 1);
   assert.match(section, /class="hero-owl-stage" aria-hidden="true"/);
-  assert.ok(section.indexOf('class="hero-owl-stage"') > section.indexOf('data-registration-link'));
+  assert.ok(section.indexOf('class="hero-owl-stage"') > section.indexOf('Registrasi LMNas 37 telah ditutup'));
   assert.match(section, /hero-owl-perched\.png" width="779" height="606" alt="" aria-hidden="true" decoding="async"/);
   assert.doesNotMatch(section, /hero-mascot-updated\.png/);
   assert.match(section, /<h1 id="hero-title">LMNAS 37<\/h1>/);
-  assert.match(section, /href="https:\/\/pendaftaran\.lmnas-ugm\.com" data-registration-link>DAFTAR SEKARANG/);
+  assert.match(section, /Registrasi LMNas 37 telah ditutup/);
+  assert.doesNotMatch(section, /data-registration-link/);
   const png = fs.readFileSync(path.join(root, "Assets/figma/hero-owl-perched.png"));
   assert.equal(png.subarray(1, 4).toString(), "PNG");
   assert.ok(png.readUInt32BE(16) >= 779, "export is not undersized");

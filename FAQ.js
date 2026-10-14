@@ -56,7 +56,7 @@ const styleSheet = document.createElement('style')
 styleSheet.textContent = styles
 document.head.appendChild(styleSheet)
 
-const navItems = ['Home', 'Daftar', 'Pengumuman', 'Contact', 'Silabus', 'Buku Panduan', 'Peraturan', 'FAQ']
+const navItems = ['Home', 'Pengumuman', 'Contact', 'Silabus', 'Buku Panduan', 'Peraturan', 'FAQ']
 const answer = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
 const faqItems = [answer, answer, answer]
 const socialLinks = [

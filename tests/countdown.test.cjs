@@ -149,12 +149,12 @@ test("resolves every registration phase and its countdown presentation", () => {
     [
       "2026-10-11T00:00:00+07:00",
       {
-        key: "REGISTRATION_CLOSED",
-        kicker: "Registrasi",
-        title: "LMNas 37 telah ditutup",
-        countdownTarget: null,
-        countdownLabel: "Registrasi LMNas 37 telah ditutup",
-        showCountdown: false,
+        key: "BEFORE_PRELIMINARY",
+        kicker: "Menuju",
+        title: "Babak Penyisihan",
+        countdownTarget: "2026-10-24T00:00:00+07:00",
+        countdownLabel: "Menuju Babak Penyisihan",
+        showCountdown: true,
       },
     ],
   ];
@@ -183,7 +183,7 @@ test("extended registration runs from 27 September through 10 October WIB", () =
     });
   }
   assert.equal(countdown.resolveRegistrationPhase(new Date("2026-09-26T23:59:59.001+07:00"), config).key, "BEFORE_EXTENDED_REGISTRATION");
-  assert.equal(countdown.resolveRegistrationPhase(new Date("2026-10-10T23:59:59.001+07:00"), config).key, "REGISTRATION_CLOSED");
+  assert.equal(countdown.resolveRegistrationPhase(new Date("2026-10-10T23:59:59.001+07:00"), config).key, "BEFORE_PRELIMINARY");
 });
 
 test("resolves registration boundaries by the explicit WIB offset", () => {
@@ -212,7 +212,7 @@ test("renders the resolved registration state into the homepage countdown", () =
     ["2026-09-12T23:59:59.001+07:00", "Menuju", "Registrasi Gelombang II", "2026-09-13T00:00:00+07:00", true],
     ["2026-09-13T00:00:00+07:00", "Berakhir dalam", "Registrasi Gelombang II", "2026-09-26T23:59:59+07:00", true],
     ["2026-09-27T00:00:00+07:00", "Berakhir dalam", "Perpanjangan Pendaftaran", "2026-10-10T23:59:59+07:00", true],
-    ["2026-10-11T00:00:00+07:00", "Registrasi", "LMNas 37 telah ditutup", null, false],
+    ["2026-10-11T00:00:00+07:00", "Menuju", "Babak Penyisihan", "2026-10-24T00:00:00+07:00", true],
   ];
 
   for (const [timestamp, expectedKicker, expectedTitle, expectedTarget, visible] of cases) {

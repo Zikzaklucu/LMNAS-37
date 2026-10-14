@@ -49,10 +49,10 @@ test("the guide uses the same compact navigation as the main page", () => {
   const mainNavigation = mainHtml.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
   const labels = (navigation) => [...navigation.matchAll(/<a\b[^>]*>([^<]+)<\/a>/g)].map((match) => match[1].trim());
 
-  assert.deepEqual(labels(mainNavigation), ["Home", "Daftar", "Buku Panduan", "Silabus", "LMNas 36", "LMNas 35", "LMNas 34", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
-  assert.deepEqual(labels(guideNavigation), ["Home", "Daftar", "Buku Panduan", "Silabus", "LMNas 36", "LMNas 35", "LMNas 34", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
-  assert.match(mainNavigation, /href="https:\/\/pendaftaran\.lmnas-ugm\.com"[^>]*>Daftar/);
-  assert.match(guideNavigation, /href="https:\/\/pendaftaran\.lmnas-ugm\.com"[^>]*>Daftar/);
+  assert.deepEqual(labels(mainNavigation), ["Home", "Buku Panduan", "Silabus", "LMNas 36", "LMNas 35", "LMNas 34", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
+  assert.deepEqual(labels(guideNavigation), ["Home", "Buku Panduan", "Silabus", "LMNas 36", "LMNas 35", "LMNas 34", "Peraturan", "FAQ", "SMP Contact Person", "SMA Contact Person"]);
+  assert.doesNotMatch(mainNavigation, /href="https:\/\/pendaftaran\.lmnas-ugm\.com"[^>]*>Daftar/);
+  assert.doesNotMatch(guideNavigation, /href="https:\/\/pendaftaran\.lmnas-ugm\.com"[^>]*>Daftar/);
   assert.match(guideNavigation, /<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>/);
   assert.match(guideNavigation, /href="https:\/\/wa\.me\/6285113291516"[^>]*>SMP Contact Person/);
   assert.match(guideNavigation, /href="https:\/\/wa\.me\/6285173085634"[^>]*>SMA Contact Person/);

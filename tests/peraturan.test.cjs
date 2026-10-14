@@ -83,7 +83,7 @@ test("the content card preserves the LMNAS visual system and keeps camera exampl
 
 test("the peraturan page keeps shared navigation and footer content intact", () => {
   assert.match(html, /<a href="\.\/" aria-current="page">Peraturan<\/a>/);
-  assert.match(html, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
+  assert.doesNotMatch(html, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
   assert.match(html, /<button type="button" class="nav-contact-toggle" aria-expanded="false" aria-controls="nav-contact-menu">Contact<\/button>/);
   assert.match(html, /<a href="https:\/\/wa\.me\/6285113291516" target="_blank" rel="noopener noreferrer">SMP Contact Person<\/a>/);
   assert.match(html, /<a href="https:\/\/wa\.me\/6285173085634" target="_blank" rel="noopener noreferrer">SMA Contact Person<\/a>/);

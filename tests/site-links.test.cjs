@@ -16,17 +16,14 @@ test("all Daftar CTA buttons use the registration website", () => {
   const hrefs = [...html.matchAll(/<a class="figma-button" href="([^"]+)"[^>]*>(?:Daftar|DAFTAR SEKARANG)<\/a>/g)]
     .map((match) => match[1]);
 
-  assert.equal(hrefs.length, 2);
-  assert.deepEqual(hrefs, [
-    "https://pendaftaran.lmnas-ugm.com",
-    "https://pendaftaran.lmnas-ugm.com",
-  ]);
+  assert.equal(hrefs.length, 0);
+  assert.deepEqual(hrefs, []);
 });
 
 test("the registration CTA preserves the approved mixed-case copy", () => {
-  assert.match(html, /<a class="figma-button" href="https:\/\/pendaftaran\.lmnas-ugm\.com" data-registration-link>Daftar<\/a>/);
+  assert.doesNotMatch(html, /data-registration-link/);
   assert.doesNotMatch(html, />DAFTAR<\/a>/);
-  assert.match(html, /<p class="registration-kicker">Tunggu Apa Lagi\?<\/p>/);
+  assert.match(html, /id="registration-title">Registrasi LMNas 37 telah ditutup<\/h2>/);
   assert.doesNotMatch(css, /\.registration-kicker[^}]*text-transform:\s*uppercase/);
 });
 
@@ -49,7 +46,7 @@ test("the hero flowers stay vertically centered beside the registration CTA", ()
 
   assert.match(
     hero,
-    /<div class="hero-cta">\s*<img class="hero-flowers"[^>]*>\s*<a class="figma-button"[^>]*>(?:Daftar|DAFTAR SEKARANG)<\/a>\s*<\/div>/,
+    /<div class="hero-cta">\s*<img class="hero-flowers"[^>]*>\s*<p class="registration-extension-note">Registrasi LMNas 37 telah ditutup<\/p>\s*<\/div>/,
   );
   assert.match(css, /\.hero-copy \{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\);[^}]*width: min\(100%, 900px\);[^}]*margin-inline: auto;[^}]*padding-top: 57px;/);
   assert.match(css, /\.hero-cta \{[^}]*position: relative;[^}]*margin-top: 45px;/);
@@ -87,7 +84,7 @@ test("published content does not contain placeholder lorem ipsum", () => {
 });
 
 test("the visible countdown heading matches its registration target", () => {
-  assert.match(html, /<h2 id="countdown-title">Perpanjangan Pendaftaran<\/h2>/);
+  assert.match(html, /<h2 id="countdown-title">Babak Penyisihan<\/h2>/);
 });
 
 test("the countdown vine keeps its authored dimensions against WordPress image rules", () => {
@@ -96,7 +93,7 @@ test("the countdown vine keeps its authored dimensions against WordPress image r
 });
 
 test("the countdown kicker preserves the approved sentence case", () => {
-  assert.match(html, /<p class="section-kicker">Berakhir dalam<\/p>/);
+  assert.match(html, /<p class="section-kicker">Menuju<\/p>/);
   assert.doesNotMatch(html, /<p class="section-kicker">MENUJU<\/p>/);
   assert.doesNotMatch(css, /\.countdown-copy \.section-kicker \{[^}]*text-transform:\s*uppercase/);
 });
@@ -118,9 +115,9 @@ test("the countdown exposes four paired lowercase unit labels", () => {
 test("the navigation exposes the approved pages and both contact-person routes", () => {
   const desktopNavigation = html.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
 
-  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 11);
+  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 10);
   assert.match(desktopNavigation, /<a href="#home">Home<\/a>/);
-  assert.match(desktopNavigation, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
+  assert.doesNotMatch(desktopNavigation, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
   assert.match(desktopNavigation, /<a href="buku-panduan\/">Buku Panduan<\/a>/);
   assert.match(desktopNavigation, /<a href="https:\/\/drive\.google\.com\/drive\/folders\/1imqxenO6Xh_K6TGj5i14sCKNBGKQ0Jho\?usp=sharing" target="_blank" rel="noopener noreferrer">Silabus<\/a>/);
   assert.match(desktopNavigation, /<a href="peraturan\/">Peraturan<\/a>/);
@@ -797,9 +794,9 @@ test("published dates and registration links are hydrated from the site configur
     "finals",
   ]);
   assert.match(html, /<script src="site-config\.js\?v=2" defer><\/script>/);
-  assert.equal((html.match(/data-registration-link/g) || []).length, 2);
+  assert.equal((html.match(/data-registration-link/g) || []).length, 0);
   assert.equal((html.match(/data-phase-key=/g) || []).length, 5);
-  assert.match(html, /data-countdown-target="2026-10-10T23:59:59\+07:00"/);
+  assert.match(html, /data-countdown-target="2026-10-24T00:00:00\+07:00"/);
   assert.match(html, /data-phase-key="registration-one" data-phase-start="2026-09-01T12:00:00\+07:00"/);
   assert.match(script, /const config = window\.LMNAS_SITE_CONFIG/);
   assert.match(script, /document\.querySelectorAll\("\[data-registration-link\]"\)/);

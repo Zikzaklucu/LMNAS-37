@@ -18,7 +18,8 @@ test("the updated hero ships the approved decorative exports with accessible HTM
   assert.equal((section.match(/src="Assets\/figma\/hero-(?:canopy|vine|flower)-/g) || []).length, 11);
   assert.match(section, /hero-owl-perched\.png" width="779" height="606" alt="" aria-hidden="true"/);
   assert.match(section, /hero-expedition-updated\.svg/);
-  assert.match(section, /data-registration-link>DAFTAR SEKARANG<\/a>/);
+  assert.match(section, /Registrasi LMNas 37 telah ditutup/);
+  assert.doesNotMatch(section, /data-registration-link/);
 });
 
 test("the deployment hero matches canonical markup after asset URL conversion", () => {
@@ -30,7 +31,8 @@ test("hero hierarchy preserves live copy and scopes the readable registration ac
   const css = read("style.css");
   assert.match(section, /<h1 id="hero-title">LMNAS 37<\/h1>/);
   assert.match(section, /Gateway<br \/> to Broader Thinking and Limitless Potential/);
-  assert.match(section, /data-registration-link>DAFTAR SEKARANG<\/a>/);
+  assert.match(section, /Registrasi LMNas 37 telah ditutup/);
+  assert.doesNotMatch(section, /data-registration-link/);
   assert.match(css, /\.hero h1 \{[^}]*font-family: var\(--display\);[^}]*font-size: 135px;[^}]*font-weight: 400;[^}]*letter-spacing: \.035em;/);
   assert.match(css, /\.hero-copy \.hero-subhead \{[^}]*margin: 26px 0 0;/);
   assert.match(css, /\.hero h1 \{ font-size: clamp\(63px, 11\.7vw, 108px\);/);

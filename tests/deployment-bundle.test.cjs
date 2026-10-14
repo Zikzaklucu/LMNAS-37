@@ -45,7 +45,7 @@ test("the deployed home page includes the approved hero flowers and registration
   assert.match(deployed, /<p class="hero-welcome">Selamat Datang di laman<\/p>/);
   assert.match(
     deployed,
-    /<div class="hero-cta">\s*<img class="hero-flowers" src="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/Assets\/figma\/hero-flowers\.svg"[^>]*>\s*<a class="figma-button"[^>]*>DAFTAR SEKARANG<\/a>\s*<\/div>/,
+    /<div class="hero-cta">\s*<img class="hero-flowers" src="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/Assets\/figma\/hero-flowers\.svg"[^>]*>\s*<p class="registration-extension-note">Registrasi LMNas 37 telah ditutup<\/p>\s*<\/div>/,
   );
   assert.match(
     deployed,
@@ -69,7 +69,8 @@ test("the deployed home page keeps registration and book content in sibling slid
   assert.ok(registrationStart >= 0);
   assert.ok(bookStart > registrationStart);
   assert.ok(contactStart > bookStart);
-  assert.match(registration, /id="pendaftaran"[\s\S]*data-registration-link/);
+  assert.match(registration, /id="pendaftaran"[\s\S]*Registrasi LMNas 37 telah ditutup/);
+  assert.doesNotMatch(registration, /data-registration-link/);
   assert.doesNotMatch(registration, /book-promo|book-covers/);
   assert.match(book, /class="book-promo"[\s\S]*class="book-covers"/);
   assert.equal((book.match(/class="book-store-link/g) || []).length, 4);

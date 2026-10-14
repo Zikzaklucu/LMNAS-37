@@ -215,8 +215,9 @@
       display.setAttribute("aria-label", `${phase.countdownLabel}: ${state.label}`);
     }
 
-    if (phase.key === "REGISTRATION_CLOSED" && timerId) {
+    if ((phase.key === "REGISTRATION_CLOSED" || phase.key === "PRELIMINARY_COMPLETE") && timerId !== undefined) {
       window.clearInterval(timerId);
+      timerId = undefined;
     }
 
     return phase.key;
@@ -224,7 +225,7 @@
 
   const initialState = updateCountdown();
 
-  if (initialState !== "REGISTRATION_CLOSED") {
+  if (initialState !== "REGISTRATION_CLOSED" && initialState !== "PRELIMINARY_COMPLETE") {
     timerId = window.setInterval(updateCountdown, 1000);
   }
 })();

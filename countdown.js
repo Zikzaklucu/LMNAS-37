@@ -117,6 +117,21 @@
       }
     }
 
+    const preliminary = phases.preliminary;
+    if (preliminary) {
+      const state = getPhaseWindowState(new Date(preliminary.start), new Date(preliminary.end), current);
+      const upcoming = state === "upcoming";
+      const kicker = upcoming ? "Menuju" : state === "active" ? "Sedang berlangsung" : "Sudah selesai";
+      return {
+        key: upcoming ? "BEFORE_PRELIMINARY" : state === "active" ? "PRELIMINARY_ACTIVE" : "PRELIMINARY_COMPLETE",
+        kicker,
+        title: "Babak Penyisihan",
+        countdownTarget: upcoming ? preliminary.start : null,
+        countdownLabel: `${kicker} Babak Penyisihan`,
+        showCountdown: upcoming,
+      };
+    }
+
     return {
       key: "REGISTRATION_CLOSED",
       kicker: "Registrasi",
