@@ -41,7 +41,7 @@ test("the deploy bundle mirrors the canonical shared stylesheet", () => {
 test("the deployed home page omits the hero notice and preserves the registration video", () => {
   const deployed = read("LMNas_Deployed/index.html");
 
-  assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=182" \/>/);
+  assert.match(deployed, /<link rel="stylesheet" href="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/LMNas_Deployed\/style\.css\?v=182" \/>/);
   assert.match(deployed, /<p class="hero-welcome">Selamat Datang di laman<\/p>/);
   const hero = deployed.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0];
   assert.ok(hero);
