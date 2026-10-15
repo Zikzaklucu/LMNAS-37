@@ -41,12 +41,12 @@ test("the updated Figma hero welcomes visitors before the title and theme", () =
   assert.match(css, /\.hero-copy \.hero-subhead \{[^}]*font-family: var\(--body\);[^}]*font-size: 22px;/);
 });
 
-test("the hero flowers stay vertically centered beside the registration CTA", () => {
+test("the hero omits the removed closure notice and its decorative flowers", () => {
   const hero = html.slice(html.indexOf('<section class="hero"'), html.indexOf('<section class="countdown-section"'));
 
-  assert.match(
+  assert.doesNotMatch(
     hero,
-    /<div class="hero-cta">\s*<img class="hero-flowers"[^>]*>\s*<p class="registration-extension-note">Registrasi LMNas 37 telah ditutup<\/p>\s*<\/div>/,
+    /class="hero-cta"|class="hero-flowers"|Registrasi LMNas 37 telah ditutup/,
   );
   assert.match(css, /\.hero-copy \{[^}]*display: grid;[^}]*grid-template-columns: minmax\(0, 1fr\);[^}]*width: min\(100%, 900px\);[^}]*margin-inline: auto;[^}]*padding-top: 57px;/);
   assert.match(css, /\.hero-cta \{[^}]*position: relative;[^}]*margin-top: 45px;/);

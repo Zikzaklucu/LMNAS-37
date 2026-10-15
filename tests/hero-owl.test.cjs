@@ -12,11 +12,12 @@ test("perched owl is one decorative composite after the live hero copy", () => {
   assert.match(section, /data-hero-owl/);
   assert.equal((section.match(/class="hero-mascot"/g) || []).length, 1);
   assert.match(section, /class="hero-owl-stage" aria-hidden="true"/);
-  assert.ok(section.indexOf('class="hero-owl-stage"') > section.indexOf('Registrasi LMNas 37 telah ditutup'));
+  assert.ok(section.indexOf('class="hero-subhead"') >= 0);
+  assert.ok(section.indexOf('class="hero-owl-stage"') > section.indexOf('class="hero-subhead"'));
   assert.match(section, /hero-owl-perched\.png" width="779" height="606" alt="" aria-hidden="true" decoding="async"/);
   assert.doesNotMatch(section, /hero-mascot-updated\.png/);
   assert.match(section, /<h1 id="hero-title">LMNAS 37<\/h1>/);
-  assert.match(section, /Registrasi LMNas 37 telah ditutup/);
+  assert.doesNotMatch(section, /Registrasi LMNas 37 telah ditutup/);
   assert.doesNotMatch(section, /data-registration-link/);
   const png = fs.readFileSync(path.join(root, "Assets/figma/hero-owl-perched.png"));
   assert.equal(png.subarray(1, 4).toString(), "PNG");

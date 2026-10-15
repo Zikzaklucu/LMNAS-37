@@ -24,7 +24,11 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
     assert.match(html, /data-countdown-target="2026-10-24T00:00:00\+07:00"/);
     for (const section of ["hero", "registration-section"]) {
       const content = html.match(new RegExp(`<section class="${section}"[\\s\\S]*?<\\/section>`))?.[0];
-      assert.match(content, /Registrasi LMNas 37 telah ditutup/);
+      if (section === "hero") {
+        assert.doesNotMatch(content, /Registrasi LMNas 37 telah ditutup|class="hero-cta"|class="hero-flowers"/);
+      } else {
+        assert.match(content, /Registrasi LMNas 37 telah ditutup/);
+      }
       assert.doesNotMatch(content, /Perpanjangan Pendaftaran|data-registration-link/);
     }
     const countdown = html.match(/<section class="countdown-section"[\s\S]*?<\/section>/)?.[0];

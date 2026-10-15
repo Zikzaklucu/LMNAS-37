@@ -38,15 +38,14 @@ test("the deploy bundle mirrors the canonical shared stylesheet", () => {
   );
 });
 
-test("the deployed home page includes the approved hero flowers and registration video", () => {
+test("the deployed home page omits the hero notice and preserves the registration video", () => {
   const deployed = read("LMNas_Deployed/index.html");
 
   assert.match(deployed, /<link rel="stylesheet" href="style\.css\?v=182" \/>/);
   assert.match(deployed, /<p class="hero-welcome">Selamat Datang di laman<\/p>/);
-  assert.match(
-    deployed,
-    /<div class="hero-cta">\s*<img class="hero-flowers" src="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/Assets\/figma\/hero-flowers\.svg"[^>]*>\s*<p class="registration-extension-note">Registrasi LMNas 37 telah ditutup<\/p>\s*<\/div>/,
-  );
+  const hero = deployed.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(hero);
+  assert.doesNotMatch(hero, /class="hero-cta"|class="hero-flowers"|Registrasi LMNas 37 telah ditutup/);
   assert.match(
     deployed,
     /<iframe\s+src="https:\/\/www\.youtube-nocookie\.com\/embed\/_ruwWMc1S_w"\s+title="Video Alur Pendaftaran LMNAS 37"[^>]*allowfullscreen><\/iframe>/,

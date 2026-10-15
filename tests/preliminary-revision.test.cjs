@@ -127,7 +127,11 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
     const html = read(file);
     for (const section of ["hero", "registration-section"]) {
       const markup = html.match(new RegExp(`<section class="${section}"[\\s\\S]*?<\\/section>`))[0];
-      assert.match(markup, /Registrasi LMNas 37 telah ditutup/);
+      if (section === "hero") {
+        assert.doesNotMatch(markup, /Registrasi LMNas 37 telah ditutup|class="hero-cta"|class="hero-flowers"/);
+      } else {
+        assert.match(markup, /Registrasi LMNas 37 telah ditutup/);
+      }
       assert.doesNotMatch(markup, /Perpanjangan Pendaftaran|Tunggu Apa Lagi|Daftar Sekarang/i);
     }
     const markup = html.match(/<section class="countdown-section"[\s\S]*?<\/section>/)[0];
