@@ -47,6 +47,16 @@ test("rule 12 links the revised objection format in source and deployment bundle
   }
 });
 
+test("supervision rule 4 uses the revised wording in source and deployment bundle", () => {
+  for (const relativePath of ["peraturan/index.html", "LMNas_Deployed/peraturan/index.html"]) {
+    const source = fs.readFileSync(path.join(projectRoot, relativePath), "utf8");
+    const section = source.match(/<section[^>]*aria-labelledby="rules-supervision-title"[\s\S]*?<\/section>/)?.[0];
+    assert.ok(section, relativePath);
+    const rules = [...section.matchAll(/<li class="rule-item">([\s\S]*?)<\/li>/g)];
+    assert.equal(rules[3][1].replace(/<[^>]*>/g, ""), "Setiap breakout room akan diawasi pengawas.", relativePath);
+  }
+});
+
 test("rule 8 uses an unnumbered circular sublist", () => {
   const ruleEight = html.match(/Selama pengerjaan soal berlangsung, peserta dilarang:[\s\S]*?<\/ul>/)?.[0];
   assert.ok(ruleEight);
