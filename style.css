@@ -932,8 +932,8 @@ h1, h2, h3, p { overflow: visible; }
 
 @media (max-width: 640px) {
   :root { --mobile-header-height: 56px; scroll-padding-top: var(--mobile-header-height); }
-  html { scroll-snap-type: y mandatory; }
-  #main-content > section, .footer { scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: 0; }
+  html:has(#main-content > .hero#home) { scroll-snap-type: y mandatory; }
+  html:has(#main-content > .hero#home) #main-content > section, html:has(#main-content > .hero#home) .footer { scroll-snap-align: start; scroll-snap-stop: always; scroll-margin-top: 0; }
   .site-header { height: var(--mobile-header-height); padding: 0 10px; }
   .brand-mark { display: grid; width: 44px; height: 44px; place-items: center; box-shadow: none; }
   .brand-mark img { width: 30px; height: 31px; box-shadow: 0 3px 4px rgba(0,0,0,.25); }
