@@ -18,5 +18,9 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
     assert.match(countdown, /data-countdown-target="2026-10-24T00:00:00\+07:00"/);
     const registration = html.match(/<section class="registration-section"[\s\S]*?<\/section>/)?.[0];
     assert.match(registration, /id="registration-title">Registrasi LMNas 37 telah ditutup<\/h2>/);
+    const refundNotice = "Segala bentuk pembayaran tidak dapat dikembalikan dalam bentuknapapun";
+    assert.match(registration, /<\/h2>\s*<p class="registration-extension-note">Segala bentuk pembayaran tidak dapat dikembalikan dalam bentuknapapun<\/p>/);
+    assert.equal(html.split(refundNotice).length - 1, 1, "refund notice appears exactly once");
+    assert.ok(html.indexOf(refundNotice) < html.indexOf('id="buku-soal"'), "refund notice precedes the book section");
   });
 }
