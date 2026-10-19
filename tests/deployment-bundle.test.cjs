@@ -95,16 +95,19 @@ test("all deployed footers expose only the approved media partners", () => {
 
 test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => {
   const expectedVersions = {
-    "LMNas_Deployed/soal/34/index.html": 6,
-    "LMNas_Deployed/soal/35/index.html": 6,
-    "LMNas_Deployed/soal/36/index.html": 6,
+    "LMNas_Deployed/soal/34/index.html": 7,
+    "LMNas_Deployed/soal/35/index.html": 7,
+    "LMNas_Deployed/soal/36/index.html": 7,
     "LMNas_Deployed/faq/index.html": 38,
     "LMNas_Deployed/peraturan/index.html": 40,
     "LMNas_Deployed/buku-panduan/index.html": 39,
   };
 
   for (const [relativePath, version] of Object.entries(expectedVersions)) {
-    assert.match(read(relativePath), new RegExp(`<link rel="stylesheet" href="style\\.css\\?v=${version}" />`));
+    const href = relativePath.includes("/soal/")
+      ? `${pagesBase}${relativePath.replace(/index\.html$/, "style.css")}?v=${version}`
+      : `style.css?v=${version}`;
+    assert.ok(read(relativePath).includes(`<link rel="stylesheet" href="${href}" />`), relativePath);
   }
 
   const deployedStylesheets = [
