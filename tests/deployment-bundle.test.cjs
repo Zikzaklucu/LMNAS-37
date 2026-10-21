@@ -41,7 +41,7 @@ test("the deploy bundle mirrors the canonical shared stylesheet", () => {
 test("the deployed home page omits the hero notice and preserves the registration video", () => {
   const deployed = read("LMNas_Deployed/index.html");
 
-  assert.match(deployed, /<link rel="stylesheet" href="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/LMNas_Deployed\/style\.css\?v=183" \/>/);
+  assert.match(deployed, /<link rel="stylesheet" href="https:\/\/zikzaklucu\.github\.io\/LMNAS-37\/LMNas_Deployed\/style\.css\?v=184" \/>/);
   assert.match(deployed, /<p class="hero-welcome">Selamat Datang di laman<\/p>/);
   const hero = deployed.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0];
   assert.ok(hero);
@@ -95,12 +95,12 @@ test("all deployed footers expose only the approved media partners", () => {
 
 test("subpage deploy bundles cache-bust the refreshed shared stylesheet", () => {
   const expectedVersions = {
-    "LMNas_Deployed/soal/34/index.html": 7,
-    "LMNas_Deployed/soal/35/index.html": 7,
-    "LMNas_Deployed/soal/36/index.html": 7,
-    "LMNas_Deployed/faq/index.html": 38,
-    "LMNas_Deployed/peraturan/index.html": 40,
-    "LMNas_Deployed/buku-panduan/index.html": 39,
+    "LMNas_Deployed/soal/34/index.html": 8,
+    "LMNas_Deployed/soal/35/index.html": 8,
+    "LMNas_Deployed/soal/36/index.html": 8,
+    "LMNas_Deployed/faq/index.html": 39,
+    "LMNas_Deployed/peraturan/index.html": 41,
+    "LMNas_Deployed/buku-panduan/index.html": 40,
   };
 
   for (const [relativePath, version] of Object.entries(expectedVersions)) {

@@ -102,6 +102,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .nav-papers summary:focus-visible { outline: 4px solid var(--gold); outline-offset: 4px; }
 .nav-papers-menu { position: absolute; z-index: 32; top: 100%; left: 0; display: grid; min-width: 180px; padding: 8px; border: 2px solid var(--gold); background: var(--green); }
 .nav-papers:not([open]) > .nav-papers-menu { display: none; }
+.nav-archive > .nav-papers-menu { left: auto; right: 0; }
 .site-header .nav-papers-menu a { min-height: 44px; padding: 8px 14px; font-size: 16px; white-space: nowrap; }
 .site-header .nav-papers-menu a:hover { background: rgba(253,220,96,.12); }
 .nav-papers[open] summary::after { transform: rotate(225deg); }

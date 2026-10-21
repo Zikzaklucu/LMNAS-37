@@ -115,7 +115,7 @@ test("the countdown exposes four paired lowercase unit labels", () => {
 test("the navigation exposes the approved pages and both contact-person routes", () => {
   const desktopNavigation = html.match(/<nav\b[^>]*aria-label="Navigasi utama"[^>]*>([\s\S]*?)<\/nav>/)?.[1] || "";
 
-  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 10);
+  assert.equal((desktopNavigation.match(/<a\b/g) || []).length, 14);
   assert.match(desktopNavigation, /<a href="#home">Home<\/a>/);
   assert.doesNotMatch(desktopNavigation, /<a href="https:\/\/pendaftaran\.lmnas-ugm\.com">Daftar<\/a>/);
   assert.match(desktopNavigation, /<a href="buku-panduan\/">Buku Panduan<\/a>/);
