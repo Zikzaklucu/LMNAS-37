@@ -21,6 +21,11 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
       end: "2026-11-15T23:59:59+07:00",
     }),
   }),
+  // Set each URL only after its official answer key has been supplied.
+  answerKeys: Object.freeze({
+    smp: "https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing",
+    sma: "https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view",
+  }),
   registration: Object.freeze({
     url: "https://pendaftaran.lmnas-ugm.com",
   }),

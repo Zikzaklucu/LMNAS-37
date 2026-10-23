@@ -2016,6 +2016,115 @@ h1, h2, h3, p { overflow: visible; }
   .footer-socials { margin-top: 24px; }
 }
 
+/* Inlined from answer-key.css. */
+/* Homepage answer-key entry and native modal; no dependency on registration. */
+.hero-copy .answer-key-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: calc(100% - 40px);
+  min-height: 56px;
+  margin-top: 28px;
+  padding: 15px 24px;
+  border: 2px solid #d8b45e;
+  border-radius: 12px;
+  color: #fff3ce;
+  background: var(--green-dark);
+  box-shadow: 0 5px 0 #b58b3d;
+  font: 700 clamp(14px, 1.3vw, 18px)/1.4 var(--body);
+  text-align: center;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+.hero-copy .answer-key-trigger[hidden] { display: none; }
+.answer-key-trigger svg { width: 22px; height: 22px; flex: 0 0 auto; }
+.hero-copy .answer-key-trigger:active { transform: translateY(3px); box-shadow: 0 2px 0 #b58b3d; }
+.answer-key-trigger:focus-visible,
+.answer-key-close:focus-visible,
+.answer-key-link:focus-visible { outline: 3px solid #3e5626; outline-offset: 5px; }
+.answer-key-modal-open { overflow: hidden; }
+.answer-key-dialog {
+  position: fixed;
+  inset: 0;
+  width: min(620px, calc(100% - 32px));
+  max-width: none;
+  max-height: calc(100svh - 32px);
+  margin: auto;
+  padding: clamp(24px, 5vw, 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  border: 2px solid var(--green);
+  border-radius: 22px;
+  color: var(--green-dark);
+  background-color: #fff3ce;
+  background-image: linear-gradient(#fff3cef2, #fff3cef2), var(--texture);
+  box-shadow: 0 24px 80px #15250f55, inset 0 0 0 6px var(--green);
+  font: 500 16px/1.6 var(--body);
+}
+.answer-key-dialog:not([open]) { display: none; }
+.answer-key-dialog::backdrop { background: #14250fd6; backdrop-filter: blur(4px); }
+.answer-key-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #3e562633;
+  border-radius: 50%;
+  color: var(--green-dark);
+  background: #fff8df;
+  font: 400 30px/1 var(--body);
+  cursor: pointer;
+}
+.answer-key-dialog #answer-key-title {
+  margin: 0 44px 26px 0;
+  color: var(--green-dark);
+  font: 400 clamp(34px, 6vw, 48px)/1.2 var(--display);
+}
+.answer-key-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.answer-key-option {
+  min-width: 0;
+  padding: 22px 18px;
+  border: 1px solid #3e562638;
+  border-radius: 14px;
+  background: #fff9e6c9;
+}
+.answer-key-option .answer-key-level-label { margin: 0 0 6px; font-size: 12px; font-weight: 600; }
+.answer-key-option h3 { margin: 0; color: var(--green-dark); font: 400 36px/1.2 var(--display); }
+.answer-key-option [data-answer-key-level] { margin: 18px 0 0; color: #526044; font-size: 14px; }
+.answer-key-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #fff3ce;
+  background: var(--green-dark);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-decoration: none;
+}
+.answer-key-noscript { max-width: calc(100% - 40px); color: var(--green); }
+@media (hover: hover) and (pointer: fine) {
+  .hero-copy .answer-key-trigger:hover { background: var(--green); transform: translateY(-2px); box-shadow: 0 7px 0 #b58b3d; }
+  .answer-key-close:hover { background: #e9ce89; }
+  .answer-key-link:hover { background: var(--green); }
+}
+@media (max-width: 480px) {
+  .hero-copy .answer-key-trigger { padding-inline: 18px; }
+  .answer-key-options { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .answer-key-option { padding: 16px 18px; }
+  .answer-key-option [data-answer-key-level] { margin-top: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy .answer-key-trigger { transition: none; }
+}
+
 /* Homepage-only registration extension; retain the existing event artwork. */
 .registration-extension-note {
   max-width: calc(100% - 32px);

@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://zikzaklucu.github.io/LMNAS-37/LMNas_Deployed/style.css?v=184" />
+    <link rel="stylesheet" href="https://zikzaklucu.github.io/LMNAS-37/LMNas_Deployed/style.css?v=187" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
@@ -104,11 +104,33 @@
           <p class="hero-welcome">Selamat Datang di laman</p>
           <h1 id="hero-title">LMNAS 37</h1>
           <p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br /> to Broader Thinking and Limitless Potential”</p>
+          <button class="answer-key-trigger" type="button" aria-haspopup="dialog" aria-controls="answer-key-dialog" data-answer-key-open hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" /><path d="M14 3v6h6M8 14l2 2 5-5" /></svg>
+            <span>Kunci Jawaban Penyisihan</span>
+          </button>
+          <noscript><p class="answer-key-noscript"><a href="https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing" target="_blank" rel="noopener noreferrer">Lihat Kunci Jawaban SMP</a> · <a href="https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view" target="_blank" rel="noopener noreferrer">Lihat Kunci Jawaban SMA</a></p></noscript>
         </div>
         <div class="hero-owl-stage" aria-hidden="true">
           <img class="hero-mascot" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-owl-perched.png" width="779" height="606" alt="" aria-hidden="true" decoding="async" />
         </div>
       </section>
+
+      <dialog class="answer-key-dialog" id="answer-key-dialog" aria-labelledby="answer-key-title">
+        <button class="answer-key-close" type="button" aria-label="Tutup kunci jawaban" data-answer-key-close autofocus><span aria-hidden="true">×</span></button>
+        <h2 id="answer-key-title">Kunci Jawaban</h2>
+        <div class="answer-key-options">
+          <div class="answer-key-option">
+            <p class="answer-key-level-label">Jenjang</p>
+            <h3>SMP</h3>
+            <p data-answer-key-level="smp">Belum tersedia.</p>
+          </div>
+          <div class="answer-key-option">
+            <p class="answer-key-level-label">Jenjang</p>
+            <h3>SMA</h3>
+            <p data-answer-key-level="sma">Belum tersedia.</p>
+          </div>
+        </div>
+      </dialog>
 
       <section class="countdown-section" aria-labelledby="countdown-title">
         <img class="countdown-scene" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-expedition.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
@@ -437,6 +459,11 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
       start: "2026-11-14T00:00:00+07:00",
       end: "2026-11-15T23:59:59+07:00",
     }),
+  }),
+  // Set each URL only after its official answer key has been supplied.
+  answerKeys: Object.freeze({
+    smp: "https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing",
+    sma: "https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view",
   }),
   registration: Object.freeze({
     url: "https://pendaftaran.lmnas-ugm.com",
@@ -1200,6 +1227,76 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
     header?.querySelector(".nav-toggle")?.addEventListener("click", close);
     hoverQuery.addEventListener("change", close);
   });
+})();
+    </script>
+    <script>
+(() => {
+  "use strict";
+
+  const trigger = document.querySelector("[data-answer-key-open]");
+  const dialog = document.getElementById("answer-key-dialog");
+  if (!trigger || !dialog || typeof dialog.showModal !== "function") return;
+
+  const keys = window.LMNAS_SITE_CONFIG?.answerKeys || {};
+  dialog.querySelectorAll("[data-answer-key-level]").forEach((slot) => {
+    const level = slot.dataset.answerKeyLevel;
+    const value = keys[level];
+    if (typeof value !== "string" || !value.trim()) return;
+
+    let url;
+    try {
+      url = new URL(value, document.baseURI);
+    } catch {
+      return;
+    }
+    if (url.protocol !== "https:" && url.protocol !== "http:") return;
+
+    const link = document.createElement("a");
+    link.className = "answer-key-link";
+    link.href = url.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = `Lihat Kunci Jawaban ${level.toUpperCase()}`;
+    slot.replaceChildren(link);
+  });
+
+  trigger.addEventListener("click", () => {
+    if (dialog.open) return;
+    dialog.showModal();
+    document.documentElement.classList.add("answer-key-modal-open");
+  });
+  const restorePage = () => {
+    // A queued close event from an earlier opening must not unlock a new modal.
+    if (dialog.open) return;
+    document.documentElement.classList.remove("answer-key-modal-open");
+    trigger.focus({ preventScroll: true });
+  };
+  const closeDialog = () => {
+    dialog.close();
+    restorePage();
+  };
+  dialog.querySelector("[data-answer-key-close]").addEventListener("click", closeDialog);
+  dialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeDialog();
+  });
+  dialog.addEventListener("close", restorePage);
+
+  const isBackdrop = (event) => {
+    if (event.target !== dialog) return false;
+    const rect = dialog.getBoundingClientRect();
+    return event.clientX < rect.left || event.clientX > rect.right
+      || event.clientY < rect.top || event.clientY > rect.bottom;
+  };
+  let startedOnBackdrop = false;
+  dialog.addEventListener("pointerdown", (event) => {
+    startedOnBackdrop = isBackdrop(event);
+  });
+  dialog.addEventListener("click", (event) => {
+    if (startedOnBackdrop && isBackdrop(event)) closeDialog();
+    startedOnBackdrop = false;
+  });
+  trigger.hidden = false;
 })();
     </script>
   </body>
