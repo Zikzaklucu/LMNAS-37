@@ -7,8 +7,8 @@ const path = require("node:path");
 const vm = require("node:vm");
 const root = path.join(__dirname, "..");
 const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
-const SMP_KEY_URL = "https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing";
-const SMA_KEY_URL = "https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view";
+const SMP_KEY_URL = "https://drive.google.com/file/d/1t5GzPcPClTMTX6uxZttShoG0jHZPzkTs/view";
+const SMA_KEY_URL = "https://drive.google.com/file/d/1qr1yrmL4n38Av0sSNV8A2TvAsbzYKuXv/view";
 
 const SMP_PAPER_URL = "https://drive.google.com/file/d/1z6X08ksc03rigrLlyuN0D0G992wh0nbN/view?usp=sharing";
 const SMA_PAPER_URL = "https://drive.google.com/file/d/11KLL1XVLK1hoOBWAtTo3L2pQ1D-YM1Rp/view?usp=sharing";
@@ -72,6 +72,7 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
 }
 
 test("the source loads popup assets and deployment inlines the exact script and stylesheet", () => {
+  assert.match(read("index.html"), /src="site-config.js\?v=7" defer/);
   assert.match(read("index.html"), /href="answer-key.css\?v=4"/);
   assert.match(read("index.html"), /src="answer-key.js\?v=2" defer/);
   const deployed = read("LMNas_Deployed/index.html");

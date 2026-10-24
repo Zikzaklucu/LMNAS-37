@@ -23,8 +23,8 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   }),
   // Set each URL only after its official answer key has been supplied.
   answerKeys: Object.freeze({
-    smp: "https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing",
-    sma: "https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view",
+    smp: "https://drive.google.com/file/d/1t5GzPcPClTMTX6uxZttShoG0jHZPzkTs/view",
+    sma: "https://drive.google.com/file/d/1qr1yrmL4n38Av0sSNV8A2TvAsbzYKuXv/view",
   }),
   preliminaryPapers: Object.freeze({
     smp: "https://drive.google.com/file/d/1z6X08ksc03rigrLlyuN0D0G992wh0nbN/view?usp=sharing",

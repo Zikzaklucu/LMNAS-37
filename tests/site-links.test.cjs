@@ -793,7 +793,7 @@ test("published dates and registration links are hydrated from the site configur
     "preliminary",
     "finals",
   ]);
-  assert.match(html, /<script src="site-config\.js\?v=6" defer><\/script>/);
+  assert.match(html, /<script src="site-config\.js\?v=7" defer><\/script>/);
   assert.equal((html.match(/data-registration-link/g) || []).length, 0);
   assert.equal((html.match(/data-phase-key=/g) || []).length, 5);
   assert.match(html, /data-countdown-target="2026-10-24T00:00:00\+07:00"/);
