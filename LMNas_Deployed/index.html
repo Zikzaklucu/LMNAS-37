@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://zikzaklucu.github.io/LMNAS-37/LMNas_Deployed/style.css?v=187" />
+    <link rel="stylesheet" href="https://zikzaklucu.github.io/LMNAS-37/LMNas_Deployed/style.css?v=188" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
@@ -106,9 +106,9 @@
           <p class="hero-subhead">“Unlocking New Horizons: Mathematics as the Gateway<br /> to Broader Thinking and Limitless Potential”</p>
           <button class="answer-key-trigger" type="button" aria-haspopup="dialog" aria-controls="answer-key-dialog" data-answer-key-open hidden>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" /><path d="M14 3v6h6M8 14l2 2 5-5" /></svg>
-            <span>Kunci Jawaban Penyisihan</span>
+            <span>Soal &amp; Kunci Jawaban Penyisihan</span>
           </button>
-          <noscript><p class="answer-key-noscript"><a href="https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing" target="_blank" rel="noopener noreferrer">Lihat Kunci Jawaban SMP</a> · <a href="https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view" target="_blank" rel="noopener noreferrer">Lihat Kunci Jawaban SMA</a></p></noscript>
+          <noscript><p class="answer-key-noscript"><a href="https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing" target="_blank" rel="noopener noreferrer">Lihat Kunci Jawaban SMP</a> · <a href="https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view" target="_blank" rel="noopener noreferrer">Lihat Kunci Jawaban SMA</a> · <a href="https://drive.google.com/file/d/1z6X08ksc03rigrLlyuN0D0G992wh0nbN/view?usp=sharing" target="_blank" rel="noopener noreferrer">Lihat Soal SMP</a> · <a href="https://drive.google.com/file/d/11KLL1XVLK1hoOBWAtTo3L2pQ1D-YM1Rp/view?usp=sharing" target="_blank" rel="noopener noreferrer">Lihat Soal SMA</a></p></noscript>
         </div>
         <div class="hero-owl-stage" aria-hidden="true">
           <img class="hero-mascot" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/hero-owl-perched.png" width="779" height="606" alt="" aria-hidden="true" decoding="async" />
@@ -116,17 +116,19 @@
       </section>
 
       <dialog class="answer-key-dialog" id="answer-key-dialog" aria-labelledby="answer-key-title">
-        <button class="answer-key-close" type="button" aria-label="Tutup kunci jawaban" data-answer-key-close autofocus><span aria-hidden="true">×</span></button>
-        <h2 id="answer-key-title">Kunci Jawaban</h2>
+        <button class="answer-key-close" type="button" aria-label="Tutup soal dan kunci jawaban" data-answer-key-close autofocus><span aria-hidden="true">×</span></button>
+        <h2 id="answer-key-title">Soal &amp; Kunci Jawaban</h2>
         <div class="answer-key-options">
           <div class="answer-key-option">
             <p class="answer-key-level-label">Jenjang</p>
             <h3>SMP</h3>
+            <p data-preliminary-paper-level="smp">Belum tersedia.</p>
             <p data-answer-key-level="smp">Belum tersedia.</p>
           </div>
           <div class="answer-key-option">
             <p class="answer-key-level-label">Jenjang</p>
             <h3>SMA</h3>
+            <p data-preliminary-paper-level="sma">Belum tersedia.</p>
             <p data-answer-key-level="sma">Belum tersedia.</p>
           </div>
         </div>
@@ -464,6 +466,10 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   answerKeys: Object.freeze({
     smp: "https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing",
     sma: "https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view",
+  }),
+  preliminaryPapers: Object.freeze({
+    smp: "https://drive.google.com/file/d/1z6X08ksc03rigrLlyuN0D0G992wh0nbN/view?usp=sharing",
+    sma: "https://drive.google.com/file/d/11KLL1XVLK1hoOBWAtTo3L2pQ1D-YM1Rp/view?usp=sharing",
   }),
   registration: Object.freeze({
     url: "https://pendaftaran.lmnas-ugm.com",
@@ -1237,28 +1243,32 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
   const dialog = document.getElementById("answer-key-dialog");
   if (!trigger || !dialog || typeof dialog.showModal !== "function") return;
 
-  const keys = window.LMNAS_SITE_CONFIG?.answerKeys || {};
-  dialog.querySelectorAll("[data-answer-key-level]").forEach((slot) => {
-    const level = slot.dataset.answerKeyLevel;
-    const value = keys[level];
-    if (typeof value !== "string" || !value.trim()) return;
+  const config = window.LMNAS_SITE_CONFIG || {};
+  const renderLinks = (selector, levelKey, documents, label) => {
+    dialog.querySelectorAll(selector).forEach((slot) => {
+      const level = slot.dataset[levelKey];
+      const value = documents?.[level];
+      if (typeof value !== "string" || !value.trim()) return;
 
-    let url;
-    try {
-      url = new URL(value, document.baseURI);
-    } catch {
-      return;
-    }
-    if (url.protocol !== "https:" && url.protocol !== "http:") return;
+      let url;
+      try {
+        url = new URL(value, document.baseURI);
+      } catch {
+        return;
+      }
+      if (url.protocol !== "https:" && url.protocol !== "http:") return;
 
-    const link = document.createElement("a");
-    link.className = "answer-key-link";
-    link.href = url.href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.textContent = `Lihat Kunci Jawaban ${level.toUpperCase()}`;
-    slot.replaceChildren(link);
-  });
+      const link = document.createElement("a");
+      link.className = "answer-key-link";
+      link.href = url.href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = `Lihat ${label} ${level.toUpperCase()}`;
+      slot.replaceChildren(link);
+    });
+  };
+  renderLinks("[data-answer-key-level]", "answerKeyLevel", config.answerKeys, "Kunci Jawaban");
+  renderLinks("[data-preliminary-paper-level]", "preliminaryPaperLevel", config.preliminaryPapers, "Soal");
 
   trigger.addEventListener("click", () => {
     if (dialog.open) return;

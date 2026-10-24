@@ -5,28 +5,32 @@
   const dialog = document.getElementById("answer-key-dialog");
   if (!trigger || !dialog || typeof dialog.showModal !== "function") return;
 
-  const keys = window.LMNAS_SITE_CONFIG?.answerKeys || {};
-  dialog.querySelectorAll("[data-answer-key-level]").forEach((slot) => {
-    const level = slot.dataset.answerKeyLevel;
-    const value = keys[level];
-    if (typeof value !== "string" || !value.trim()) return;
+  const config = window.LMNAS_SITE_CONFIG || {};
+  const renderLinks = (selector, levelKey, documents, label) => {
+    dialog.querySelectorAll(selector).forEach((slot) => {
+      const level = slot.dataset[levelKey];
+      const value = documents?.[level];
+      if (typeof value !== "string" || !value.trim()) return;
 
-    let url;
-    try {
-      url = new URL(value, document.baseURI);
-    } catch {
-      return;
-    }
-    if (url.protocol !== "https:" && url.protocol !== "http:") return;
+      let url;
+      try {
+        url = new URL(value, document.baseURI);
+      } catch {
+        return;
+      }
+      if (url.protocol !== "https:" && url.protocol !== "http:") return;
 
-    const link = document.createElement("a");
-    link.className = "answer-key-link";
-    link.href = url.href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.textContent = `Lihat Kunci Jawaban ${level.toUpperCase()}`;
-    slot.replaceChildren(link);
-  });
+      const link = document.createElement("a");
+      link.className = "answer-key-link";
+      link.href = url.href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = `Lihat ${label} ${level.toUpperCase()}`;
+      slot.replaceChildren(link);
+    });
+  };
+  renderLinks("[data-answer-key-level]", "answerKeyLevel", config.answerKeys, "Kunci Jawaban");
+  renderLinks("[data-preliminary-paper-level]", "preliminaryPaperLevel", config.preliminaryPapers, "Soal");
 
   trigger.addEventListener("click", () => {
     if (dialog.open) return;

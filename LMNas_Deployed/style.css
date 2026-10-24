@@ -2095,7 +2095,8 @@ h1, h2, h3, p { overflow: visible; }
 }
 .answer-key-option .answer-key-level-label { margin: 0 0 6px; font-size: 12px; font-weight: 600; }
 .answer-key-option h3 { margin: 0; color: var(--green-dark); font: 400 36px/1.2 var(--display); }
-.answer-key-option [data-answer-key-level] { margin: 18px 0 0; color: #526044; font-size: 14px; }
+.answer-key-option [data-answer-key-level],
+.answer-key-option [data-preliminary-paper-level] { margin: 18px 0 0; color: #526044; font-size: 14px; }
 .answer-key-link {
   display: inline-flex;
   align-items: center;
@@ -2119,7 +2120,8 @@ h1, h2, h3, p { overflow: visible; }
   .hero-copy .answer-key-trigger { padding-inline: 18px; }
   .answer-key-options { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .answer-key-option { padding: 16px 18px; }
-  .answer-key-option [data-answer-key-level] { margin-top: 10px; }
+  .answer-key-option [data-answer-key-level],
+  .answer-key-option [data-preliminary-paper-level] { margin-top: 10px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-copy .answer-key-trigger { transition: none; }

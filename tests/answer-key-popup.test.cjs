@@ -10,7 +10,10 @@ const read = (file) => fs.readFileSync(path.join(root, file), "utf8");
 const SMP_KEY_URL = "https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing";
 const SMA_KEY_URL = "https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view";
 
-function setup(answerKeys = {}, { supported = true, present = true } = {}) {
+const SMP_PAPER_URL = "https://drive.google.com/file/d/1z6X08ksc03rigrLlyuN0D0G992wh0nbN/view?usp=sharing";
+const SMA_PAPER_URL = "https://drive.google.com/file/d/11KLL1XVLK1hoOBWAtTo3L2pQ1D-YM1Rp/view?usp=sharing";
+
+function setup(answerKeys = {}, { supported = true, present = true, preliminaryPapers = {} } = {}) {
   const element = () => ({
     hidden: true,
     listeners: {},
@@ -22,12 +25,13 @@ function setup(answerKeys = {}, { supported = true, present = true } = {}) {
   const trigger = element();
   const close = element();
   const slots = ["smp", "sma"].map((level) => ({ ...element(), dataset: { answerKeyLevel: level } }));
+  const paperSlots = ["smp", "sma"].map((level) => ({ ...element(), dataset: { preliminaryPaperLevel: level } }));
   const dialog = {
     ...element(), open: false,
     showModal: supported ? function () { this.open = true; } : undefined,
     close() { this.open = false; this.listeners.close(); },
     querySelector() { return close; },
-    querySelectorAll() { return slots; },
+    querySelectorAll(selector) { return selector === "[data-preliminary-paper-level]" ? paperSlots : slots; },
     getBoundingClientRect() { return { left: 100, right: 600, top: 100, bottom: 500 }; },
   };
   const classes = new Set();
@@ -38,8 +42,8 @@ function setup(answerKeys = {}, { supported = true, present = true } = {}) {
     getElementById: () => present ? dialog : null,
     createElement: () => element(),
   };
-  vm.runInNewContext(read("answer-key.js"), { document, window: { LMNAS_SITE_CONFIG: { answerKeys } }, URL });
-  return { trigger, close, dialog, classes, slots };
+  vm.runInNewContext(read("answer-key.js"), { document, window: { LMNAS_SITE_CONFIG: { answerKeys, preliminaryPapers } }, URL });
+  return { trigger, close, dialog, classes, slots, paperSlots };
 }
 
 for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
@@ -47,31 +51,33 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
     const html = read(file);
     const hero = html.match(/<section class="hero"[\s\S]*?<\/section>/)?.[0];
     assert.match(hero, /<button[^>]*type="button"[^>]*aria-haspopup="dialog"[^>]*aria-controls="answer-key-dialog"[^>]*data-answer-key-open[^>]*hidden/);
-    assert.match(hero, /Kunci Jawaban Penyisihan/);
+    assert.match(hero, /Soal &amp; Kunci Jawaban Penyisihan/);
     const dialog = html.match(/<dialog\b[\s\S]*?<\/dialog>/)?.[0];
     assert.match(dialog, /id="answer-key-dialog"/);
     assert.match(dialog, /aria-labelledby="answer-key-title"/);
-    assert.match(dialog, /<h2 id="answer-key-title">Kunci Jawaban<\/h2>/);
+    assert.match(dialog, /<h2 id="answer-key-title">Soal &amp; Kunci Jawaban<\/h2>/);
     assert.doesNotMatch(dialog, /LMNAS 37 · BABAK PENYISIHAN|Kunci jawaban Babak Penyisihan LMNas 37 untuk jenjang SMP dan SMA\.|answer-key-description|answer-key-kicker/);
     assert.match(dialog, /data-answer-key-close[^>]*autofocus/);
     assert.match(dialog, /data-answer-key-level="smp">Belum tersedia\.<\/p>/);
     assert.match(dialog, /data-answer-key-level="sma">Belum tersedia\.<\/p>/);
+    for (const level of ["smp", "sma"]) assert.ok(dialog.includes(`data-preliminary-paper-level="${level}">Belum tersedia.</p>`));
     assert.doesNotMatch(dialog, /href=|\bopen\b/);
     if (file.startsWith("LMNas_Deployed/")) assert.ok(html.includes(read("site-config.js").trim()));
     const fallback = html.match(/<noscript>[\s\S]*?<\/noscript>/)?.[0];
     assert.ok(fallback.includes(`href="${SMA_KEY_URL}" target="_blank" rel="noopener noreferrer"`));
     assert.ok(fallback.includes(`href="${SMP_KEY_URL}" target="_blank" rel="noopener noreferrer"`));
+    for (const url of [SMP_PAPER_URL, SMA_PAPER_URL]) assert.ok(fallback.includes(`href="${url}" target="_blank" rel="noopener noreferrer"`));
     assert.doesNotMatch(fallback, /belum tersedia/i);
   });
 }
 
 test("the source loads popup assets and deployment inlines the exact script and stylesheet", () => {
-  assert.match(read("index.html"), /href="answer-key.css\?v=3"/);
-  assert.match(read("index.html"), /src="answer-key.js\?v=1" defer/);
+  assert.match(read("index.html"), /href="answer-key.css\?v=4"/);
+  assert.match(read("index.html"), /src="answer-key.js\?v=2" defer/);
   const deployed = read("LMNas_Deployed/index.html");
   assert.ok(deployed.includes(read("answer-key.js").trim()));
   assert.ok(read("LMNas_Deployed/style.css").includes(read("answer-key.css").trim()));
-  assert.match(deployed, /LMNas_Deployed\/style.css\?v=187/);
+  assert.match(deployed, /LMNas_Deployed\/style.css\?v=188/);
   const config = {};
   vm.runInNewContext(read("site-config.js"), { window: config });
   assert.equal(config.LMNAS_SITE_CONFIG.answerKeys.smp, SMP_KEY_URL);
@@ -89,6 +95,38 @@ test("the production configuration activates both exact supplied PDF links", () 
     assert.equal(link.textContent, `Lihat Kunci Jawaban ${level}`);
     assert.equal(link.target, "_blank");
     assert.equal(link.rel, "noopener noreferrer");
+  }
+});
+
+test("the production configuration renders each exact preliminary paper alongside its answer key", () => {
+  const config = {};
+  vm.runInNewContext(read("site-config.js"), { window: config });
+  const { answerKeys, preliminaryPapers } = config.LMNAS_SITE_CONFIG;
+  const app = setup(answerKeys, { preliminaryPapers });
+  for (const [index, level, url] of [[0, "smp", SMP_PAPER_URL], [1, "sma", SMA_PAPER_URL]]) {
+    assert.equal(preliminaryPapers[level], url);
+    assert.equal(app.paperSlots[index].children.length, 1);
+    const link = app.paperSlots[index].children[0];
+    assert.equal(link.href, url);
+    assert.equal(link.textContent, `Lihat Soal ${level.toUpperCase()}`);
+    assert.equal(link.target, "_blank");
+    assert.equal(link.rel, "noopener noreferrer");
+    assert.equal(app.slots[index].children.length, 1);
+  }
+});
+
+test("preliminary papers validate independently and never replace existing answer keys", () => {
+  const keys = { smp: SMP_KEY_URL, sma: SMA_KEY_URL };
+  const app = setup(keys, { preliminaryPapers: { smp: SMP_PAPER_URL } });
+  assert.equal(app.paperSlots[0].children[0].href, SMP_PAPER_URL);
+  assert.equal(app.paperSlots[1].children.length, 0);
+  assert.equal(app.slots[0].children[0].href, SMP_KEY_URL);
+  const relative = setup({}, { preliminaryPapers: { sma: "Assets/documents/sma.pdf" } });
+  assert.equal(relative.paperSlots[1].children[0].href, "https://lmnas.example.test/Assets/documents/sma.pdf");
+  for (const value of [null, "", "javascript:alert(1)", "data:text/html,test", "https://[", 42]) {
+    const pending = setup(keys, { preliminaryPapers: { smp: value } });
+    assert.equal(pending.paperSlots[0].children.length, 0, String(value));
+    assert.equal(pending.slots[0].children[0].href, SMP_KEY_URL);
   }
 });
 

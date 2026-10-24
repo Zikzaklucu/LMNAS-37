@@ -26,6 +26,10 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
     smp: "https://drive.google.com/file/d/1Ch-josgDd9RHXJsIZ6E1ocAw1zkDbDU4/view?usp=sharing",
     sma: "https://drive.google.com/file/d/1ssBcQJjWzreKIecApULcNZWsG9RsNgw-/view",
   }),
+  preliminaryPapers: Object.freeze({
+    smp: "https://drive.google.com/file/d/1z6X08ksc03rigrLlyuN0D0G992wh0nbN/view?usp=sharing",
+    sma: "https://drive.google.com/file/d/11KLL1XVLK1hoOBWAtTo3L2pQ1D-YM1Rp/view?usp=sharing",
+  }),
   registration: Object.freeze({
     url: "https://pendaftaran.lmnas-ugm.com",
   }),
