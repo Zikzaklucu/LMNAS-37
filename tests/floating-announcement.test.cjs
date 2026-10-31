@@ -17,7 +17,7 @@ function runtime(file) {
   assert.ok(script, "deployment has self-contained announcement runtime");
   return script[1];
 }
-function init(file, url) {
+function init(file, url, transform = source => source) {
   const body = { textContent: pending, children: [], replaceChildren(node) { this.children = [node]; this.textContent = node.textContent; } };
   const close = { addEventListener(event, callback) { assert.equal(event, "click"); this.click = callback; } };
   const notice = { hidden: false, querySelector(selector) { return selector === "[data-announcement-body]" ? body : selector === "[data-announcement-close]" ? close : null; } };
@@ -25,10 +25,21 @@ function init(file, url) {
     URL, window: { LMNAS_SITE_CONFIG: { preliminaryAnnouncement: { url } } },
     document: { querySelector(selector) { assert.equal(selector, "[data-preliminary-announcement]"); return notice; }, createElement(tag) { assert.equal(tag, "a"); return { tagName: "A" }; } },
   };
-  vm.runInNewContext(runtime(file), context);
+  vm.runInNewContext(transform(runtime(file)), context);
   return { body, close, notice };
 }
 for (const file of pages) {
+  test(`${file}: announcement survives backslash stripping observed on WordPress`, () => {
+    const url = "https://bit.ly/HasilPenyisihanLMNas37UGM";
+    const stripBackslashes = source => source.split(String.fromCharCode(92)).join("");
+    const state = init(file, url, stripBackslashes);
+    assert.equal(state.body.children[0].href, url);
+    state.close.click();
+    assert.equal(state.notice.hidden, true);
+    for (const invalid of ["javascript:alert(1)", "//example.org/results", "https:example.org", "/results", null]) {
+      assert.equal(init(file, invalid, stripBackslashes).body.children.length, 0);
+    }
+  });
   test(`${file}: labeled pending notice initializes without a link`, () => {
     assert.ok(markup(file), "homepage has floating announcement aside");
     assert.match(markup(file), /aria-labelledby="preliminary-announcement-title"/);
@@ -79,7 +90,7 @@ test("source and deployment share markup, runtime, CSS and official announcement
     assert.match(markup(file), /type="button" aria-label="Tutup pengumuman babak penyisihan"/);
   }
   assert.match(read(pages[0]), /href="announcement\.css\?v=2"/);
-  assert.match(read(pages[0]), /src="announcement\.js\?v=1" defer/);
+  assert.match(read(pages[0]), /src="announcement\.js\?v=2" defer/);
   assert.match(read(pages[0]), /src="site-config\.js\?v=9" defer/);
   assert.doesNotMatch(read(pages[1]), /(?:src|href)="[^"]*announcement\.(?:css|js)/);
 });

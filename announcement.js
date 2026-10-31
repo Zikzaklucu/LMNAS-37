@@ -7,7 +7,7 @@
     notice.hidden = true;
   });
   const url = window.LMNAS_SITE_CONFIG?.preliminaryAnnouncement?.url;
-  if (typeof url !== "string" || !/^https?:\/\//i.test(url)) return;
+  if (typeof url !== "string" || !(url.toLowerCase().startsWith("https://") || url.toLowerCase().startsWith("http://"))) return;
   try {
     const parsed = new URL(url);
     if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return;
