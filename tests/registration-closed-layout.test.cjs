@@ -33,5 +33,5 @@ test("the deployment bundle ends with the canonical registration layout override
   assert.ok(read("LMNas_Deployed/style.css").endsWith(read("registration-extension.css")));
 });
 test("the source page cache-busts the corrected registration layout stylesheet", () => {
-  assert.match(read("index.html"), /href="registration-extension\.css\?v=2"/);
+  assert.match(read("index.html"), /href="registration-extension\.css\?v=3"/);
 });

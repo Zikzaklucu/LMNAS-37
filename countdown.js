@@ -118,7 +118,7 @@
     }
 
     const preliminary = phases.preliminary;
-    if (preliminary) {
+    if (preliminary && (!phases.finals || current <= new Date(preliminary.end))) {
       const state = getPhaseWindowState(new Date(preliminary.start), new Date(preliminary.end), current);
       const upcoming = state === "upcoming";
       const kicker = upcoming ? "Menuju" : state === "active" ? "Sedang berlangsung" : "Sudah selesai";
@@ -128,6 +128,22 @@
         title: "Babak Penyisihan",
         countdownTarget: upcoming ? preliminary.start : null,
         countdownLabel: `${kicker} Babak Penyisihan`,
+        showCountdown: upcoming,
+      };
+    }
+
+    const finals = phases.finals;
+    if (finals) {
+      const state = getPhaseWindowState(new Date(finals.start), new Date(finals.end), current);
+      const upcoming = state === "upcoming";
+      const kicker = upcoming ? "Menuju" : state === "active" ? "Sedang berlangsung" : "Sudah selesai";
+      const title = upcoming ? "Babak Semifinal" : "Babak Semifinal, Final, dan Grandfinal";
+      return {
+        key: upcoming ? "BEFORE_SEMIFINAL" : state === "active" ? "FINALS_ACTIVE" : "FINALS_COMPLETE",
+        kicker,
+        title,
+        countdownTarget: upcoming ? finals.start : null,
+        countdownLabel: `${kicker} ${title}`,
         showCountdown: upcoming,
       };
     }

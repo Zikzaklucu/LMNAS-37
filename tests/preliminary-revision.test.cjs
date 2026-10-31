@@ -17,7 +17,6 @@ const cases = [
   ["2026-10-24T00:00:00.001+07:00", "PRELIMINARY_ACTIVE", "Sedang berlangsung", false],
   ["2026-10-24T23:59:58.999+07:00", "PRELIMINARY_ACTIVE", "Sedang berlangsung", false],
   ["2026-10-24T23:59:59+07:00", "PRELIMINARY_ACTIVE", "Sedang berlangsung", false],
-  ["2026-10-24T23:59:59.001+07:00", "PRELIMINARY_COMPLETE", "Sudah selesai", false],
 ];
 for (const [timestamp, key, kicker, visible] of cases) {
   test(`preliminary boundary ${timestamp}`, () => {
@@ -90,7 +89,7 @@ for (const file of ["script.js", "LMNas_Deployed/index.html"]) {
       assert.equal(state.intervals.size, expectedKicker === "Sudah selesai" ? 0 : 1);
     });
   }
-  test(`${file} ticks from upcoming through active to complete and stops`, () => {
+  test(`${file} ticks from upcoming through active to semifinal`, () => {
     const state = render(file, "2026-10-23T23:59:59+07:00");
     assert.equal(state.parts.seconds.textContent, "01");
     state.tick("2026-10-24T00:00:00+07:00");
@@ -100,9 +99,10 @@ for (const file of ["script.js", "LMNas_Deployed/index.html"]) {
     state.tick("2026-10-24T23:59:59+07:00");
     assert.equal(state.kicker.textContent, "Sedang berlangsung");
     state.tick("2026-10-24T23:59:59.001+07:00");
-    assert.equal(state.kicker.textContent, "Sudah selesai");
-    assert.equal(state.intervals.size, 0);
-    assert.equal(state.cleared.length, 1);
+    assert.equal(state.kicker.textContent, "Menuju");
+    assert.equal(state.title.textContent, "Babak Semifinal");
+    assert.equal(state.intervals.size, 1);
+    assert.equal(state.cleared.length, 0);
   });
 }
 function htmlFiles(directory) {
@@ -136,9 +136,9 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
     }
     const markup = html.match(/<section class="countdown-section"[\s\S]*?<\/section>/)[0];
     assert.match(markup, />Menuju<\/p>/);
-    assert.match(markup, /id="countdown-title">Babak Penyisihan/);
-    assert.match(markup, /24 Oktober 2026/);
-    assert.match(markup, /data-countdown-target="2026-10-24T00:00:00\+07:00"/);
+    assert.match(markup, /id="countdown-title">Babak Semifinal/);
+    assert.match(markup, /14 November 2026/);
+    assert.match(markup, /data-countdown-target="2026-11-14T00:00:00\+07:00"/);
     assert.doesNotMatch(html.match(/<head>[\s\S]*?<\/head>/)[0], /Perpanjangan Pendaftaran/);
     assert.match(html, /<h3>Perpanjangan Pendaftaran<\/h3><time datetime="2026-09-27">27 September–10 Oktober 2026/);
     assert.equal((html.match(/class="book-store-link/g) || []).length, 4);

@@ -1,4 +1,6 @@
 window.LMNAS_SITE_CONFIG = Object.freeze({
+  // Official preliminary-round results supplied by the organizer.
+  preliminaryAnnouncement: Object.freeze({ url: "https://bit.ly/HasilPenyisihanLMNas37UGM" }),
   phases: Object.freeze({
     "registration-one": Object.freeze({
       start: "2026-09-01T12:00:00+07:00",

@@ -1,0 +1,56 @@
+/* Self-contained homepage announcement; keep deployment inline copy in sync. */
+.floating-announcement {
+  position: fixed;
+  z-index: 25;
+  top: calc(80px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  box-sizing: border-box;
+  width: min(420px, calc(100% - 48px));
+  padding: 18px 12px 18px 20px;
+  border: 1px solid #3e55264d;
+  border-radius: 18px;
+  color: #263c1b;
+  background: #fff8e6;
+  font: 500 14px/1.5 var(--body, "Montserrat", sans-serif);
+}
+.floating-announcement[hidden] { display: none; }
+.floating-announcement-copy { flex: 1; min-width: 0; }
+.floating-announcement h2 {
+  margin: 0 0 6px;
+  color: #263c1b;
+  font: 700 16px/1.4 var(--body, "Montserrat", sans-serif);
+}
+.floating-announcement p { margin: 0; }
+.floating-announcement a { color: #263c1b; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.floating-announcement-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  color: #263c1b;
+  background: transparent;
+  font: 400 26px/1 sans-serif;
+  cursor: pointer;
+}
+.floating-announcement-close:hover { background: #3e552614; }
+.floating-announcement-close:focus-visible,
+.floating-announcement a:focus-visible { outline: 3px solid #3e5526; outline-offset: 2px; }
+@media (max-width: 600px) {
+  .floating-announcement {
+    width: min(420px, calc(100% - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+    padding: 14px 8px 14px 16px;
+  }
+}
+/* Clear the WordPress toolbar without covering the navigation. */
+body.admin-bar .floating-announcement { top: calc(112px + env(safe-area-inset-top, 0px)); }
+@media (max-width: 782px) {
+  body.admin-bar .floating-announcement { top: calc(126px + env(safe-area-inset-top, 0px)); }
+}

@@ -26,9 +26,74 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://zikzaklucu.github.io/LMNAS-37/LMNas_Deployed/style.css?v=188" />
+    <link rel="stylesheet" href="https://zikzaklucu.github.io/LMNAS-37/LMNas_Deployed/style.css?v=189" />
+    <style data-floating-announcement>
+/* Self-contained homepage announcement; keep deployment inline copy in sync. */
+.floating-announcement {
+  position: fixed;
+  z-index: 25;
+  top: calc(80px + env(safe-area-inset-top, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  box-sizing: border-box;
+  width: min(420px, calc(100% - 48px));
+  padding: 18px 12px 18px 20px;
+  border: 1px solid #3e55264d;
+  border-radius: 18px;
+  color: #263c1b;
+  background: #fff8e6;
+  font: 500 14px/1.5 var(--body, "Montserrat", sans-serif);
+}
+.floating-announcement[hidden] { display: none; }
+.floating-announcement-copy { flex: 1; min-width: 0; }
+.floating-announcement h2 {
+  margin: 0 0 6px;
+  color: #263c1b;
+  font: 700 16px/1.4 var(--body, "Montserrat", sans-serif);
+}
+.floating-announcement p { margin: 0; }
+.floating-announcement a { color: #263c1b; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.floating-announcement-close {
+  display: grid;
+  place-items: center;
+  flex: 0 0 44px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  color: #263c1b;
+  background: transparent;
+  font: 400 26px/1 sans-serif;
+  cursor: pointer;
+}
+.floating-announcement-close:hover { background: #3e552614; }
+.floating-announcement-close:focus-visible,
+.floating-announcement a:focus-visible { outline: 3px solid #3e5526; outline-offset: 2px; }
+@media (max-width: 600px) {
+  .floating-announcement {
+    width: min(420px, calc(100% - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+    padding: 14px 8px 14px 16px;
+  }
+}
+/* Clear the WordPress toolbar without covering the navigation. */
+body.admin-bar .floating-announcement { top: calc(112px + env(safe-area-inset-top, 0px)); }
+@media (max-width: 782px) {
+  body.admin-bar .floating-announcement { top: calc(126px + env(safe-area-inset-top, 0px)); }
+}
+    </style>
   </head>
   <body>
+    <aside class="floating-announcement" data-preliminary-announcement aria-labelledby="preliminary-announcement-title">
+      <div class="floating-announcement-copy">
+        <h2 id="preliminary-announcement-title">Pengumuman Babak Penyisihan LMNas 37</h2>
+        <p data-announcement-body>Tautan pengumuman akan tersedia segera.</p>
+      </div>
+      <button class="floating-announcement-close" data-announcement-close type="button" aria-label="Tutup pengumuman babak penyisihan"><span aria-hidden="true">×</span></button>
+    </aside>
     <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
 
     <header class="site-header">
@@ -139,9 +204,9 @@
         <img class="countdown-art" src="https://zikzaklucu.github.io/LMNAS-37/Assets/figma/countdown-vines.svg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <div class="countdown-copy">
           <p class="section-kicker">Menuju</p>
-          <h2 id="countdown-title">Babak Penyisihan</h2>
-          <p class="registration-extension-note">24 Oktober 2026</p>
-          <p class="countdown-value" role="timer" aria-atomic="true" aria-label="Menghitung waktu menuju Babak Penyisihan" data-countdown-label="Menuju Babak Penyisihan" data-countdown-target="2026-10-24T00:00:00+07:00">
+          <h2 id="countdown-title">Babak Semifinal</h2>
+          <p class="registration-extension-note">14 November 2026</p>
+          <p class="countdown-value" role="timer" aria-atomic="true" aria-label="Menghitung waktu menuju Babak Semifinal" data-countdown-label="Menuju Babak Semifinal" data-countdown-target="2026-11-14T00:00:00+07:00">
             <span class="countdown-unit"><span class="countdown-number" data-countdown-part="days">0</span><span class="countdown-unit-label" aria-hidden="true">hari</span></span>
             <span class="countdown-unit"><span class="countdown-number" data-countdown-part="hours">00</span><span class="countdown-unit-label" aria-hidden="true">jam</span></span>
             <span class="countdown-unit"><span class="countdown-number" data-countdown-part="minutes">00</span><span class="countdown-unit-label" aria-hidden="true">menit</span></span>
@@ -440,6 +505,8 @@
 
       /* Inlined from site-config.js. */
 window.LMNAS_SITE_CONFIG = Object.freeze({
+  // Official preliminary-round results supplied by the organizer.
+  preliminaryAnnouncement: Object.freeze({ url: "https://bit.ly/HasilPenyisihanLMNas37UGM" }),
   phases: Object.freeze({
     "registration-one": Object.freeze({
       start: "2026-09-01T12:00:00+07:00",
@@ -597,7 +664,7 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
     }
 
     const preliminary = phases.preliminary;
-    if (preliminary) {
+    if (preliminary && (!phases.finals || current <= new Date(preliminary.end))) {
       const state = getPhaseWindowState(new Date(preliminary.start), new Date(preliminary.end), current);
       const upcoming = state === "upcoming";
       const kicker = upcoming ? "Menuju" : state === "active" ? "Sedang berlangsung" : "Sudah selesai";
@@ -607,6 +674,22 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
         title: "Babak Penyisihan",
         countdownTarget: upcoming ? preliminary.start : null,
         countdownLabel: `${kicker} Babak Penyisihan`,
+        showCountdown: upcoming,
+      };
+    }
+
+    const finals = phases.finals;
+    if (finals) {
+      const state = getPhaseWindowState(new Date(finals.start), new Date(finals.end), current);
+      const upcoming = state === "upcoming";
+      const kicker = upcoming ? "Menuju" : state === "active" ? "Sedang berlangsung" : "Sudah selesai";
+      const title = upcoming ? "Babak Semifinal" : "Babak Semifinal, Final, dan Grandfinal";
+      return {
+        key: upcoming ? "BEFORE_SEMIFINAL" : state === "active" ? "FINALS_ACTIVE" : "FINALS_COMPLETE",
+        kicker,
+        title,
+        countdownTarget: upcoming ? finals.start : null,
+        countdownLabel: `${kicker} ${title}`,
         showCountdown: upcoming,
       };
     }
@@ -901,7 +984,7 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
       display.setAttribute("aria-label", `${phase.countdownLabel}: ${state.label}`);
     }
 
-    if ((phase.key === "REGISTRATION_CLOSED" || phase.key === "PRELIMINARY_COMPLETE") && timerId !== undefined) {
+    if ((phase.key === "REGISTRATION_CLOSED" || phase.key === "PRELIMINARY_COMPLETE" || phase.key === "FINALS_COMPLETE") && timerId !== undefined) {
       window.clearInterval(timerId);
       timerId = undefined;
     }
@@ -911,7 +994,7 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
 
   const initialState = updateCountdown();
 
-  if (initialState !== "REGISTRATION_CLOSED" && initialState !== "PRELIMINARY_COMPLETE") {
+  if (initialState !== "REGISTRATION_CLOSED" && initialState !== "PRELIMINARY_COMPLETE" && initialState !== "FINALS_COMPLETE") {
     timerId = window.setInterval(updateCountdown, 1000);
   }
 })();
@@ -1307,6 +1390,29 @@ window.LMNAS_SITE_CONFIG = Object.freeze({
     startedOnBackdrop = false;
   });
   trigger.hidden = false;
+})();
+    </script>
+    <script data-floating-announcement>
+/* Homepage announcement: pending until the official URL is configured. */
+(function () {
+  "use strict";
+  const notice = document.querySelector("[data-preliminary-announcement]");
+  if (!notice) return;
+  notice.querySelector("[data-announcement-close]").addEventListener("click", function () {
+    notice.hidden = true;
+  });
+  const url = window.LMNAS_SITE_CONFIG?.preliminaryAnnouncement?.url;
+  if (typeof url !== "string" || !/^https?:\/\//i.test(url)) return;
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return;
+    const link = document.createElement("a");
+    link.href = parsed.href;
+    link.textContent = "Lihat pengumuman";
+    notice.querySelector("[data-announcement-body]").replaceChildren(link);
+  } catch (_) {
+    // Invalid or unavailable URL: retain the visible pending copy.
+  }
 })();
     </script>
   </body>

@@ -72,13 +72,13 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
 }
 
 test("the source loads popup assets and deployment inlines the exact script and stylesheet", () => {
-  assert.match(read("index.html"), /src="site-config.js\?v=7" defer/);
+  assert.match(read("index.html"), /src="site-config.js\?v=9" defer/);
   assert.match(read("index.html"), /href="answer-key.css\?v=4"/);
   assert.match(read("index.html"), /src="answer-key.js\?v=2" defer/);
   const deployed = read("LMNas_Deployed/index.html");
   assert.ok(deployed.includes(read("answer-key.js").trim()));
   assert.ok(read("LMNas_Deployed/style.css").includes(read("answer-key.css").trim()));
-  assert.match(deployed, /LMNas_Deployed\/style.css\?v=188/);
+  assert.match(deployed, /LMNas_Deployed\/style.css\?v=189/);
   const config = {};
   vm.runInNewContext(read("site-config.js"), { window: config });
   assert.equal(config.LMNAS_SITE_CONFIG.answerKeys.smp, SMP_KEY_URL);

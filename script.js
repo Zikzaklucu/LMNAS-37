@@ -215,7 +215,7 @@
       display.setAttribute("aria-label", `${phase.countdownLabel}: ${state.label}`);
     }
 
-    if ((phase.key === "REGISTRATION_CLOSED" || phase.key === "PRELIMINARY_COMPLETE") && timerId !== undefined) {
+    if ((phase.key === "REGISTRATION_CLOSED" || phase.key === "PRELIMINARY_COMPLETE" || phase.key === "FINALS_COMPLETE") && timerId !== undefined) {
       window.clearInterval(timerId);
       timerId = undefined;
     }
@@ -225,7 +225,7 @@
 
   const initialState = updateCountdown();
 
-  if (initialState !== "REGISTRATION_CLOSED" && initialState !== "PRELIMINARY_COMPLETE") {
+  if (initialState !== "REGISTRATION_CLOSED" && initialState !== "PRELIMINARY_COMPLETE" && initialState !== "FINALS_COMPLETE") {
     timerId = window.setInterval(updateCountdown, 1000);
   }
 })();

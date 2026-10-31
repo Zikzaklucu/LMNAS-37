@@ -2137,7 +2137,11 @@ h1, h2, h3, p { overflow: visible; }
   line-height: 1.5;
   text-align: center;
 }
-.countdown-copy .registration-extension-note { order: 1; }
+.countdown-copy .registration-extension-note {
+  order: 1;
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 700;
+}
 .timeline-entry[data-phase-key="registration-extended"] h3,
 .timeline-entry[data-phase-key="finals"] h3 { white-space: normal; }
 .hero:has(.registration-extension-note) { height: auto; padding-bottom: 64px; }

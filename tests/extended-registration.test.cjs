@@ -21,7 +21,7 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
       assert.match(content, /27 September–10 Oktober 2026/);
     }
     assert.match(html, /data-phase-key="registration-extended"/);
-    assert.match(html, /data-countdown-target="2026-10-24T00:00:00\+07:00"/);
+    assert.match(html, /data-countdown-target="2026-11-14T00:00:00\+07:00"/);
     for (const section of ["hero", "registration-section"]) {
       const content = html.match(new RegExp(`<section class="${section}"[\\s\\S]*?<\\/section>`))?.[0];
       if (section === "hero") {
@@ -32,7 +32,7 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
       assert.doesNotMatch(content, /Perpanjangan Pendaftaran|data-registration-link/);
     }
     const countdown = html.match(/<section class="countdown-section"[\s\S]*?<\/section>/)?.[0];
-    assert.match(countdown, /Babak Penyisihan/);
-    assert.match(countdown, /24 Oktober 2026/);
+    assert.match(countdown, /Babak Semifinal/);
+    assert.match(countdown, /14 November 2026/);
   });
 }

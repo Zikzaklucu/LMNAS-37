@@ -84,7 +84,7 @@ test("published content does not contain placeholder lorem ipsum", () => {
 });
 
 test("the visible countdown heading matches its registration target", () => {
-  assert.match(html, /<h2 id="countdown-title">Babak Penyisihan<\/h2>/);
+  assert.match(html, /<h2 id="countdown-title">Babak Semifinal<\/h2>/);
 });
 
 test("the countdown vine keeps its authored dimensions against WordPress image rules", () => {
@@ -793,10 +793,10 @@ test("published dates and registration links are hydrated from the site configur
     "preliminary",
     "finals",
   ]);
-  assert.match(html, /<script src="site-config\.js\?v=7" defer><\/script>/);
+  assert.match(html, /<script src="site-config\.js\?v=9" defer><\/script>/);
   assert.equal((html.match(/data-registration-link/g) || []).length, 0);
   assert.equal((html.match(/data-phase-key=/g) || []).length, 5);
-  assert.match(html, /data-countdown-target="2026-10-24T00:00:00\+07:00"/);
+  assert.match(html, /data-countdown-target="2026-11-14T00:00:00\+07:00"/);
   assert.match(html, /data-phase-key="registration-one" data-phase-start="2026-09-01T12:00:00\+07:00"/);
   assert.match(script, /const config = window\.LMNAS_SITE_CONFIG/);
   assert.match(script, /document\.querySelectorAll\("\[data-registration-link\]"\)/);

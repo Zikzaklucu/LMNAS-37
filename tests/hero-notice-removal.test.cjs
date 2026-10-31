@@ -14,8 +14,8 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
     assert.match(hero, /Mathematics as the Gateway/);
     assert.match(hero, /class="hero-owl-stage"/);
     const countdown = html.match(/<section class="countdown-section"[\s\S]*?<\/section>/)?.[0];
-    assert.match(countdown, /id="countdown-title">Babak Penyisihan/);
-    assert.match(countdown, /data-countdown-target="2026-10-24T00:00:00\+07:00"/);
+    assert.match(countdown, /id="countdown-title">Babak Semifinal/);
+    assert.match(countdown, /data-countdown-target="2026-11-14T00:00:00\+07:00"/);
     const registration = html.match(/<section class="registration-section"[\s\S]*?<\/section>/)?.[0];
     assert.match(registration, /id="registration-title">Registrasi LMNas 37 telah ditutup<\/h2>/);
     const refundNotice = "Segala bentuk pembayaran tidak dapat dikembalikan dalam bentuknapapun";
