@@ -72,7 +72,7 @@ for (const file of ["index.html", "LMNas_Deployed/index.html"]) {
 }
 
 test("the source loads popup assets and deployment inlines the exact script and stylesheet", () => {
-  assert.match(read("index.html"), /src="site-config.js\?v=10" defer/);
+  assert.match(read("index.html"), /src="site-config.js\?v=11" defer/);
   assert.match(read("index.html"), /href="answer-key.css\?v=4"/);
   assert.match(read("index.html"), /src="answer-key.js\?v=2" defer/);
   const deployed = read("LMNas_Deployed/index.html");
