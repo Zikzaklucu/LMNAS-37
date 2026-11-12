@@ -14,12 +14,30 @@ test("all source and deployment footers load tiers and identify Fumalife correct
     assert.ok(href, file);
     assert.ok(fs.existsSync(path.resolve(root, path.dirname(file), href[1].split("?")[0])), file);
     const sponsors = html.split('aria-label="Mitra LMNAS 37">')[1].split("</ul>")[0];
-    assert.equal((sponsors.match(/<li /g) || []).length, 9, file);
-    for (const name of ["standard", "bsm", "mic", "taman-batik", "raden", "wisma", "imperial", "takaful", "fumalife"]) {
+    assert.equal((sponsors.match(/<li /g) || []).length, 10, file);
+    for (const name of ["standard", "bsm", "mic", "taman-batik", "raden", "wisma", "imperial", "takaful", "fumalife", "bpd-diy"]) {
       assert.ok(sponsors.includes(`footer-logo--${name}\"`), `${file}: ${name}`);
     }
     assert.match(sponsors, /alt="Fumalife"/);
     assert.doesNotMatch(sponsors, /alt="Manulife"/);
+  }
+});
+
+test("Bank BPD DIY is present once in every footer with an available local asset", () => {
+  for (const file of [...pages, ...pages.map(file => `LMNas_Deployed/${file}`)]) {
+    const html = read(file);
+    const matches = [...html.matchAll(/<li class="footer-logo footer-logo--bpd-diy"><img src="([^"]+)" alt="Bank BPD DIY" loading="lazy" decoding="async" \/><\/li>/g)];
+    assert.equal(matches.length, 1, file);
+    if (file.startsWith("LMNas_Deployed/")) {
+      assert.ok(matches[0][1].startsWith("data:image/png;base64,"), file);
+      const embedded = Buffer.from(matches[0][1].split(",")[1], "base64");
+      assert.deepEqual(embedded, fs.readFileSync(path.join(root, "Assets/sponsors/bank-bpd-diy.png")), file);
+      continue;
+    }
+    const asset = matches[0][1].replace("https://zikzaklucu.github.io/LMNAS-37/", "");
+    const local = asset.startsWith("Assets/") ? path.join(root, asset) : path.resolve(root, path.dirname(file), asset);
+    assert.ok(fs.existsSync(local), `${file}: ${asset}`);
+    assert.equal(fs.readFileSync(local).subarray(1, 4).toString(), "PNG");
   }
 });
 

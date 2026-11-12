@@ -507,7 +507,7 @@ test("the footer fills the updated Home3 Figma partner regions", () => {
   assert.match(html, /class="footer-visual" src="Assets\/figma\/footer-panel-divider-home3\.png"/);
   assert.match(html, /class="footer-heading footer-heading--media">Media Partner<\/h2>/);
   assert.match(html, /class="footer-heading footer-heading--partner">Mitra<\/h2>/);
-  assert.equal((footer.match(/class="footer-logo footer-logo--/g) || []).length, 11);
+  assert.equal((footer.match(/class="footer-logo footer-logo--/g) || []).length, 12);
   assert.deepEqual([...footer.matchAll(/class="footer-logo[^>]*><img[^>]+alt="([^"]+)"/g)].map(([, alt]) => alt), [
     "Standard",
     "BSM Rental",
@@ -518,6 +518,7 @@ test("the footer fills the updated Home3 Figma partner regions", () => {
     "Imperial Digital Printing",
     "Takaful Umum",
     "Fumalife",
+    "Bank BPD DIY",
     "Jogja TV",
     "Kotaperak 94.6 FM",
   ]);
@@ -875,7 +876,7 @@ test("the updated footer keeps Mitra and Media Partner as separate semantic grou
   const mitra = footer.slice(footer.indexOf('footer-partner-group--mitra'), footer.indexOf('footer-partner-group--media'));
   const media = footer.slice(footer.indexOf('footer-partner-group--media'), footer.indexOf('class="footer-socials"'));
 
-  assert.equal((mitra.match(/class="footer-logo footer-logo--/g) || []).length, 9);
+  assert.equal((mitra.match(/class="footer-logo footer-logo--/g) || []).length, 10);
   assert.equal((media.match(/class="footer-logo footer-logo--/g) || []).length, 2);
   assert.match(mitra, /Standard[\s\S]*BSM Rental[\s\S]*MIC Hotel[\s\S]*Taman Batik Terang Bulan[\s\S]*Raden HT[\s\S]*Wisma Kagama[\s\S]*Imperial Digital Printing[\s\S]*Takaful Umum[\s\S]*Fumalife/);
   assert.match(media, /Jogja TV[\s\S]*Kotaperak 94\.6 FM/);
