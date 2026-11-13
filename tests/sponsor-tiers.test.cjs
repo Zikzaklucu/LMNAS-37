@@ -14,8 +14,8 @@ test("all source and deployment footers load tiers and identify Fumalife correct
     assert.ok(href, file);
     assert.ok(fs.existsSync(path.resolve(root, path.dirname(file), href[1].split("?")[0])), file);
     const sponsors = html.split('aria-label="Mitra LMNAS 37">')[1].split("</ul>")[0];
-    assert.equal((sponsors.match(/<li /g) || []).length, 10, file);
-    for (const name of ["standard", "bsm", "mic", "taman-batik", "raden", "wisma", "imperial", "takaful", "fumalife", "bpd-diy"]) {
+    assert.equal((sponsors.match(/<li /g) || []).length, 11, file);
+    for (const name of ["standard", "bsm", "mic", "taman-batik", "raden", "wisma", "imperial", "takaful", "fumalife", "bpd-diy", "yamie-panda"]) {
       assert.ok(sponsors.includes(`footer-logo--${name}\"`), `${file}: ${name}`);
     }
     assert.match(sponsors, /alt="Fumalife"/);

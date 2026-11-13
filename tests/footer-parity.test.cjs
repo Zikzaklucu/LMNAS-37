@@ -30,8 +30,8 @@ const deployedRoutes = sourceRoutes.map((file) => `LMNas_Deployed/${file}`);
 
 const assertPartnerContent = (block) => {
   assert.match(block, /<footer class="footer"/);
-  assert.equal((block.match(/class="footer-logo footer-logo--/g) || []).length, 12);
-  assert.equal((block.match(/class="footer-logo footer-logo--(?:standard|bsm|mic|taman-batik|raden|wisma|imperial|takaful|fumalife|bpd-diy)/g) || []).length, 10);
+  assert.equal((block.match(/class="footer-logo footer-logo--/g) || []).length, 13);
+  assert.equal((block.match(/class="footer-logo footer-logo--(?:standard|bsm|mic|taman-batik|raden|wisma|imperial|takaful|fumalife|bpd-diy|yamie-panda)/g) || []).length, 11);
   assert.equal((block.match(/class="footer-logo footer-logo--(?:jogja-tv|kotaperak)/g) || []).length, 2);
   assert.match(block, /alt="Fumalife"/);
   assert.match(block, /alt="Jogja TV"/);

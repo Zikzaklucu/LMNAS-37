@@ -35,7 +35,7 @@
 .footer-partner-group--mitra .footer-logo img { transform: none; object-fit: contain; }
 
 @media (min-width: 1333px) {
-  .footer-stage { min-height: 600px; }
+  .footer-stage { min-height: 680px; }
   .footer-partner-group--mitra .footer-logo-list { position: absolute; top: 100px; right: 8%; left: 8%; bottom: auto; }
   .footer-heading { top: 28px; }
   .footer-partner-group--media .footer-logo-list { top: 100px; bottom: auto; height: 190px; }
