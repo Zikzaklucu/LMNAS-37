@@ -30,7 +30,7 @@ function init(file, url, transform = source => source) {
 }
 for (const file of pages) {
   test(`${file}: announcement survives backslash stripping observed on WordPress`, () => {
-    const url = "https://drive.google.com/drive/folders/1_etg8zhVyeBeRWb_Zy6Nqxgy53JdBK_3";
+    const url = "https://s.id/SKHasilBabakSemifinalLMNas37UGM";
     const stripBackslashes = source => source.split(String.fromCharCode(92)).join("");
     const state = init(file, url, stripBackslashes);
     assert.equal(state.body.children[0].href, url);
@@ -43,7 +43,7 @@ for (const file of pages) {
   test(`${file}: labeled pending notice initializes without a link`, () => {
     assert.ok(markup(file), "homepage has floating announcement aside");
     assert.match(markup(file), /aria-labelledby="preliminary-announcement-title"/);
-    assert.match(markup(file), /id="preliminary-announcement-title">Pengumuman Babak Penyisihan LMNas 37<\/h2>/);
+    assert.match(markup(file), /id="preliminary-announcement-title">Pengumuman Hasil Babak Semifinal LMNas 37<\/h2>/);
     assert.match(markup(file), /Tautan pengumuman akan tersedia segera\./);
     assert.doesNotMatch(markup(file), /<a\b|autofocus|role="(?:alert|dialog)"/);
     const state = init(file, "");
@@ -84,14 +84,14 @@ test("source and deployment share markup, runtime, CSS and official announcement
     const context = { window: {} };
     const config = file === "index.html" ? read("site-config.js") : read(file).match(/\/\* Inlined from site-config\.js\. \*\/([\s\S]*?)(?=\/\* Inlined from)/)[1];
     vm.runInNewContext(config, context);
-    assert.equal(context.window.LMNAS_SITE_CONFIG.preliminaryAnnouncement.url, "https://drive.google.com/drive/folders/1_etg8zhVyeBeRWb_Zy6Nqxgy53JdBK_3");
+    assert.equal(context.window.LMNAS_SITE_CONFIG.preliminaryAnnouncement.url, "https://s.id/SKHasilBabakSemifinalLMNas37UGM");
     assert.match(read(file), /data-countdown-target="2026-11-14T00:00:00\+07:00"/);
     assert.match(read(file), /<h2 id="countdown-title">Babak Semifinal<\/h2>/);
-    assert.match(markup(file), /type="button" aria-label="Tutup pengumuman babak penyisihan"/);
+    assert.match(markup(file), /type="button" aria-label="Tutup pengumuman hasil babak semifinal"/);
   }
   assert.match(read(pages[0]), /href="announcement\.css\?v=2"/);
   assert.match(read(pages[0]), /src="announcement\.js\?v=2" defer/);
-  assert.match(read(pages[0]), /src="site-config\.js\?v=11" defer/);
+  assert.match(read(pages[0]), /src="site-config\.js\?v=12" defer/);
   assert.doesNotMatch(read(pages[1]), /(?:src|href)="[^"]*announcement\.(?:css|js)/);
 });
 test("CSS guardrails: fixed compact desktop, inset mobile, safe-area, focus and hidden", () => {
